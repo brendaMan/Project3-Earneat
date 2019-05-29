@@ -5,7 +5,7 @@ const port = process.env.PORT || 8000;
 server.set("port", port);
 server.get('/', function(req, res){
     res.write('/api/user             List of users\n');
-    res.write('/api/user/:userid     User details\n');
+    res.write('/api/user/:userid     User details. hola\n');
     res.end();
 })
 
