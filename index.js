@@ -1,10 +1,13 @@
 const express = require('express');
+const path = require('path');
 const server = express();
 const port = process.env.PORT || 8000;
 
 server.set("port", port);
 
-server.get('/', function(req, res){
+server.use('/', express.static(path.join(__dirname, '/build')));
+
+server.get('/api', function(req, res){
     res.write('/api/user             List of users\n');
     res.write('/api/user/:userid     User details. hola\n');
     res.end();
