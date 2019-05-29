@@ -1,7 +1,8 @@
 const express = require('express');
 const server = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
+server.set("port", port);
 server.get('/', function(req, res){
     res.write('/api/user             List of users\n');
     res.write('/api/user/:userid     User details\n');
