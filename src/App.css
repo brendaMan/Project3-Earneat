@@ -2,11 +2,14 @@
   text-align: center;
 }
 
+/* SignIn page CSS */
 .signInDiv {
   background-image: 
-  url("https://cdn.pixabay.com/photo/2016/12/01/20/17/texture-1876097_1280.jpg") ;
+  url("https://i.postimg.cc/26Yv5PV4/hero-home-oldv2.jpg") ;
+  background-size: cover; 
+  background-position: center center; 
   height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
 }
 
 .signInContainer { 
@@ -16,9 +19,9 @@
   -moz-box-shadow: 0 10px 6px -6px #03d0b6;
   box-shadow: 0 10px 6px -6px #03d0b6;
   padding: 2%;
-  margin-top: 2%;
-  background-color: #fffff;
-  opacity: 0.7;
+  margin-top: 10%;
+  background-color: #ffffff;
+  opacity: 0.9;
   /* filter: alpha(opacity=60); */
 }
 
