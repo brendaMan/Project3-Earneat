@@ -21,7 +21,11 @@ export default class SignIn extends Component {
             <div className='signInDiv'>
                 <Container textAlign='center'>
                     <h1>EarnEat by</h1>
-                    <Image src={Logo} alt='apeteat logo' size='tiny' centered/>
+                    <Image 
+                        src={Logo} 
+                        alt='apeteat logo' 
+                        size='tiny' 
+                        centered/>
                 </Container> 
             <Container className='signInContainer'>
                 <Header textAlign='center'>
@@ -41,7 +45,9 @@ export default class SignIn extends Component {
                     <Button color='teal' circular='true' type='submit'>Sign In</Button>
             </Form>
             </Container>
+            
             </div>
+            
         )
     }
 }

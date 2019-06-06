@@ -4,12 +4,15 @@
 
 /* SignIn page CSS */
 .signInDiv {
-  background-image: 
-  url("https://i.postimg.cc/26Yv5PV4/hero-home-oldv2.jpg") ;
+  background-image: linear-gradient(
+    rgba(233, 240, 239, 0.7),
+    rgba(233, 240, 239, 0.2)
+  ),url("https://i.postimg.cc/26Yv5PV4/hero-home-oldv2.jpg");
   background-size: cover; 
-  background-position: center center; 
-  height: 100vh;
-  /* width: 100vw; */
+  background-position: center center;  
+  height: 100vh; 
+  padding-top: 5%;
+  text-shadow: 0px 8px 8px darkgrey; 
 }
 
 .signInContainer { 
@@ -19,45 +22,13 @@
   -moz-box-shadow: 0 10px 6px -6px #03d0b6;
   box-shadow: 0 10px 6px -6px #03d0b6;
   padding: 2%;
-  margin-top: 10%;
+  margin-top: 5%;
   background-color: #ffffff;
-  opacity: 0.9;
-  /* filter: alpha(opacity=60); */
+  opacity: 0.7;
+  width: 50% !important;
 }
 
 .checkbox {
   display: flex;
   justify-content: space-between;
 }
-
-
-
-/* .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
