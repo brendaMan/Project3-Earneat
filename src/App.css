@@ -1,0 +1,34 @@
+.App {
+  text-align: center;
+}
+
+/* SignIn page CSS */
+.signInDiv {
+  background-image: linear-gradient(
+    rgba(233, 240, 239, 0.7),
+    rgba(233, 240, 239, 0.2)
+  ),url("https://i.postimg.cc/26Yv5PV4/hero-home-oldv2.jpg");
+  background-size: cover; 
+  background-position: center center;  
+  height: 100vh; 
+  padding-top: 5%;
+  text-shadow: 0px 8px 8px darkgrey; 
+}
+
+.signInContainer { 
+  border: 1px solid #03d0b6;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 10px 6px -6px #03d0b6;
+  -moz-box-shadow: 0 10px 6px -6px #03d0b6;
+  box-shadow: 0 10px 6px -6px #03d0b6;
+  padding: 2%;
+  margin-top: 5%;
+  background-color: #ffffff;
+  opacity: 0.7;
+  width: 50% !important;
+}
+
+.checkbox {
+  display: flex;
+  justify-content: space-between;
+}
