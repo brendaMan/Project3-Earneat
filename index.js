@@ -23,6 +23,10 @@ server.get('/api/user/:userid', function(req, res){
     res.end('user');
 })
 
+server.post('/api/user/:userid', function(req, res){
+    res.end('user');
+})
+
 server.get('/api/login', function(req, res){
     if (Math.random() > 0.5) {
         return res.sendStatus(200); // Login ok
