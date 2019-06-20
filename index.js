@@ -3,7 +3,7 @@ const path = require('path');
 const server = express();
 const port = process.env.PORT || 8000;
 
-server.set("port", port);
+server.set("port", port); // informar al serv que puerto se está usando
 
 server.use('/', express.static(path.join(__dirname, '/build')));
 
@@ -16,11 +16,15 @@ server.get('/api', function(req, res){
 })
 
 server.get('/api/user', function(req, res){
-    res.end('Lista de usuarios');
+    res.end('List of users');
 })
 
 server.get('/api/user/:userid', function(req, res){
-    res.end('usuario');
+    res.end('user');
+})
+
+server.post('/api/user/:userid', function(req, res){
+    res.end('user');
 })
 
 server.get('/api/login', function(req, res){
