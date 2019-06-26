@@ -3,7 +3,7 @@ const path = require('path');
 const server = express();
 const connection = require('./conf');
 const bodyParser = require('body-parser');
-//const sha1 = require('sha1'); //new
+// ! const sha1 = require('sha1'); //-------------------------> important
 const port = process.env.PORT || 8000;
 
 
@@ -38,7 +38,7 @@ server.get('/api/users', (req, res) => {
     });
 });
 
-server.get('/api/user/:id', (req, res) => {
+server.get('/api/users/:id', (req, res) => {
     connection.query('SELECT * from user WHERE id= ?', [req.params.userid], (err, results) => {
         if (err) {
             console.log(err)
@@ -49,19 +49,21 @@ server.get('/api/user/:id', (req, res) => {
     });
 })
 
-server.post('/api/user', (req, res) => {
+server.post('/api/users', (req, res) => {
     const formData = req.body;
-    // const salt = "0X(PkJ%49nm09 75NUN6I$2]]0m6h95x";
-            // const data = {
-            //     name: req.body.name,
-            //     email: req.body.email,
-            //     hash: 
-            // }
+
+    // TODO: const salt = "0X(PkJ%49nm09 75NUN6I$2]]0m6h95x";
+    //  TODO:        const data = {
+    //   TODO:        name: req.body.name,
+    //   TODO:           email: req.body.email,
+    //  TODO:            hash: 
+    //   TODO:       }
     
-    // {
-    //     username: "bob@hola.com"
-    //     hash: "l784hf78ao8a7w4g4ybsdf7"   --> sha1(password + salt) 
-    // }
+    //  TODO: {
+    // TODO:     username: "bob@hola.com"
+    // TODO:     hash: "l784hf78ao8a7w4g4ybsdf7"   --> sha1(password + salt) } IMPORTANT!
+    
+    
         connection.query('INSERT INTO user SET ?', formData, (err, results) => {
             if (err) {
                 console.log(err);
@@ -72,7 +74,7 @@ server.post('/api/user', (req, res) => {
         });
 });
 
-server.patch('/api/user/:id', (req, res) => {
+server.patch('/api/users/:id', (req, res) => {
 
     //{email: password:}
 
