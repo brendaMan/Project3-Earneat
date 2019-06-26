@@ -5,7 +5,7 @@ const connection = require('./conf');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const sha1 = require('sha1'); //-------------------------> important
+const sha1 = require('sha1'); 
 const port = process.env.PORT || 8000;
 
 server.use(passport.initialize());
@@ -16,7 +16,7 @@ server.use(bodyParser.urlencoded({
 );
 
 
-server.set("port", port); // informar al serv que puerto se está usando
+server.set("port", port); 
 server.use('/', express.static(path.join(__dirname, '/build')));
 
 // ?----------------------------- USER ----------------------------------------
