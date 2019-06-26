@@ -6,7 +6,19 @@ export default class Premios extends Component {
         return (
             <Container fluid>
                 <Header as='h2' block>
-                  Premios
+                  Premios -------------------------------
+                </Header>
+                <Header as='h2' block>
+                  Premios -------------------------------
+                </Header>
+                <Header as='h2' block>
+                  Premios -------------------------------
+                </Header>
+                <Header as='h2' block>
+                  Premios -------------------------------
+                </Header>
+                <Header as='h2' block>
+                  Premios -------------------------------
                 </Header>
             </Container>
         )

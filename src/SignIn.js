@@ -7,8 +7,33 @@ export default class SignIn extends Component {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            message: ""
         };
+    }
+
+    onLogin = () => {
+        fetch('api/login', {
+            method: 'POST',
+            body: JSON.stringify(this.state)
+        })
+        .then (r => {
+            if (r.status === 200) this.onLoginSuccess();
+            else this.onLoginError();
+        })
+        .catch (this.onLoginError)
+    }
+
+    onLoginSuccess = (r) => {
+        console.log('onLoginSuccess');
+        this.props.onLoginSuccess();
+    }
+
+    onLoginError = () => {
+        console.log('onLoginError')
+        this.setState({
+            message: 'There is a problem logging in, please try again.'
+        })
     }
 
     validateForm() {
@@ -31,18 +56,21 @@ export default class SignIn extends Component {
                 <Header textAlign='center'>
                     <Icon name='users' size='massive'></Icon>
                 </Header>
-            <Form size='large' fluid>
+                <p style={{ color: 'red'}}>{this.state.message}</p>
+            <Form size='large' fluid="fluid">
                 <Form.Field required>
-                    <Input icon='mail' iconPosition='left' type='email' placeholder='Correo Electrónico' />
+                    <Input value={this.state.email} onChange={e => this.setState({email:e.target.value})} icon='mail' iconPosition='left' type='email' placeholder='Correo Electrónico' />
                 </Form.Field>
                 <Form.Field required>
-                    <Input icon='lock' iconPosition='left' type='password' placeholder='Contraseña' />
+                    <Input value={this.state.password} onChange={e => this.setState({password:e.target.value})} icon='lock' iconPosition='left' type='password' placeholder='Contraseña' />
                 </Form.Field>
                 <Form.Field className='checkbox'>
                     <Checkbox label='Recuérdame'/> 
-                    <a href='#'>¿Olvidastes tu contraseña?</a>
+                    <a href='#'>¿Olvidaste tu contraseña?</a>
                 </Form.Field>
-                    <Button color='teal' circular='true' type='submit'>Sign In</Button>
+                <Container textAlign='center'>
+                    <Button color='teal' circular={true} onClick={this.onLogin} type='submit'>Sign In</Button>
+                </Container>
             </Form>
             </Container>
             
