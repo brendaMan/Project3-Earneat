@@ -3,7 +3,9 @@ const path = require('path');
 const server = express();
 const connection = require('./conf');
 const bodyParser = require('body-parser');
-// ! const sha1 = require('sha1'); //-------------------------> important
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const sha1 = require('sha1'); //-------------------------> important
 const port = process.env.PORT || 8000;
 
 server.use(passport.initialize());
@@ -13,8 +15,8 @@ server.use(bodyParser.urlencoded({
     })
 );
 
-server.set("port", port); // informar al serv que puerto se está usando
 
+server.set("port", port); // informar al serv que puerto se está usando
 server.use('/', express.static(path.join(__dirname, '/build')));
 
 // ?----------------------------- USER ----------------------------------------
@@ -51,19 +53,6 @@ server.get('/api/users/:id', (req, res) => {
 
 server.post('/api/users', (req, res) => {
     const formData = req.body;
-
-    // TODO: const salt = "0X(PkJ%49nm09 75NUN6I$2]]0m6h95x";
-    //  TODO:        const data = {
-    //   TODO:        name: req.body.name,
-    //   TODO:           email: req.body.email,
-    //  TODO:            hash: 
-    //   TODO:       }
-    
-    //  TODO: {
-    // TODO:     username: "bob@hola.com"
-    // TODO:     hash: "l784hf78ao8a7w4g4ybsdf7"   --> sha1(password + salt) } IMPORTANT!
-    
-    
         connection.query('INSERT INTO user SET ?', formData, (err, results) => {
             if (err) {
                 console.log(err);
@@ -75,9 +64,6 @@ server.post('/api/users', (req, res) => {
 });
 
 server.patch('/api/users/:id', (req, res) => {
-
-    //{email: password:}
-
     const idUser = req.params.id;
     const formData = req.body;
         connection.query('UPDATE user SET ? WHERE id = ?', [formData, idUser], err => {
@@ -93,15 +79,19 @@ server.patch('/api/users/:id', (req, res) => {
 
 // ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
 
-// server.post('/api/login', (req, res) => {
-//     if (Math.random() > 0.5) {
-//         return res.sendStatus(200); // Login ok
-//     } else {
-//         return res.sendStatus(404); // Login error
-//     }
-// });
-
-server.post('/api/login', passport.authenticate('local', {session: false})),
+server.post('/api/login', (req, res, next) => {
+    console.log('login starting');
+    passport.authenticate('local', function(err, user, info){
+        console.log('login finish')
+        if (err || !user) {
+            res.status(401);
+            res.json({ message:'There is a problem logging in'})
+        } else {
+            res.status(200);
+            res.json(user)
+        }
+    })(req, res, next);
+});
 
 server.post('/api/logoff', (req, res) => {
     if (Math.random() > 0.5) {
@@ -164,6 +154,20 @@ server.patch('api/premios/:id', (req, res) => {
             }
         });
 });
+
+// autentificacion del passport 
+passport.use(new LocalStrategy({
+    usernameField: 'email'
+},
+    function(username, password, done) {
+        const salt = '0X(PkJ%49nm09 75NUN6I$2]]0m6h95x';
+        console.log('LOGGING IN...', {username, password})
+        connection.query('SELECT * FROM user WHERE email = ? AND hash = ?', [username, sha1(password + salt)], (err, results) => {
+            console.log('LOGIN RESULT', results[0]);
+            done(err, results[0])
+        });
+    }
+))
 
 server.on("error", (e) => console.log(e))
 

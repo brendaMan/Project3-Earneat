@@ -1,5 +1,5 @@
 const env = require('dotenv').config();
 const mysql = require('mysql');
-const connection = mysql.createConnection(process.env.CLEARDB_DATABASE_URL || '');
+const pool = mysql.createPool(process.env.CLEARDB_DATABASE_URL || '');
 
-module.exports = connection;
+module.exports = pool;
