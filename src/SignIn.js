@@ -47,10 +47,7 @@ export default class SignIn extends Component {
                 <Container textAlign='center'>
                     <h1>EarnEat by</h1>
                     <Image 
-                        src={Logo} 
-                        alt='apeteat logo' 
-                        size='tiny' 
-                        centered/>
+                        src={Logo} alt='apeteat logo' size='tiny' centered/>
                 </Container> 
             <Container className='signInContainer'>
                 <Header textAlign='center'>
@@ -59,17 +56,26 @@ export default class SignIn extends Component {
                 <p style={{ color: 'red'}}>{this.state.message}</p>
             <Form size='large' fluid="fluid">
                 <Form.Field required>
-                    <Input value={this.state.email} onChange={e => this.setState({email:e.target.value})} icon='mail' iconPosition='left' type='email' placeholder='Correo Electrónico' />
+                    <Input 
+                        value={this.state.email} 
+                        onChange={e => this.setState({email:e.target.value})} 
+                        icon='mail' iconPosition='left' type='email' placeholder='Correo Electrónico' />
                 </Form.Field>
                 <Form.Field required>
-                    <Input value={this.state.password} onChange={e => this.setState({password:e.target.value})} icon='lock' iconPosition='left' type='password' placeholder='Contraseña' />
+                    <Input 
+                        value={this.state.password} 
+                        onChange={e => this.setState({password:e.target.value})} 
+                        icon='lock' iconPosition='left' type='password' placeholder='Contraseña' />
                 </Form.Field>
                 <Form.Field className='checkbox'>
                     <Checkbox label='Recuérdame'/> 
                     <a href='#'>¿Olvidaste tu contraseña?</a>
                 </Form.Field>
                 <Container textAlign='center'>
-                    <Button color='teal' circular={true} onClick={this.onLogin} type='submit'>Sign In</Button>
+                    <Button 
+                        onClick={this.onLogin}
+                        color='teal' circular={true} type='submit'>Sign In
+                    </Button>
                 </Container>
             </Form>
             </Container>
