@@ -2,16 +2,9 @@ import React, { Component } from 'react'
 import SignIn from './SignIn';
 import Loading from './Components/Loading';
 import Dashboard from './Components/Dashboard';
+import AdminDashboard from './AdminComponents/AdminDashboard';
 import './App.css';
 
-
-const styles = {
-  // background: "#000",
-  // width: "2px",
-  cursor: "col-resize",
-  margin: "5px",
-  height: "100%"
-}; 
 
 export default class App extends Component {
 
@@ -27,13 +20,23 @@ export default class App extends Component {
       .catch (err => this.setState({ signedIn: false }))
   }
 
+  onLoginSuccess = () => {
+    this.setState({ signedIn: true })
+  }
+
   render() {
-    const signedIn = this.state.signedIn;
+    const { user, signedIn } = this.state;
     return (
         <div>
-        { signedIn === true ? <Dashboard /> : 
-          signedIn === false ? <SignIn onLogin={this.onLogin}/> : 
-                                <Loading /> }
+        { signedIn === true ? 
+            
+            ( user && user.admin ? <AdminDashboard user={user} /> : <Dashboard user={user} />) 
+            : 
+            (signedIn === false ? 
+              <SignIn onLoginSuccess={this.onLoginSuccess}/> : 
+
+              // signedIn === undefined 
+              <Loading />) }
         </div>
         )
   }

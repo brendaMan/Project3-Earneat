@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-// import SideBar from './SideBar';
 import TopNavBar from './TopNavBar';
 import Puntos from './Puntos';
 import Premios from './Premios';
 import MiArea from './MiArea';
 import MiTarjeta from './MiTarjeta';
-//import AddUsuario from './AddUsuario';
 import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import { Icon} from 'semantic-ui-react';
 import SplitPane from "react-split-pane";

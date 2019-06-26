@@ -3,21 +3,21 @@ import AccionesRecientes from './AccionesRecientes';
 import { Header, Container, Divider, Form, Segment, TextArea, Input} from 'semantic-ui-react';
 
 const options = [
-    { key: 'o', text: 'Other1', value: 'other' },
-    { key: 'o', text: 'Other2', value: 'other' },
-    { key: 'o', text: 'Other3', value: 'other' },
+    { key: 'o1', text: 'Other1', value: 'other' },
+    { key: 'o2', text: 'Other2', value: 'other' },
+    { key: 'o3', text: 'Other3', value: 'other' },
   ]
 
 export default class Puntos extends Component {
     render() {
         return (
-            <Container fluid>  
+            <Container fluid={true}>  
                 <Header as='h2' className='headerContainer' block>
                   Puntos
                 </Header> 
                 
                 <Segment raised>
-                <Form fluid widths='equals'>
+                <Form fluid="fluid" widths='equal'>
                     <Header as='h3' >Regalar Puntos</Header>
                     <Divider/>
                     <Form.Group inline>
