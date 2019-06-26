@@ -3,6 +3,7 @@ const path = require('path');
 const server = express();
 const connection = require('./conf');
 const bodyParser = require('body-parser');
+//const sha1 = require('sha1'); //new
 const port = process.env.PORT || 8000;
 
 
@@ -19,15 +20,15 @@ server.use('/', express.static(path.join(__dirname, '/build')));
 //----------------------------- USER ----------------------------------------
 
 server.get('/api', (req, res) => {
-    res.write('GET    /api/user             List of users\n');
-    res.write('GET    /api/user/:id     User details.\n');
+    res.write('GET    /api/users             List of users\n');
+    res.write('GET    /api/users/:id     User details.\n');
     res.write('\n');
     res.write('POST   /api/login            Log in.\n');
     res.end();
 })
 
 server.get('/api/users', (req, res) => {
-    connection.query('SELECT * from usuario', (err, results) =>{
+    connection.query('SELECT * from user', (err, results) =>{
         if (err) {
             console.log(err)
             res.status(500).send(err.message);
@@ -37,8 +38,8 @@ server.get('/api/users', (req, res) => {
     });
 });
 
-server.get('/api/users/:id', (req, res) => {
-    connection.query('SELECT * from usuario WHERE id= ?', [req.params.userid], (err, results) => {
+server.get('/api/user/:id', (req, res) => {
+    connection.query('SELECT * from user WHERE id= ?', [req.params.userid], (err, results) => {
         if (err) {
             console.log(err)
             res.status(500).send(err.message);
@@ -48,15 +49,20 @@ server.get('/api/users/:id', (req, res) => {
     });
 })
 
-server.post('/api/users', (req, res) => {
+server.post('/api/user', (req, res) => {
     const formData = req.body;
     // const salt = "0X(PkJ%49nm09 75NUN6I$2]]0m6h95x";
-    // // 
+            // const data = {
+            //     name: req.body.name,
+            //     email: req.body.email,
+            //     hash: 
+            // }
+    
     // {
     //     username: "bob@hola.com"
     //     hash: "l784hf78ao8a7w4g4ybsdf7"   --> sha1(password + salt) 
     // }
-        connection.query('INSERT INTO usuario SET ?', formData, (err, results) => {
+        connection.query('INSERT INTO user SET ?', formData, (err, results) => {
             if (err) {
                 console.log(err);
                 res.results(500).send('There is an error');
@@ -66,10 +72,13 @@ server.post('/api/users', (req, res) => {
         });
 });
 
-server.patch('/api/users/:id', (req, res) => {
+server.patch('/api/user/:id', (req, res) => {
+
+    //{email: password:}
+
     const idUser = req.params.id;
     const formData = req.body;
-        connection.query('UPDATE usuario SET ? WHERE id = ?', [formData, idUser], err => {
+        connection.query('UPDATE user SET ? WHERE id = ?', [formData, idUser], err => {
             if (err) {
                 console.log(err);
                 res.status(500).send("Error");
@@ -102,9 +111,9 @@ server.post('/api/logoff', (req, res) => {
 //------------------------------------ VOTE ----------------------------------------
 
 
-server.post('/api/votes', (req, res) => {
+server.post('/api/votos', (req, res) => {
     const formData = req.body;
-        connection.query('INSERT INTO vote SET ?', formData, (err, results) => {
+        connection.query('INSERT INTO votos SET ?', formData, (err, results) => {
             if (err) {
                 console.log(err);
                 res.results(500).send('You can post your vote')
