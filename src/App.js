@@ -34,7 +34,6 @@ export default class App extends Component {
             : 
             (signedIn === false ? 
               <SignIn onLoginSuccess={this.onLoginSuccess}/> : 
-
               // signedIn === undefined 
               <Loading />) }
         </div>

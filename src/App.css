@@ -8,9 +8,9 @@
     rgba(233, 240, 239, 0.7),
     rgba(233, 240, 239, 0.2)
   ),url("https://i.postimg.cc/26Yv5PV4/hero-home-oldv2.jpg");
-  background-size: cover; 
+  background-size: cover;
   background-position: center center;  
-  height: 100vh; 
+  height: 100vh;
   padding-top: 5%;
   text-shadow: 0px 8px 8px darkgrey; 
 }
