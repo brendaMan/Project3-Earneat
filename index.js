@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 // ! const sha1 = require('sha1'); //-------------------------> important
 const port = process.env.PORT || 8000;
 
-
+server.use(passport.initialize());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({
     extended: true
@@ -17,7 +17,7 @@ server.set("port", port); // informar al serv que puerto se está usando
 
 server.use('/', express.static(path.join(__dirname, '/build')));
 
-//----------------------------- USER ----------------------------------------
+// ?----------------------------- USER ----------------------------------------
 
 server.get('/api', (req, res) => {
     res.write('GET    /api/users             List of users\n');
@@ -91,15 +91,17 @@ server.patch('/api/users/:id', (req, res) => {
 });
 
 
-//---------------------------------- LOG IN/ LOG OFF -----------------------------------------
+// ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
 
-server.post('/api/login', (req, res) => {
-    if (Math.random() > 0.5) {
-        return res.sendStatus(200); // Login ok
-    } else {
-        return res.sendStatus(404); // Login error
-    }
-});
+// server.post('/api/login', (req, res) => {
+//     if (Math.random() > 0.5) {
+//         return res.sendStatus(200); // Login ok
+//     } else {
+//         return res.sendStatus(404); // Login error
+//     }
+// });
+
+server.post('/api/login', passport.authenticate('local', {session: false})),
 
 server.post('/api/logoff', (req, res) => {
     if (Math.random() > 0.5) {
@@ -110,7 +112,7 @@ server.post('/api/logoff', (req, res) => {
 });
 
 
-//------------------------------------ VOTE ----------------------------------------
+// ?------------------------------------ VOTE ----------------------------------------
 
 
 server.post('/api/votos', (req, res) => {
@@ -126,7 +128,7 @@ server.post('/api/votos', (req, res) => {
 });
 
 
-//------------------------------- PREMIO ---------------------------------------------
+// ?------------------------------- PREMIO ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
     connection.query('SELECT * from premios', (err, results) => {
