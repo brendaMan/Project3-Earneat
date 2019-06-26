@@ -11,6 +11,23 @@ export default class SignIn extends Component {
         };
     }
 
+    onLogin = () => {
+        fetch('api/login', {
+            method: 'POST',
+            data: this.state
+        })
+        .then (this.onLoginSuccess)
+        .catch (this.onLoginError)
+    }
+
+    onLoginSuccess = () => {
+        console.log('onLoginSuccess')
+    }
+
+    onLoginError = () => {
+        console.log('onLoginError')
+    }
+
     validateForm() {
         return this.state.email.lenght > 0 && this.state.password.lenght > 0
     }
@@ -40,9 +57,11 @@ export default class SignIn extends Component {
                 </Form.Field>
                 <Form.Field className='checkbox'>
                     <Checkbox label='Recuérdame'/> 
-                    <a href='#'>¿Olvidastes tu contraseña?</a>
+                    <a href='#'>¿Olvidaste tu contraseña?</a>
                 </Form.Field>
-                    <Button color='teal' circular='true' type='submit'>Sign In</Button>
+                <Container textAlign='center'>
+                    <Button color='teal' circular='true' onClick={this.onLogin} type='submit'>Sign In</Button>
+                </Container>
             </Form>
             </Container>
             

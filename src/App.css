@@ -34,6 +34,10 @@
 }
 
 /* CSS Pagina Puntos */
-/* .headerContainer {
+.headerContainer {
   margin-top: 5%;
-} */
+}
+
+.adminForms {
+  padding: 10px;
+}

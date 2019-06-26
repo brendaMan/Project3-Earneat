@@ -8,12 +8,8 @@ export default class MiArea extends Component {
                 <Header as='h2' block>
                   Mi Area Personal
                 </Header>
-                <Header as='h2' block>
-                  Mi Area Personal
-                </Header>
-                <Header as='h2' block>
-                  Mi Area Personal
-                </Header>
+                
+                
             </Container>
         )
     }

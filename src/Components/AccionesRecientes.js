@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Feed, Icon, Header } from 'semantic-ui-react';
+import { Feed, Icon, Header, Segment, Divider } from 'semantic-ui-react';
 
 export default class AccionesRecientes extends Component {
     render() {
         return (
+          <Segment raised>
             <Feed>
                  <Header as='h3' >Acciones Recientes</Header>
+                 <Divider/>
             <Feed.Event>
               <Feed.Label>
                 <img src='/images/avatar/small/elliot.jpg' />
@@ -105,6 +107,7 @@ export default class AccionesRecientes extends Component {
       </Feed.Content>
     </Feed.Event>
   </Feed>
+  </Segment>
         )
     }
 }
