@@ -77,6 +77,22 @@ server.patch('/api/users/:id', (req, res) => {
 });
 
 
+server.get('/api/newsfeed', (req, res) => {
+    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', [req.params.userid], (err, results) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send(err.message);
+        } else {
+            res.json(results);
+        }
+    });
+})
+
+
+
+// SELECT * FROM newsfeed
+// ORDER BY date DESC LIMIT 20
+
 // ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
 
 server.post('/api/login', (req, res, next) => {

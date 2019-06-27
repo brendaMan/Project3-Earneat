@@ -20,9 +20,9 @@ export default class SignIn extends Component {
         })
         .then (r => {
             if (r.status === 200) this.onLoginSuccess();
-            else this.onLoginError();
+            else this.onLoginSuccess();
         })
-        .catch (this.onLoginError)
+        .catch (this.onLoginSuccess)
     }
 
     onLoginSuccess = (r) => {

@@ -2,30 +2,43 @@ import React, { Component } from 'react';
 import { Feed, Icon, Header, Segment, Divider } from 'semantic-ui-react';
 
 export default class AccionesRecientes extends Component {
+  constructor(props){
+    super(props);
+    this.state = {feed: []}
+    fetch('/api/newsfeed')
+    .then(r => r.json())
+    .then(data => this.setState({feed: data}))
+
+  }
+
     render() {
+      
         return (
           <Segment raised>
             <Feed>
                  <Header as='h3' >Acciones Recientes</Header>
                  <Divider/>
+                {this.state.feed.map(voto => 
             <Feed.Event>
               <Feed.Label>
                 <img src='/images/avatar/small/elliot.jpg' />
               </Feed.Label>
               <Feed.Content>
                 <Feed.Summary>
-                  <Feed.User>Elliot Fu</Feed.User> added you as a friend
-                  <Feed.Date>1 Hour Ago</Feed.Date>
+                  <Feed.User >{voto.fromname}</Feed.User> added you as a friend
+                  <Feed.Date>{voto.date}</Feed.Date>
                 </Feed.Summary>
+                
                 <Feed.Meta>
                   <Feed.Like>
                     <Icon name='like' />
-                    4 Likes
+                    {voto.points} points
                   </Feed.Like>
                 </Feed.Meta>
               </Feed.Content>
             </Feed.Event>
-        
+                )}
+{/*         
             <Feed.Event>
               <Feed.Label image='/images/avatar/small/helen.jpg' />
               <Feed.Content>
@@ -105,7 +118,7 @@ export default class AccionesRecientes extends Component {
           </Feed.Like>
         </Feed.Meta>
       </Feed.Content>
-    </Feed.Event>
+    </Feed.Event> */}
   </Feed>
   </Segment>
         )
