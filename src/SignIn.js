@@ -6,8 +6,8 @@ export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            password: "",
+            email: "mari@hotmail.com",
+            password: "123456",
             message: ""
         };
     }
@@ -20,9 +20,9 @@ export default class SignIn extends Component {
         })
         .then (r => {
             if (r.status === 200) this.onLoginSuccess();
-            else this.onLoginSuccess();
+            else this.onLoginError();
         })
-        .catch (this.onLoginSuccess)
+        .catch (this.onLoginError)
     }
 
     onLoginSuccess = (r) => {
@@ -89,7 +89,6 @@ export default class SignIn extends Component {
             </Form>
             </Container>
             </div>
-            
         )
     }
 }

@@ -31,8 +31,8 @@ export default class App extends Component {
           <ul id="mainMenu">
             <MiTarjeta/>
             <li>
-              <Icon name='exchange' />
-              <Link to="/">Puntos</Link></li>
+              <Icon name='laptop' />
+              <Link to="/">Dashboard</Link></li>
             <li>
               <Icon name='trophy' />
               <Link to="/premios">Premios</Link></li>
