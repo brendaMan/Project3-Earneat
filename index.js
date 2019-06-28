@@ -5,7 +5,7 @@ const connection = require('./conf');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const sha1 = require('sha1'); //-------------------------> important
+const sha1 = require('sha1'); 
 const port = process.env.PORT || 8000;
 
 server.use(passport.initialize());
@@ -16,7 +16,7 @@ server.use(bodyParser.urlencoded({
 );
 
 
-server.set("port", port); // informar al serv que puerto se está usando
+server.set("port", port); 
 server.use('/', express.static(path.join(__dirname, '/build')));
 
 // ?----------------------------- USER ----------------------------------------
@@ -76,6 +76,22 @@ server.patch('/api/users/:id', (req, res) => {
         });
 });
 
+
+server.get('/api/newsfeed', (req, res) => {
+    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', [req.params.userid], (err, results) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send(err.message);
+        } else {
+            res.json(results);
+        }
+    });
+})
+
+
+
+// SELECT * FROM newsfeed
+// ORDER BY date DESC LIMIT 20
 
 // ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
 

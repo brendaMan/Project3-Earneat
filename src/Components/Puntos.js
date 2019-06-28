@@ -13,7 +13,7 @@ export default class Puntos extends Component {
         return (
             <Container fluid={true}>  
                 <Header as='h2' className='headerContainer' block>
-                  Puntos
+                  Dashboard
                 </Header> 
                 
                 <Segment raised>
