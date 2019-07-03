@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Segment, Container} from 'semantic-ui-react';
 
-export default class AddPremios extends Component {
+export default class AddPremio extends Component {
     render() {
         return (
             <Segment 

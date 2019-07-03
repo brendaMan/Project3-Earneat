@@ -14,11 +14,11 @@ export default class Puntos extends Component {
     //     this.state={
     //         votos:
     //     };
-        // fetch('/api/regalar', {
-        //     method: 'POST',
+    //     fetch('/api/regalar', {
+    //         method: 'POST',
 
-        // }
-    // }
+        //     }}
+    
     render() {
         return (
             <Container fluid={true}>  
