@@ -90,9 +90,6 @@ server.get('/api/newsfeed', (req, res) => {
 
 
 
-// SELECT * FROM newsfeed
-// ORDER BY date DESC LIMIT 20
-
 // ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
 
 server.post('/api/login', (req, res, next) => {
@@ -111,9 +108,9 @@ server.post('/api/login', (req, res, next) => {
 
 server.post('/api/logoff', (req, res) => {
     if (Math.random() > 0.5) {
-        return res.sendStatus(200); // Logoff ok
+        return res.sendStatus(200); 
     } else {
-        return res.sendStatus(404); // Logoff error
+        return res.sendStatus(404); 
     }
 });
 
@@ -171,7 +168,8 @@ server.patch('api/premios/:id', (req, res) => {
         });
 });
 
-// autentificacion del passport 
+// ? -------------------- Autentificación del passport 
+
 passport.use(new LocalStrategy({
     usernameField: 'email'
 },

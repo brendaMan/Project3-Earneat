@@ -34,10 +34,17 @@
 }
 
 /* CSS Pagina Puntos */
-.headerContainer {
-  margin-top: 5%;
+.ui.header:first-child {
+  margin-top: 13px;
 }
 
 .adminForms {
   padding: 10px;
 }
+   /* input box in Regalar Puntos */
+.ui.input {
+  width: 65px;
+}
+
+/* Personal area*/
+

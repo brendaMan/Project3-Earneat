@@ -4,51 +4,43 @@ import Puntos from './Puntos';
 import Premios from './Premios';
 import MiArea from './MiArea';
 import MiTarjeta from './MiTarjeta';
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import { Icon} from 'semantic-ui-react';
-import SplitPane from "react-split-pane";
+import MenuWithRouter from "./MenuWithRouter";
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import { Grid, Menu, Container } from 'semantic-ui-react'; 
 
-const styles = {
-  // background: "#000",
-  // width: "2px",
-  cursor: "col-resize",
-  margin: "5px",
-  height: "100%"
-}; 
-
-export default class App extends Component {
-
+export default class Dashboard extends Component {
+  
   render() {
     return (
-        <div>
-        <TopNavBar/>
-        <Router>
-        <SplitPane
-          split="vertical"
-          minSize={140}
-          defaultSize={160}
-          resizerStyle={styles}>
-          <ul id="mainMenu">
-            <MiTarjeta/>
-            <li>
-              <Icon name='laptop' />
-              <Link to="/">Dashboard</Link></li>
-            <li>
-              <Icon name='trophy' />
-              <Link to="/premios">Premios</Link></li>
-            <li>
-              <Icon name='id badge outline' />
-              <Link to="/mi-area">Mi Area</Link></li>
-          </ul>
-          <div>
-            <Route exact path="/" component={Puntos} />
-            <Route path="/premios" component={Premios} />
-            <Route path="/mi-area" component={MiArea} />
-          </div>
-        </SplitPane>
-        </Router>
-        </div>
-        )
-  }
-}
+      
+    <Router>
+    <TopNavBar/>
+    <Grid>
+    <Grid.Column width={4}>
+    <MiTarjeta/>
+        
+      <MenuWithRouter
+        onItemClick={item => this.onItemClick(item)}
+        items={[
+          ['Dashboard', "/"],
+          ['Premios', "/premios"],
+          ['Mi Area  Personal', "/mi-area"]
+        ]}
+        headerIcon={"compass outline"}
+      />
+      </Grid.Column>
+      <Grid.Column stretched width={12}>
+      <Container>
+        <Switch>
+          <Route path="/" exact component={Puntos} />
+          <Route path="/premios" component={Premios} />
+          <Route path="/mi-area" component={MiArea} />
+          {/* <Route component={MissingPage} /> */}
+        </Switch>
+      </Container>
+      </Grid.Column>
+      </Grid>
+  </Router>
 
+  )}
+}
