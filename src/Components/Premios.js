@@ -14,7 +14,7 @@ export default class Premios extends Component {
     .then (r => r.json())
     .then ( data => this.setState({premios : data}));
 
-    fetch ('/api/puntos')
+    fetch ('/api/votos')
     .then (r => r.json())
     .then (data => this.setState({votos : data}))
   }
@@ -36,7 +36,7 @@ export default class Premios extends Component {
               <Card.Meta>
                 <span className='date'>Primer premio</span>
               </Card.Meta>
-              <Card.puntos>{premios.puntos}</Card.puntos>
+              <Card.puntos>{premios.puntos} Puntos</Card.puntos>
               <Card.Description>{premios.description}</Card.Description>
             </Card.Content>
           
@@ -54,7 +54,7 @@ export default class Premios extends Component {
               <Card.Meta>
                 <span className='date'>Primer premio</span>
               </Card.Meta>
-              <Card.puntos>{premios.puntos}</Card.puntos>
+              <Card.puntos>{premios.puntos} Puntos</Card.puntos>
               <Card.Description>
                 {premios.description}
               </Card.Description>
