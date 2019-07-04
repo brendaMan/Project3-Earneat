@@ -47,7 +47,7 @@ server.use('/', express.static(path.join(__dirname, '/build')));
 server.get('/api', (req, res) => {
     res.write('GET    /api/users             List of users\n');
     res.write('GET    /api/users/:id         User details.\n');
-    // ! res.write('GET    /api/users/me                    ');
+    res.write('GET    /api/users/me                         ');
     res.write(                '\n'                           );
     res.write('POST   /api/login                   Log in.\n');
     res.end();
@@ -144,12 +144,8 @@ server.post('/api/login', (req, res, next) => {
     })(req, res, next);
 });
 
-server.post('/api/logoff', (req, res) => {
-    if (Math.random() > 0.5) {
-        return res.sendStatus(200); 
-    } else {
-        return res.sendStatus(404); 
-    }
+server.post('/api/logout', (req, res, nex) => {
+    res.clearCookie('jwt').send()
 });
 
 
