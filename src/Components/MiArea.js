@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Button, Card, Container, Divider, Form, Grid, Header, Image, Segment} from 'semantic-ui-react';
 
 export default class MiArea extends Component {
+
     render() {
+        
         return (
             <Container fluid>
                 <div>
@@ -30,7 +32,7 @@ export default class MiArea extends Component {
                                 </Card.Content>
                                     <Divider />
                                 <Container textAlign='center'>
-                                        <Button color="instagram">OK</Button>
+                                        <Button color="gray" >OK</Button>
                                 </Container>
                             </Card>
                         </Segment>

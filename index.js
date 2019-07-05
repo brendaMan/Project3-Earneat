@@ -109,13 +109,26 @@ server.patch('/api/users/:id', (req, res) => {
     const formData = req.body;
         connection.query('UPDATE user SET ? WHERE id = ?', [formData, idUser], err => {
             if (err) {
-                console.log(err);
+                console.log(err); 
                 res.status(500).send("Error");
-            } else {
+            } else { 
                 res.sendStatus(200);
             }
         });
 });
+
+server.delete('/api/users/:id', (req, res) => {
+    const idUser = req.params.id;
+    const formData = req.body;
+        connection.query('DELETE FROM user WHERE id = ?', [formData, idUser], err => {
+            if (err) {
+                res.status(401). json({"error": res.message})
+                return;
+            }
+            res.json({"message": "deleted", changes: this.changes})
+        });
+})
+
 
 // ?----------------------------- NEWS FEED ----------------------------------------
 
