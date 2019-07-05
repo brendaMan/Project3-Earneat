@@ -53,16 +53,21 @@ server.get('/api', (req, res) => {
     res.end();
 })
 
-server.get('/api/users', (req, res) => {
-    connection.query('SELECT * from user', (err, results) =>{
-        if (err) {
-            console.log(err)
-            res.status(500).send(err.message);
+server.get('/api/users', passport.authenticate('jwt', {
+    session: false }),(req, res) => {
+        if ( err || !user ) {
+            res.sendStatus(401)
         } else {
-            res.json(results);
+            connection.query('SELECT * from user', (err, results) => {
+                if (err) {  
+                    res.sendStatus(500);
+                } else {
+                    res.json(results);
+                }
+            });
         }
-    });
-});
+    }
+);
 
 server.get('/api/users/me', passport.authenticate('jwt', {
     session: false}), (req, res) => { 
@@ -74,7 +79,7 @@ server.get('/api/users/me', passport.authenticate('jwt', {
 
 server.get('/api/users/:id', (req, res) => {
     connection.query('SELECT * from user WHERE id= ?', [req.params.userid], (err, results) => {
-        if (err) {
+        if (err ) {
             console.log(err)
             res.status(500).send(err.message);
         } else {
