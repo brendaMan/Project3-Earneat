@@ -91,15 +91,17 @@ server.get('/api/users/:id', (req, res) => {
 })
 
 server.post('/api/users', (req, res) => {
-    const formData = req.body;
-        connection.query('INSERT INTO user SET ?', formData, (err, results) => {
-            if (err) {
-                console.log(err);
-                res.results(500).send('There is an error');
-            } else {
-                res.sendStatus(200);
-            }
-        });
+    const user = req.body;
+    user.hash = sha1(password + salt);
+    delete user.password;
+    connection.query('INSERT INTO user SET ?', user, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.results(500).send('There is an error');
+        } else {
+            res.sendStatus(200);
+        }
+    });
 });
 
 server.patch('/api/users/:id', (req, res) => {
