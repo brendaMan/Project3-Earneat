@@ -45,11 +45,13 @@ server.use('/', express.static(path.join(__dirname, '/build')));
 // ?----------------------------- USER ----------------------------------------
 
 server.get('/api', (req, res) => {
-    res.write('GET    /api/users             List of users\n');
-    res.write('GET    /api/users/:id         User details.\n');
-    res.write('GET    /api/users/me                         ');
-    res.write(                '\n'                           );
-    res.write('POST   /api/login                   Log in.\n');
+    res.write('GET    /api/users                        List of users\n');
+    res.write('GET    /api/users/me                     Administrator\n');
+    res.write('GET    /api/users/:id                    User details.\n');
+    res.write('GET    /api/newsfeed                     NF on profile\n');
+    res.write(                                                      '\n');
+    res.write('POST   /api/logout                    Log out profile \n');
+    res.write('POST   /api/login                      Log in profile.\n');
     res.end();
 })
 
@@ -113,6 +115,7 @@ server.patch('/api/users/:id', (req, res) => {
         });
 });
 
+// ?----------------------------- NEWS FEED ----------------------------------------
 
 server.get('/api/newsfeed', (req, res) => {
     connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', [req.params.userid], (err, results) => {
@@ -127,7 +130,7 @@ server.get('/api/newsfeed', (req, res) => {
 
 
 
-// ?---------------------------------- LOG IN/ LOG OFF -----------------------------------------
+// ?---------------------------------- LOG IN/ LOG OUT -----------------------------------------
 
 server.post('/api/login', (req, res, next) => {
     console.log('login starting');
@@ -154,7 +157,7 @@ server.post('/api/logout', (req, res, nex) => {
 });
 
 
-// ?------------------------------------ VOTE ----------------------------------------
+// ?------------------------------------ VOTES ----------------------------------------
 
 
 server.post('/api/votos', (req, res) => {
@@ -170,7 +173,7 @@ server.post('/api/votos', (req, res) => {
 });
 
 
-// ?------------------------------- PREMIO ---------------------------------------------
+// ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
     connection.query('SELECT * from premios', (err, results) => {
@@ -194,6 +197,7 @@ server.post('/api/premios', (req, res) => {
         }
     });
 });
+
 
 server.patch('api/premios/:id', (req, res) => {
     const idPremio = req.params.id;
