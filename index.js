@@ -144,7 +144,7 @@ server.get('/api/premios', (req, res) => {
     });
 });
 
-server.post('/api/premios', (req, res) => {
+server.post('/api/premios/add', (req, res) => {
     const formData = req.body;
     connection.query('INSERT into premios SET ?', formData, (err, results) => {
         if (err) {
