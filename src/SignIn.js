@@ -19,15 +19,10 @@ export default class SignIn extends Component {
             headers: {'Content-Type':'application/json' }
         })
         .then (r => {
-            if (r.status === 200) this.onLoginSuccess();
+            if (r.status === 200) r.json().then(this.props.onLoginSuccess);
             else this.onLoginError();
         })
         .catch (this.onLoginError)
-    }
-
-    onLoginSuccess = () => {
-        console.log('onLoginSuccess');
-        this.props.onLoginSuccess();
     }
 
     onLoginError = () => {

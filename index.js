@@ -83,7 +83,18 @@ server.get('/api/users/me', passport.authenticate('jwt', {
 
 
 server.get('/api/users/:id', (req, res) => {
-    connection.query('SELECT * from usuario WHERE id= ?', [req.params.userid], (err, results) => {
+    connection.query('SELECT * from usuario WHERE id= ?', [req.params.id], (err, results) => {
+        if (err ) {
+            console.log(err)
+            res.status(500).send(err.message);
+        } else {
+            res.json(results && results[0]);
+        }
+    });
+})
+
+server.get('/api/users/:id/puntos_saldo', (req, res) => {
+    connection.query('SELECT * from puntos_saldo WHERE id= ?', [req.params.id], (err, results) => {
         if (err ) {
             console.log(err)
             res.status(500).send(err.message);
@@ -144,7 +155,7 @@ server.delete('/api/users/:id', passport.authenticate('jwt', {
 
 
 server.get('/api/newsfeed', (req, res) => {
-    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', (err, results) => {
+    connection.query('SELECT * FROM newsfeed_plus ORDER BY date DESC LIMIT 20', (err, results) => {
             if (err) {
                 res.sendStatus(500);
             } else {
