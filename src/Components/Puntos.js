@@ -37,8 +37,7 @@ export default class Puntos extends Component {
                     </Form.Group>
                     <Form.Button align='center'>Regalar</Form.Button>
                 </Form>
-            </Segment>
-                
+            </Segment>  
             <AccionesRecientes/>
             </Container>
         )

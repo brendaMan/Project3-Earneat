@@ -25,42 +25,42 @@ export default class Dashboard extends Component {
     }
     return ( 
     <Router>
-    <TopNavBar/>
-    <Grid>
-    <Grid.Column width={4}>
-    <MiTarjeta />
-        
-      <MenuWithRouter
-        onItemClick={item => this.onItemClick(item)}
-        items={items}
-        headerIcon={"compass outline"}
-      />
-      </Grid.Column>
-      <Grid.Column stretched width={12}>
-      <Container>
-      { user.admin ? 
-        /// Navegacion para administradores
-        <Switch>
-          <Route path="/" exact component={Puntos} />
-          <Route path="/premios" component={Premios} />
-          <Route path="/mi-area" component={MiArea} />
-          <Route path="/administrar-usuarios" component={AdminUsuarios} />
-          <Route path="/administrar-premios" component={AdminPremios} />
-        </Switch>
-              :
-        // Navegacion para plebeyos
-        <Switch>
-          <Route path="/" exact component={Puntos} />
-          <Route path="/premios" component={Premios} />
-          <Route path="/mi-area" component={MiArea} />
-          {/* <Route component={MissingPage} /> */}
-        </Switch>
-              }
+      <TopNavBar/>
+      <Grid>
+{/* Grid with SideBar  */}
+        <Grid.Column width={4}>
+          <MiTarjeta/>
+          <MenuWithRouter
+            onItemClick={item => this.onItemClick(item)}
+            items={items}
+            headerIcon={"compass outline"}
+          />
+        </Grid.Column>
+{/* Grid with Content Area */}
+        <Grid.Column stretched width={12}>
+          <Container>
+          { user.admin ? 
+// Navegacion para administradores
+            <Switch>
+              <Route path="/" exact component={Puntos} />
+              <Route path="/premios" component={Premios} />
+              <Route path="/mi-area" component={MiArea} />
+              <Route path="/administrar-usuarios" component={AdminUsuarios} />
+              <Route path="/administrar-premios" component={AdminPremios} />
+            </Switch>
+                  :
+// Navegacion para resto de usuarios
+            <Switch>
+              <Route path="/" exact component={Puntos} />
+              <Route path="/premios" component={Premios} />
+              <Route path="/mi-area" component={MiArea} />
+              {/* <Route component={MissingPage} /> */}
+            </Switch>
+                  }
 
-      </Container>
-      </Grid.Column>
+          </Container>
+        </Grid.Column>
       </Grid>
-  </Router>
-
+    </Router>
   )}
 }

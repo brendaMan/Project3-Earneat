@@ -19,8 +19,9 @@ export default class App extends Component {
       .catch (err => this.setState({ signedIn: false }))
   }
 
-  onLoginSuccess = () => {
-    this.setState({ signedIn: true })
+  onLoginSuccess = (user) => {
+    console.log("App.onLoginSuccess()", user)
+    this.setState({ signedIn: true, user: user })
   }
 
   render() {

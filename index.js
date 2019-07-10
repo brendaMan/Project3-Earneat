@@ -83,7 +83,18 @@ server.get('/api/users/me', passport.authenticate('jwt', {
 
 
 server.get('/api/users/:id', (req, res) => {
-    connection.query('SELECT * from usuario WHERE id= ?', [req.params.userid], (err, results) => {
+    connection.query('SELECT * from usuario WHERE id= ?', [req.params.id], (err, results) => {
+        if (err ) {
+            console.log(err)
+            res.status(500).send(err.message);
+        } else {
+            res.json(results && results[0]);
+        }
+    });
+})
+
+server.get('/api/users/:id/puntos_saldo', (req, res) => {
+    connection.query('SELECT * from puntos_saldo WHERE id= ?', [req.params.id], (err, results) => {
         if (err ) {
             console.log(err)
             res.status(500).send(err.message);
@@ -144,7 +155,7 @@ server.delete('/api/users/:id', passport.authenticate('jwt', {
 
 
 server.get('/api/newsfeed', (req, res) => {
-    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', (err, results) => {
+    connection.query('SELECT * FROM newsfeed_plus ORDER BY date DESC LIMIT 20', (err, results) => {
             if (err) {
                 res.sendStatus(500);
             } else {
@@ -206,6 +217,29 @@ server.post('/api/votos', (req, res) => {
 // ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
+<<<<<<< HEAD
+    connection.query('SELECT * from premios', (err, results) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send(err.message);
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+server.post('/api/premios/add', (req, res) => {
+    const formData = req.body;
+    connection.query('INSERT into premios SET ?', formData, (err, results) => {
+        if (err) {
+            console.log(err);
+            res.results(500).send('Error');
+        } else {
+            res.sendStatus(200);
+        }
+    });
+});
+=======
     const total = req.body;
         connection.query('SELECT * from premio', total, (err, results) => {
             if (err) {
@@ -217,6 +251,7 @@ server.get('/api/premios', (req, res) => {
         });
     }
 );
+>>>>>>> 93917dd50c182a45a7a6920ad9d38282b8e04fc0
 
 
 server.post('/api/premios', (req, res) => {

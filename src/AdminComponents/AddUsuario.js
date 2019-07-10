@@ -74,7 +74,7 @@ export default class AddUsuario extends Component {
                 </Form.Field>
                 <Form.Checkbox toggle
                     value= {this.state.admin}
-                    // onChange= {e => this.setState((this.state.admin=0?1:0))}
+                    onChange= {e => this.setState(this.state.admin=0?0:1)}
                     label='¿Es administrador?'/>
                 <Container textAlign="center">
                 <Form.Button
