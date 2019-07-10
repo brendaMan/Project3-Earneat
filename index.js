@@ -21,7 +21,7 @@ passport.use(new LocalStrategy({
     function(username, password, done) {
         const salt = '0X(PkJ%49nm09 75NUN6I$2]]0m6h95x';
         console.log('LOGGING IN...', {username, password})
-        connection.query('SELECT * FROM user WHERE email = ? AND hash = ?', [username, sha1(password + salt)], (err, results) => {
+        connection.query('SELECT * FROM usuario WHERE email = ? AND hash = ?', [username, sha1(password + salt)], (err, results) => {
             console.log('LOGIN RESULT', results[0]);
             const user = results[0];
             done(err, user)
@@ -61,7 +61,7 @@ server.get('/api/users', passport.authenticate('jwt', {
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('SELECT * from user', (err, results) => {
+            connection.query('SELECT * from usuario', (err, results) => {
                 if (err) {  
                     res.sendStatus(500);
                 } else {
@@ -83,7 +83,7 @@ server.get('/api/users/me', passport.authenticate('jwt', {
 
 
 server.get('/api/users/:id', (req, res) => {
-    connection.query('SELECT * from user WHERE id= ?', [req.params.userid], (err, results) => {
+    connection.query('SELECT * from usuario WHERE id= ?', [req.params.userid], (err, results) => {
         if (err ) {
             console.log(err)
             res.status(500).send(err.message);
@@ -98,12 +98,12 @@ server.post('/api/users', (req, res) => {
     const user = req.body;
     user.hash = sha1(user.password + salt);
     delete user.password;
-    connection.query('INSERT INTO user SET ?', user, (err, results) => {
+    connection.query('INSERT INTO usuario SET ?', user, (err, results) => {
         if (err) {
             console.log(err);
             res.results(500).send('There is an error');
         } else {
-            res.sendStatus(200);
+            res.sendStatus(results);
         }
     });
 });
@@ -112,7 +112,7 @@ server.post('/api/users', (req, res) => {
 server.patch('/api/users/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
             if (!req.user || !req.user.admin) {
-            connection.query('UPDATE user SET ? WHERE id = ?', (err, results) => {
+            connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
                 if (err) {
                     res.sendStatus(401);
                 } else { 
@@ -129,7 +129,7 @@ server.delete('/api/users/:id', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('DELETE FROM user WHERE id = ?', (err, results) => {
+            connection.query('DELETE FROM usuario WHERE id = ?', (err, results) => {
                 if (err) {
                     res.sendStatus(401);
                 }
@@ -191,7 +191,7 @@ server.post('/api/logout', (req, res, nex) => {
 
 server.post('/api/votos', (req, res) => {
     const total = req.body;
-        connection.query('INSERT INTO votos SET ?', total, (err, results) => {
+        connection.query('INSERT INTO voto SET ?', total, (err, results) => {
             if (err) {
                 console.log(err);
                 res.results(500).send('You can post your vote')
@@ -207,7 +207,7 @@ server.post('/api/votos', (req, res) => {
 
 server.get('/api/premios', (req, res) => {
     const total = req.body;
-        connection.query('SELECT * from premios', total, (err, results) => {
+        connection.query('SELECT * from premio', total, (err, results) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
@@ -221,7 +221,7 @@ server.get('/api/premios', (req, res) => {
 
 server.post('/api/premios', (req, res) => {
     const formData = req.body;
-        connection.query('INSERT into premios SET ?', formData, (err, results) => {
+        connection.query('INSERT into premio SET ?', formData, (err, results) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);

@@ -28,7 +28,7 @@ export default class Dashboard extends Component {
     <TopNavBar/>
     <Grid>
     <Grid.Column width={4}>
-    <MiTarjeta text="done"/>
+    <MiTarjeta />
         
       <MenuWithRouter
         onItemClick={item => this.onItemClick(item)}

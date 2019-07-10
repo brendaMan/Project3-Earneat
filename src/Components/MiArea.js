@@ -4,80 +4,78 @@ import { Button, Card, Container, Divider, Form, Grid, Header, Image, Segment} f
 export default class MiArea extends Component {
     constructor(props){
         super(props);
-        this.state={
-            textDisplay: false,
+            this.state = {
+                done: false
+            }
+            this.handleClick = this.handleClick.bind(this)
+    };
+        handleClick() {
+            this.setState({done: !this.state.done})
         }
-    }
-    
-    ToggleButton(){
-        this.setState((currentState) => ({
-            textDisplay: !currentState.textDisplay,
-        }));
-    }
 
         render() {
-            
-            return (
-                <Container fluid>
-                    <div>
-                        <Segment>
-                                <Header as="h2" widths="equal">
-                                    Área personal
-                                </Header>
+                return (
+                    <Container fluid>
+                        <div>
                             <Segment>
-                                <Header as="h3" floated="left">
-                                    Premios canjeados
-                                </Header>
-                                    <Divider clearing />
-                                <Card>
-                                    <Image
-                                        src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
-                                        wrapped
-                                        ui={false}
-                                    />
-                                    <Card.Content>
-                                        <Card.Header textAlign="center">Viaje a tenerife</Card.Header>
-                                            <Card.Meta />
-                                                <Card.Description textAlign="center">
-                                                    190000 puntos
-                                                </Card.Description>
-                                    </Card.Content>
-                                        <Divider />
-                                    <Container textAlign='center'>
-                                            <Button color="gray" >OK</Button>
-                                    </Container>
-                                </Card>
-                            </Segment>
-
-                            <Segment>
-                                <Header as="h3" floated="left">
-                                    Cambios de perfil
-                                </Header>
-                                    <Divider clearing />
+                                    <Header as="h2" widths="equal">
+                                        Área personal
+                                    </Header>
                                 <Segment>
-                                    <Form unstackable>
-                                    
-                                        <Form.Group widths={2}>
-                                            <Form.Input label='Vieja contraseña' placeholder='Old password' />
-                                            <Form.Input label='Nueva contraseña' placeholder='New password' />
-                                            <Form.Input label='Repetir contraseña' placeholder='Confirm Password' />
-                                        </Form.Group>
-                                        
-                                            <Grid>
-                                                <Grid.Column textAlign="center">
-                                                    <Button onClick={() => this.ToggleButton()}>Aceptar</Button>
-                                                        {this.state.textDisplay && this.props.text}
-                                                </Grid.Column>
-                                            </Grid>
-                                    </Form>
+                                    <Header as="h3" floated="left">
+                                        Premios canjeados
+                                    </Header>
+                                        <Divider clearing />
+                                    <Card>
+                                        <Image
+                                            src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                                            wrapped
+                                            ui={false}
+                                        />
+                                        <Card.Content>
+                                            <Card.Header textAlign="center">Viaje a tenerife</Card.Header>
+                                                <Card.Meta />
+                                                    <Card.Description textAlign="center">
+                                                        190000 puntos
+                                                    </Card.Description>
+                                        </Card.Content>
+                                    </Card>
                                 </Segment>
-                            </Segment> 
-                        </Segment>
-                    </div>
-                    );
-                    
-                    
-                </Container>
-            )
+
+                                <Segment>
+                                    <Header as="h3" floated="left">
+                                        Cambios de perfil
+                                    </Header>
+                                        <Divider clearing />
+                                    <Segment>
+                                    { this.state.done 
+                                        ? 
+                                        <p>Ya has cambiado tu contraseña!!</p>
+                                            :
+                                        <Form unstackable>
+                                        
+                                            <Form.Group widths={2}>
+                                                <Form.Input label='Vieja contraseña' placeholder='Old password' />
+                                                <Form.Input label='Nueva contraseña' placeholder='New password' />
+                                                <Form.Input label='Repetir contraseña' placeholder='Confirm Password' />
+                                            </Form.Group>
+                                            
+                                                <Grid>
+                                                    <Grid.Column textAlign="center">
+                                                        <Button onClick={this.handleClick} 
+                                                                >Aceptar</Button>
+                                                    </Grid.Column>
+                                                </Grid>
+                                        </Form>
+                                    }
+                                    </Segment>
+                                </Segment> 
+                            </Segment>
+                        </div>
+                        );
+                        
+                        
+                    </Container>
+                )
+            }
         }
-    }
