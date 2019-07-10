@@ -58,7 +58,7 @@ server.get('/api', (req, res) => {
 
 server.get('/api/users', passport.authenticate('jwt', {
     session: false }),(req, res) => {
-        if ( err || !user ) {
+        if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
             connection.query('SELECT * from user', (err, results) => {
@@ -96,7 +96,7 @@ server.get('/api/users/:id', (req, res) => {
 
 server.post('/api/users', (req, res) => {
     const user = req.body;
-    user.hash = sha1(password + salt);
+    user.hash = sha1(user.password + salt);
     delete user.password;
     connection.query('INSERT INTO user SET ?', user, (err, results) => {
         if (err) {

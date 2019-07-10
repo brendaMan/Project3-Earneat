@@ -25,7 +25,7 @@ export default class SignIn extends Component {
         .catch (this.onLoginError)
     }
 
-    onLoginSuccess = (r) => {
+    onLoginSuccess = () => {
         console.log('onLoginSuccess');
         this.props.onLoginSuccess();
     }

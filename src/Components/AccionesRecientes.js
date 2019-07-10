@@ -20,7 +20,7 @@ export default class AccionesRecientes extends Component {
             <Feed>
                  <Header as='h3'>Acciones Recientes</Header>
                  <Divider/>
-              {this.state.feed.map(voto => 
+            {this.state.feed.map(voto => 
                 <Feed.Event>
                   <Feed.Label>
                     <Icon name='gift'/>
