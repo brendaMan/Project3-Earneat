@@ -10,7 +10,7 @@ export default class MiArea extends Component {
                             <Header as="h2" widths="equal">
                                 Área personal
                             </Header>
-                        {/* <Segment>
+                        <Segment>
                             <Header as="h3" floated="left">
                                 Premios canjeados
                             </Header>
@@ -33,7 +33,7 @@ export default class MiArea extends Component {
                                         <Button color="instagram">OK</Button>
                                 </Container>
                             </Card>
-                        </Segment>*/}
+                        </Segment>
 
                         <Segment>
                             <Header as="h3" floated="left">
@@ -45,8 +45,8 @@ export default class MiArea extends Component {
                                    
                                     <Form.Group widths={2}>
                                         <Form.Input label='Vieja contraseña' placeholder='Old password' />
-                                        <Form.Input label='Nueva contraseña' placeholder='Nueva contraseña' />
-                                        <Form.Input label='Repetir contraseña' placeholder='Repetir contraseña' />
+                                        <Form.Input label='Nueva contraseña' placeholder='New password' />
+                                        <Form.Input label='Repetir contraseña' placeholder='Confirm Password' />
                                     </Form.Group>
                                     
                                         <Grid>

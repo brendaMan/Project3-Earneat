@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import SignIn from './SignIn';
 import Loading from './Components/Loading';
-import Dashboard from './Components/Dashboard';
-import AdminDashboard from './AdminComponents/AdminDashboard';
+import Dashboard from './Dashboard';
 import './App.css';
 
 
@@ -28,9 +27,8 @@ export default class App extends Component {
     const { user, signedIn } = this.state;
     return (
         <div>
-        { signedIn === true ? 
-            
-            ( user && user.admin ? <AdminDashboard user={user} /> : <Dashboard user={user} />) 
+        { signedIn === true && user ? 
+             <Dashboard user={user} />
             : 
             (signedIn === false ? 
               <SignIn onLoginSuccess={this.onLoginSuccess}/> : 

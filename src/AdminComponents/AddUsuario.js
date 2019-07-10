@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Form, Segment, Container} from 'semantic-ui-react';
 
 
-const genero = [
-    { key: 'h', text: 'Hombre', value: 'hombre' },
-    { key: 'm', text: 'Mujer', value: 'mujer' },
-    { key: 'o', text: 'Otro', value: 'otro' },
-  ]
 export default class AddUsuario extends Component {
+    // constructor(props){
+    //     super(props);
+    //     this.state={
+
+    //     }
+    // }
+    
     render() {
         return (
             <Segment 
@@ -24,12 +26,6 @@ export default class AddUsuario extends Component {
                     <label>Apellido(s)</label>
                     <Form.Input 
                         placeholder='Last Name' />
-                </Form.Field>
-                <Form.Field>
-                    <label>Genero</label>
-                    <Form.Select 
-                        placeholder='Gender'
-                        options={genero} />
                 </Form.Field>
                 <Form.Field>
                     <label>Correo Electrónico</label>
