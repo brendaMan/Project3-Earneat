@@ -55,6 +55,7 @@ server.get('/api', (req, res) => {
     res.end();
 })
 
+
 server.get('/api/users', passport.authenticate('jwt', {
     session: false }),(req, res) => {
         if ( err || !user ) {
@@ -71,6 +72,7 @@ server.get('/api/users', passport.authenticate('jwt', {
     }
 );
 
+
 server.get('/api/users/me', passport.authenticate('jwt', {
     session: false}), (req, res) => { 
         console.log('terminado autentificación jwt', req.user);
@@ -78,6 +80,7 @@ server.get('/api/users/me', passport.authenticate('jwt', {
         res.json(req.user);
     }
 );
+
 
 server.get('/api/users/:id', (req, res) => {
     connection.query('SELECT * from user WHERE id= ?', [req.params.userid], (err, results) => {
@@ -89,6 +92,7 @@ server.get('/api/users/:id', (req, res) => {
         }
     });
 })
+
 
 server.post('/api/users', (req, res) => {
     const user = req.body;
@@ -104,6 +108,7 @@ server.post('/api/users', (req, res) => {
     });
 });
 
+
 server.patch('/api/users/:id', (req, res) => {
     const idUser = req.params.id;
     const formData = req.body;
@@ -116,6 +121,7 @@ server.patch('/api/users/:id', (req, res) => {
             }
         });
 });
+
 
 server.delete('/api/users/:id', (req, res) => {
     const idUser = req.params.id;
@@ -132,6 +138,7 @@ server.delete('/api/users/:id', (req, res) => {
 
 // ?----------------------------- NEWS FEED ----------------------------------------
 
+
 server.get('/api/newsfeed', (req, res) => {
     connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', [req.params.userid], (err, results) => {
         if (err) {
@@ -146,6 +153,7 @@ server.get('/api/newsfeed', (req, res) => {
 
 
 // ?---------------------------------- LOG IN/ LOG OUT -----------------------------------------
+
 
 server.post('/api/login', (req, res, next) => {
     console.log('login starting');
