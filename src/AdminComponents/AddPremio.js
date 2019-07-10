@@ -34,7 +34,7 @@ export default class AddPremio extends Component {
             <Form.Button
                 inverted 
                 type="submit"
-                onClick={() => console.log('Creacion de nuevo premio')}>
+                onClick={() => console.log('Creación de nuevo premio')}>
                     Crear Premio
             </Form.Button>
             </Container>

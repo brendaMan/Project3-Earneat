@@ -3,8 +3,6 @@ import { Card, Image } from 'semantic-ui-react';
 
 export default class MiTarjeta extends Component {
 
-
-    
     render() {
         return ( 
             <Card raised fluid>
