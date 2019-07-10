@@ -220,8 +220,8 @@ server.get('/api/premios', (req, res) => {
 
 
 server.post('/api/premios', (req, res) => {
-    const formData = req.body;
-        connection.query('INSERT into premio SET ?', formData, (err, results) => {
+    const total = req.body;
+        connection.query('INSERT into premio SET ?', total, (err, results) => {
             if (err) {
                 console.log(err);
                 res.sendStatus(500);
