@@ -109,46 +109,50 @@ server.post('/api/users', (req, res) => {
 });
 
 
-server.patch('/api/users/:id', (req, res) => {
-    const idUser = req.params.id;
-    const formData = req.body;
-        connection.query('UPDATE user SET ? WHERE id = ?', [formData, idUser], err => {
-            if (err) {
-                console.log(err); 
-                res.status(500).send("Error");
-            } else { 
-                res.sendStatus(200);
-            }
-        });
-});
+server.patch('/api/users/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+            if (!req.user || !req.user.admin) {
+            connection.query('UPDATE user SET ? WHERE id = ?', (err, results) => {
+                if (err) {
+                    res.sendStatus(401);
+                } else { 
+                    res.json(results);
+                }
+            }); 
+        }
+    }
+);
 
 
-server.delete('/api/users/:id', (req, res) => {
-    const idUser = req.params.id;
-    const formData = req.body;
-        connection.query('DELETE FROM user WHERE id = ?', [formData, idUser], err => {
-            if (err) {
-                res.status(401). json({"error": res.message})
-                return;
-            }
-            res.json({"message": "deleted", changes: this.changes})
-        });
-})
+server.delete('/api/users/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('DELETE FROM user WHERE id = ?', (err, results) => {
+                if (err) {
+                    res.sendStatus(401);
+                }
+                res.json(results);
+            });     
+        }
+    }
+);
 
 
 // ?----------------------------- NEWS FEED ----------------------------------------
 
 
 server.get('/api/newsfeed', (req, res) => {
-    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', [req.params.userid], (err, results) => {
-        if (err) {
-            console.log(err)
-            res.status(500).send(err.message);
-        } else {
-            res.json(results);
-        }
-    });
-})
+    connection.query('SELECT * FROM newsfeed ORDER BY date DESC LIMIT 20', (err, results) => {
+            if (err) {
+                res.sendStatus(500);
+            } else {
+                res.json(results);
+            }
+        });
+    }
+);
 
 
 
@@ -157,23 +161,25 @@ server.get('/api/newsfeed', (req, res) => {
 
 server.post('/api/login', (req, res, next) => {
     console.log('login starting');
-    passport.authenticate('local', function(err, user){
-        console.log('login finish')
-        if (err || !user) {
-            res.status(401);
-            res.json({ message:'There is a problem logging in'})
-        } else {
-            jwt.sign({user}, secret,(err, token) => {
-                console.log('jwt generate', err, token)
-                if(err) return res.status(500).json(err)
-                res.cookie('jwt', token, {
-                    httpOnly: true 
+        passport.authenticate('local', function(err, user){
+            console.log('login finish')
+            if (err || !user) {
+                res.status(401);
+                res.json({ message:'There is a problem logging in'})
+            } else {
+                jwt.sign({user}, secret,(err, token) => {
+                    console.log('jwt generate', err, token)
+                    if(err) return res.status(500).json(err)
+                    res.cookie('jwt', token, {
+                        httpOnly: true 
+                    })
+                    res.status(200).send(user)
                 })
-                res.status(200).send(user)
-            })
-        }
-    })(req, res, next);
-});
+            }
+        })(req, res, next);
+    }
+);
+
 
 server.post('/api/logout', (req, res, nex) => {
     res.clearCookie('jwt').send()
@@ -184,60 +190,67 @@ server.post('/api/logout', (req, res, nex) => {
 
 
 server.post('/api/votos', (req, res) => {
-    const formData = req.body;
-        connection.query('INSERT INTO votos SET ?', formData, (err, results) => {
+    const total = req.body;
+        connection.query('INSERT INTO votos SET ?', total, (err, results) => {
             if (err) {
                 console.log(err);
                 res.results(500).send('You can post your vote')
             } else {
-                res.sendStatus(200);
+                res.json(results);
             }
         });
-});
+    }
+);
 
 
 // ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
-    connection.query('SELECT * from premios', (err, results) => {
-        if (err) {
-            console.log(err)
-            res.status(500).send(err.message);
-        } else {
-            res.json(results);
-        }
-    });
-});
+    const total = req.body;
+        connection.query('SELECT * from premios', total, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+            } else {
+                res.json(results);
+            }
+        });
+    }
+);
+
 
 server.post('/api/premios', (req, res) => {
     const formData = req.body;
-    connection.query('INSERT into premios SET ?', formData, (err, results) => {
-        if (err) {
-            console.log(err);
-            res.results(500).send('Error');
-        } else {
-            res.sendStatus(200);
-        }
-    });
-});
-
-
-server.patch('api/premios/:id', (req, res) => {
-    const idPremio = req.params.id;
-    const formData = req.body;
-        connection.query('UPDATE premio SET ? WHERE id = ?', [formData, idPremio], err => {
+        connection.query('INSERT into premios SET ?', formData, (err, results) => {
             if (err) {
-                res.status(500).send('Error');
+                console.log(err);
+                res.sendStatus(500);
             } else {
-                res.sendStatus(200);
+                res.sendStatus(results);
             }
-        });
-});
+        }); 
+    }
+);
 
+
+server.patch('api/premios/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+            if (!req.user || !req.user.admin) {
+            connection.query('UPDATE premio SET ? WHERE id = ?', (err, results)=> {
+                if (err) {
+                    res.sendStatus(401);
+                } else {
+                    res.sendStatus(results);
+                }
+            });
+        }
+    }
+);
 
 
 server.on("error", (e) => console.log(e))
 
 server.listen(port, () => { 
-    console.log('This is on port ' + port);
-})
+        console.log('This is on port ' + port);
+    }
+)
