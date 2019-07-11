@@ -44,6 +44,7 @@ server.use('/', express.static(path.join(__dirname, '/build')));
 
 // ?----------------------------- USER ----------------------------------------
 
+// TODO: Documentar mas
 server.get('/api', (req, res) => {
     res.write('GET    /api/users                        List of users\n');
     res.write('GET    /api/users/me                     Administrator\n');
@@ -56,8 +57,8 @@ server.get('/api', (req, res) => {
 })
 
 
-server.get('/api/users', passport.authenticate('jwt', {
-    session: false }),(req, res) => {
+server.get('/api/usuarios', passport.authenticate('jwt', { 
+    session: false }), (req, res) => {
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
@@ -73,7 +74,7 @@ server.get('/api/users', passport.authenticate('jwt', {
 );
 
 
-server.get('/api/users/me', passport.authenticate('jwt', {
+server.get('/api/usuarios/yo', passport.authenticate('jwt', {
     session: false}), (req, res) => { 
         console.log('terminado autentificación jwt', req.user);
         // Sabemos, si es usuario valido, y si es administrador
@@ -81,68 +82,120 @@ server.get('/api/users/me', passport.authenticate('jwt', {
     }
 );
 
-
-server.get('/api/users/:id', (req, res) => {
-    connection.query('SELECT * from usuario WHERE id= ?', [req.params.id], (err, results) => {
-        if (err ) {
-            console.log(err)
-            res.status(500).send(err.message);
-        } else {
-            res.json(results && results[0]);
-        }
-    });
+// TODO: /api/usuarios
+// 1. passport.authenticate
+// 2. si es admin, puede pedir cualquier usuario
+// 3. si es usuario normal solo puede pedirse a si mismo (o sale 401)
+// 4. si no es usuario -> 401
+server.get('/api/users/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+    if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
+        connection.query('SELECT * from usuario WHERE id= ?', (err, results) => {
+            if (err){
+                res.sendStatus(500)
+            } else if (results.length === 0) {
+                res.sendStatus(404);
+            } else {
+                res.json(results[0]);
+            }
+        })
+    } else {
+        res.sendStatus(401)
+    }
 })
 
-server.get('/api/users/:id/puntos_saldo', (req, res) => {
-    connection.query('SELECT * from puntos_saldo WHERE id= ?', [req.params.id], (err, results) => {
-        if (err ) {
-            console.log(err)
-            res.status(500).send(err.message);
-        } else {
-            res.json(results && results[0]);
+
+server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
+    session: false}, (req, res) => {
+        if (req.user) {
+            connection.query('SELECT nombre from usuario WHERE id= ?', (err, results) => {
+                if (err) {
+                    res.sendStatus(500)
+                } else {
+                    res.json(results)
+                }
+            })
         }
-    });
+    }))
+
+// TODO: /api/usuarios
+// 1. passport.authenticate
+// 2. si es admin, puede pedir cualquier usuario
+// 3. si es usuario normal solo puede pedirse a si mismo (o sale 401)
+// 4. si no es usuario -> 401
+server.get('/api/usuarios/:id/puntos_saldo', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
+            connection.query('SELECT * from puntos_saldo WHERE id= ?', (err, results) => {
+            if (err) {
+                res.sendStatus(500);
+            } else if (results.length === 0) {
+                res.sendStatus(404);
+            } else {
+            res.json(results[0]);
+            }
+        })
+    } else {
+        res.sendStatus(401)
+    }
 })
 
-
-server.post('/api/users', (req, res) => {
+// TODO: /api/usuarios
+// 1. passport.authenticate
+// 2. si es admin, puede crear usuario
+// 3. si es usuario normal -> 401
+// 4. si no es usuario -> 401
+server.post('/api/usuarios', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
     const user = req.body;
     user.hash = sha1(user.password + salt);
     delete user.password;
-    connection.query('INSERT INTO usuario SET ?', user, (err, results) => {
-        if (err) {
-            console.log(err);
-            res.results(500).send('There is an error');
-        } else {
-            res.sendStatus(results);
-        }
-    });
-});
-
-
-server.patch('/api/users/:id', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-            if (!req.user || !req.user.admin) {
-            connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
-                if (err) {
-                    res.sendStatus(401);
-                } else { 
-                    res.json(results);
-                }
-            }); 
-        }
+    if (req.user && (req.user.admin || req.user.id)) {
+        connection.query('INSERT INTO usuario SET ?', (err, results) => {
+            if (err) {
+                res.sendStatus(500);
+            } else if (results.length === 0) {
+                res.sendStatus(404);
+            } else {
+            res.json(results[0]);
+            }
+        })
+    } else {
+        res.sendStatus(401)
     }
-);
+})
+
+// TODO: /api/usuarios
+// 1. passport.authenticate
+// 2. si es admin, puede cambiar cualquier usuario
+// 3. si es usuario normal solo puede cambiarse a si mismo (o sale 401)
+// 4. si no es usuario -> 401
+server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
+                connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
+                    if (err) {
+                        res.sendStatus(500);
+                    } else if (results.length === 0) {
+                        res.sendStatus(404);
+                    } else {
+                    res.json(results[0]);
+                    }
+                })
+            } else {
+                res.sendStatus(401)
+            }
+        })
 
 
-server.delete('/api/users/:id', passport.authenticate('jwt', {
+server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
             connection.query('DELETE FROM usuario WHERE id = ?', (err, results) => {
                 if (err) {
-                    res.sendStatus(401);
+                    res.sendStatus(500);
                 }
                 res.json(results);
             });     
@@ -199,25 +252,26 @@ server.post('/api/logout', (req, res, nex) => {
 
 // ?------------------------------------ VOTES ----------------------------------------
 
-
-server.post('/api/votos', (req, res) => {
-    const total = req.body;
-        connection.query('INSERT INTO voto SET ?', total, (err, results) => {
+// TODO: passport.authenticate (solo usuarios pueden votar)
+server.post('/api/votos', oassport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('INSERT INTO voto SET ?', (err, results) => {
             if (err) {
-                console.log(err);
-                res.results(500).send('You can post your vote')
+                res.sendStatus(500)
             } else {
                 res.json(results);
             }
         });
     }
-);
+});
 
 
 // ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
-<<<<<<< HEAD
     connection.query('SELECT * from premios', (err, results) => {
         if (err) {
             console.log(err)
@@ -228,49 +282,40 @@ server.get('/api/premios', (req, res) => {
     });
 });
 
-server.post('/api/premios/add', (req, res) => {
-    const formData = req.body;
-    connection.query('INSERT into premios SET ?', formData, (err, results) => {
-        if (err) {
-            console.log(err);
-            res.results(500).send('Error');
+// TODO: passport.authenticate (solo usuarios pueden escoger premios)
+server.post('/api/premios/add', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if ( !req.user || !req.user.admin) {
+            res.sendStatus(401)
         } else {
-            res.sendStatus(200);
+            connection.query('INSERT into premios SET ?', (err, results) => {
+        if (err) {
+            res.sendStatus(500);
         }
-    });
-});
-=======
-    const total = req.body;
-        connection.query('SELECT * from premio', total, (err, results) => {
-            if (err) {
-                console.log(err);
-                res.sendStatus(500);
-            } else {
-                res.json(results);
-            }
+            res.json(results);
         });
     }
-);
->>>>>>> 93917dd50c182a45a7a6920ad9d38282b8e04fc0
+});
 
-
-server.post('/api/premios', (req, res) => {
-    const total = req.body;
-        connection.query('INSERT into premio SET ?', total, (err, results) => {
-            if (err) {
-                console.log(err);
-                res.sendStatus(500);
-            } else {
-                res.sendStatus(results);
-            }
-        }); 
+// TODO: passport.authenticate (solo administrador puede crear premios)
+server.post('/api/premios', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user || req.user.admin) {
+            connection.query('INSERT into premio SET ?', total, (err, results) => {
+                if (err) {
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(results);
+                }
+            }); 
+        }
     }
 );
 
-
+// TODO: revisar logica (solo administrador puede cambiar premios)
 server.patch('api/premios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-            if (!req.user || !req.user.admin) {
+        if (req.user || req.user.admin) {
             connection.query('UPDATE premio SET ? WHERE id = ?', (err, results)=> {
                 if (err) {
                     res.sendStatus(401);
@@ -289,3 +334,5 @@ server.listen(port, () => {
         console.log('This is on port ' + port);
     }
 )
+
+// TODO: tests con mocha y supertest
