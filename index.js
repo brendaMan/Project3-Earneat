@@ -217,29 +217,6 @@ server.post('/api/votos', (req, res) => {
 // ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
-<<<<<<< HEAD
-    connection.query('SELECT * from premios', (err, results) => {
-        if (err) {
-            console.log(err)
-            res.status(500).send(err.message);
-        } else {
-            res.json(results);
-        }
-    });
-});
-
-server.post('/api/premios/add', (req, res) => {
-    const formData = req.body;
-    connection.query('INSERT into premios SET ?', formData, (err, results) => {
-        if (err) {
-            console.log(err);
-            res.results(500).send('Error');
-        } else {
-            res.sendStatus(200);
-        }
-    });
-});
-=======
     const total = req.body;
         connection.query('SELECT * from premio', total, (err, results) => {
             if (err) {
@@ -251,7 +228,6 @@ server.post('/api/premios/add', (req, res) => {
         });
     }
 );
->>>>>>> 93917dd50c182a45a7a6920ad9d38282b8e04fc0
 
 
 server.post('/api/premios', (req, res) => {
