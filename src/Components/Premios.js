@@ -9,22 +9,19 @@ export default class Premios extends Component {
     super(props);
     this.state = {
       premios : [],
-      votos : []
+      
     };
 
     fetch('/api/premios')
     .then (r => r.json())
-    .then ( data => this.setState({premios : data}))
+    .then ( data => this.setState({premios : data}));
   
-
-    fetch ('/api/votos')
-    .then (r => r.json())
-    .then (data => this.setState({votos : data}))
-  }
+    
+  };
 
   render() {
     const premios = this.state.premios;
-    const votos = this.state.votos;
+    
     return(
         <div>
           <Container fluid>
@@ -36,6 +33,8 @@ export default class Premios extends Component {
           
             
           <Segment>
+
+          
             <Card.Group widths={2}>
              {premios.map(premio =>
               <Card>
@@ -48,7 +47,7 @@ export default class Premios extends Component {
                  <Card.Header className='premio-header' textAlign= 'center' >{premio.nombre}</Card.Header>
                  <Card.Meta className='date' textAlign= 'center'>
                       <span >Primer premio</span>
-                      <span>{premio.punto} Puntos </span>
+                      <span>{premio.puntos} Puntos </span>
                   </Card.Meta>
                 <Card.Description  className= 'descripcion'  textAlign='center'>{premio.descripcion}</Card.Description>
                </Card.Content>
