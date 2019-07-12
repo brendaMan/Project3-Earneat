@@ -33,15 +33,21 @@
   justify-content: space-between;
 }
 .displayAreaGrid {
-  background-color: rgb(255,255,255);
+  background-color: rgb(230,230,230);
 }
 .displayArea {
   top: 20px;
 }
 
+/* CSS ALL */
+.gridAll {
+  padding: 0px;
+}
+
 /* CSS SideBar */
 .sideBarGrid {
   background-color: rgb(3,208,182, 0.8);
+  margin-bottom: 0px; 
 }
 
 .sideBar {
@@ -59,6 +65,14 @@ element.style {
 
 .adminForms {
   padding: 10px;
+}
+
+.saldo {
+  float: right;
+  color: black;
+  font-size: 160%;
+  font-weight: bold;
+  padding: 2px 0;
 }
    /* input box in Regalar Puntos */
 .ui.input {

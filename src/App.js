@@ -13,7 +13,7 @@ export default class App extends Component {
       user: undefined,
       signedIn: undefined,
     }
-    fetch('/api/users/me')
+    fetch('/api/usuarios/yo')
       .then (r => r.json())
       .then (user => this.setState({ user, signedIn: true }))
       .catch (err => this.setState({ signedIn: false }))

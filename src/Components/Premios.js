@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Header, Container, Button, Card, Image} from 'semantic-ui-react';
+import { Header, Container, Button, Card, Image, Segment,} from 'semantic-ui-react';
 
+import imagen_premio from './imagenes/imagen_premio.png';
 
 
 export default class Premios extends Component {
@@ -26,36 +27,50 @@ export default class Premios extends Component {
     const votos = this.state.votos;
     return(
         <div>
-             <Container fluid>
-              <Header as='h2' block>
-                  Premios {premios.length}
-              </Header>
-               </Container>
-            
-            <Container fluid>
-            {premios.map(premio =>
-              <Card>
-              <Image  src = {premio.image} wrapped ui={false} />
-               <Card.Content>
-                <Card.Header>{premio.header}</Card.Header>
-                <Card.Meta>
-                      <span className='date'>Primer premio</span>
-                      <span className= 'puntos'>{premio.puntos} Puntos </span>
-                 </Card.Meta>
-                <Card.Description>{premio.description}</Card.Description>
-             </Card.Content>
-            <Card.Content extra>
-              <div>
-                  <Button color='grey' align = 'left'>Más Información</Button>
-                  <Button color='teal' align ='right'>Me lo quedo</Button>
-              </div>
-            </Card.Content>
-            </Card>)}
-            </Container>
-            
-            
+          <Container fluid>
+               <Segment>
+                 <Header as='h2' block>
+                    Premios {premios.length}
+                 </Header>
+              </Segment>
           
-        </div>
-          )
-        }
-   }
+            
+          <Segment>
+            <Card.Group widths={2}>
+             {premios.map(premio =>
+              <Card>
+                <Image  
+                  src = {imagen_premio}
+                  wrapped 
+                  ui={false} 
+                 />
+               <Card.Content>
+                 <Card.Header className='premio-header' textAlign= 'center' >{premio.nombre}</Card.Header>
+                 <Card.Meta className='date' textAlign= 'center'>
+                      <span >Primer premio</span>
+                      <span>{premio.punto} Puntos </span>
+                  </Card.Meta>
+                <Card.Description  className= 'descripcion'  textAlign='center'>{premio.descripcion}</Card.Description>
+               </Card.Content>
+               
+               <Card.Content extra>
+                  <Button color='teal'  >
+                     Me lo quedo
+                  </Button>
+              </Card.Content>
+
+            </Card>)}
+
+            </Card.Group>
+
+         </Segment>
+     
+        </Container>
+            
+            
+    </div>
+          );
+       };
+             
+    }
+

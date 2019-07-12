@@ -11,7 +11,23 @@ import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import { Grid, Segment } from 'semantic-ui-react'; 
 
 export default class Dashboard extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state ={
+      saldo:0,
+      a_regalar: 0
+    }
+    this.loadSaldo()
+  }
+  loadSaldo = () => {
+    fetch(`/api/usuarios/${this.props.user.id}/puntos_saldo`)
+    .then(res=> res.json())
+    .then(data=> this.setState({saldo: data.puntos_saldo}))
+
+    fetch(`/api/usuarios/${this.props.user.id}/puntos_dados`)
+    .then(res=> res.json())
+    .then(data=> this.setState({a_regalar: data.puntos_restantes}))
+  }
   render() {
     const user = this.props.user;
     const items = [
@@ -26,14 +42,14 @@ export default class Dashboard extends Component {
     return ( 
     <Router>
       <TopNavBar/>
-      <Grid divided='vertically'>
+      <Grid className="gridAll" divided='vertically'>
 {/* Grid with SideBar  */}
         <Grid.Column className="sideBarGrid" width={3}>
         <Segment 
           className='sideBar'
           inverted color='teal'
           >
-          <MiTarjeta/>
+          <MiTarjeta user={user} saldo={this.state.saldo} a_regalar={this.state.a_regalar}/>
           <MenuWithRouter
             onItemClick={item => this.onItemClick(item)}
             items={items}
