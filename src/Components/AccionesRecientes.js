@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { Feed, Icon, Header, Segment, Divider } from 'semantic-ui-react';
+import moment from 'moment';
 
 export default class AccionesRecientes extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      feed: []
-    };
-  fetch('/api/newsfeed')
-    .then(r => r.json())
-    .then(data => this.setState({feed: data}))
-  }
 
     render() {
         return (
@@ -18,7 +10,7 @@ export default class AccionesRecientes extends Component {
             <Feed>
               <Header as='h3'>Acciones Recientes</Header>
               <Divider/>
-              {this.state.feed.map(voto => 
+              {this.props.feed.map(voto => 
 // Noticias de Puntos Regalados
                 voto.a_usuario_id ? 
                 <Feed.Event>
@@ -29,7 +21,7 @@ export default class AccionesRecientes extends Component {
                     <Feed.Summary>
                       <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado {voto.puntos}
                         puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.descripcion}<Icon name='quote right'/> 
-                        <Feed.Date>{voto.fecha}</Feed.Date>
+                        <Feed.Date>{moment(voto.fecha).fromNow()}</Feed.Date>
                     </Feed.Summary>
                     <Feed.Meta>
                       <Icon name='plus circle'
@@ -48,7 +40,7 @@ export default class AccionesRecientes extends Component {
                   <Feed.Summary>
                     <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos}
                       puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
-                      <Feed.Date>{voto.fecha}</Feed.Date>
+                      <Feed.Date>{moment(voto.fecha).fromNow()}</Feed.Date>
                   </Feed.Summary>
                   <Feed.Meta>
                     <Icon name='minus circle' />

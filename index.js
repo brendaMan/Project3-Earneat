@@ -35,7 +35,7 @@ passport.use(new JwtStrategy({
 }, 
     function(payload, done) {
         console.log('Payload extraido', payload);
-        done(null, payload.user)
+        done(payload ? null : 'no payload', payload.user)
     }
 ))
 
@@ -106,9 +106,13 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 
 
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
-    session: false}, (req, res) => {
-        if (req.user) {
-            connection.query('SELECT nombre from usuario WHERE id= ?', (err, results) => {
+    session: false}), (req, res) => {
+console.log('get /api/dropdown/usuarios')
+        if (!req || !req.user) {
+            res.sendStatus(401)
+        }
+        else {
+            connection.query('SELECT id AS `key`, id AS `value`, nombre AS `text` FROM usuario', (err, results) => {
                 if (err) {
                     res.sendStatus(500)
                 } else {
@@ -116,7 +120,7 @@ server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
                 }
             })
         }
-    }))
+    })
 
 // TODO: /api/usuarios
 // 1. passport.authenticate
@@ -126,7 +130,24 @@ server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
 server.get('/api/usuarios/:id/puntos_saldo', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-            connection.query('SELECT * from puntos_saldo WHERE id= ?', (err, results) => {
+            connection.query('SELECT * from puntos_saldo WHERE id= ?', [req.params.id], (err, results) => {
+            if (err) {
+                res.sendStatus(500);
+            } else if (results.length === 0) {
+                res.sendStatus(404);
+            } else {
+            res.json(results[0]);
+            }
+        })
+    } else {
+        res.sendStatus(401)
+    }
+})
+
+server.get('/api/usuarios/:id/puntos_dados', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
+            connection.query('SELECT * from puntos_dados WHERE id= ?', [req.params.id], (err, results) => {
             if (err) {
                 res.sendStatus(500);
             } else if (results.length === 0) {
@@ -258,8 +279,15 @@ server.post('/api/votos', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('INSERT INTO voto SET ?', (err, results) => {
+            const data= {
+                a_usuario_id: req.body.a_usuario_id,
+                de_usuario_id: req.body.de_usuario_id, 
+                puntos: req.body.puntos,
+                razon: req.body.razon
+            }
+            connection.query('INSERT INTO voto SET ?', data, (err, results) => {
             if (err) {
+                console.log(err)
                 res.sendStatus(500)
             } else {
                 res.json(results);

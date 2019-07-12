@@ -8,10 +8,22 @@ export default class Puntos extends Component {
         this.state = {
             de_usuario_id: props.user.id,
             a_usuario_id: 0,
+            usuarios: [],
             puntos: "",
             razon: "",
-            message:""
+            message:"", 
+            feed: []
         };
+        fetch('/api/dropdown/usuarios') 
+        .then(res => res.json())
+        .then(data => this.setState({usuarios : data.filter(u=> u.key !== props.user.id)}))
+        this.loadFeed()
+    }
+
+    loadFeed = () => {
+        fetch('/api/newsfeed')
+        .then(r => r.json())
+        .then(data => this.setState({feed: data}))
     }
     onRegalar = () => {
             fetch('/api/votos', {
@@ -20,7 +32,10 @@ export default class Puntos extends Component {
             headers: {'Content-Type': 'application/json'}
         })
         .then(res => {
-            if (res.status === 200) this.setState({message : 'Voto completado'})
+            if (res.status === 200) {
+                this.setState({message : 'Voto completado'})
+                this.loadFeed();
+            }
             else this.setState({message: 'There is a problem'})
         })
         .catch (err => this.setState({message: 'There is a problem'}))
@@ -50,12 +65,15 @@ export default class Puntos extends Component {
                             De ###{} puntos, quiero dar 
                         <Input
                             value={this.state.puntos} 
-                            onChange={e => this.setState({email:e.target.puntos})} /> 
-                        puntos a <Select/>
+                            onChange={e => this.setState({puntos: e.target.value})} /> 
+                        puntos a 
+                        <Select 
+                            options={this.state.usuarios} 
+                            onChange={(e, data) => this.setState({a_usuario_id: data.value})} />
                         </Form.Group>
                         <Form.Group 
                             value={this.state.razon} 
-                            onChange={e => this.setState({email:e.target.razon})}>
+                            onChange={e => this.setState({razon: e.target.value})}>
                             por: <TextArea></TextArea>
                         </Form.Group>
     {/* Button para regalar puntos */}
@@ -70,7 +88,7 @@ export default class Puntos extends Component {
                 }
             </Segment> 
 {/* Componente del Newsfeed  */}
-            <AccionesRecientes/>
+            <AccionesRecientes feed={this.state.feed} />
             </Container>
         )
     }
