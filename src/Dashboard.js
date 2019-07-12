@@ -8,7 +8,7 @@ import MenuWithRouter from "./MenuWithRouter";
 import AdminUsuarios from "./AdminComponents/AdminUsuarios";
 import AdminPremios from "./AdminComponents/AdminPremios";
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-import { Grid, Container } from 'semantic-ui-react'; 
+import { Grid, Segment } from 'semantic-ui-react'; 
 
 export default class Dashboard extends Component {
   
@@ -26,23 +26,33 @@ export default class Dashboard extends Component {
     return ( 
     <Router>
       <TopNavBar/>
-      <Grid>
+      <Grid className="gridAll" divided='vertically'>
 {/* Grid with SideBar  */}
-        <Grid.Column width={4}>
-          <MiTarjeta/>
+        <Grid.Column className="sideBarGrid" width={3}>
+        <Segment 
+          className='sideBar'
+          inverted color='teal'
+          >
+          <MiTarjeta user={user}/>
           <MenuWithRouter
             onItemClick={item => this.onItemClick(item)}
             items={items}
             headerIcon={"compass outline"}
           />
+        </Segment>
         </Grid.Column>
 {/* Grid with Content Area */}
-        <Grid.Column stretched width={12}>
-          <Container>
+        <Grid.Column
+        className="displayAreaGrid" 
+         width={13}
+        >
+          <Segment
+            className="displayArea" 
+          >
           { user.admin ? 
 // Navegacion para administradores
             <Switch>
-              <Route path="/" exact component={Puntos} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user}} />)} />
               <Route path="/premios" component={Premios} />
               <Route path="/mi-area" component={MiArea} />
               <Route path="/administrar-usuarios" component={AdminUsuarios} />
@@ -51,14 +61,13 @@ export default class Dashboard extends Component {
                   :
 // Navegacion para resto de usuarios
             <Switch>
-              <Route path="/" exact component={Puntos} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user}} />)} />
               <Route path="/premios" component={Premios} />
               <Route path="/mi-area" component={MiArea} />
               {/* <Route component={MissingPage} /> */}
             </Switch>
                   }
-
-          </Container>
+          </Segment>
         </Grid.Column>
       </Grid>
     </Router>

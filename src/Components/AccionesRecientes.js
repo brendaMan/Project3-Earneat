@@ -19,22 +19,43 @@ export default class AccionesRecientes extends Component {
               <Header as='h3'>Acciones Recientes</Header>
               <Divider/>
               {this.state.feed.map(voto => 
-              <Feed.Event>
+// Noticias de Puntos Regalados
+                voto.a_usuario_id ? 
+                <Feed.Event>
+                  <Feed.Label>
+                    <Icon name='star'/>
+                  </Feed.Label>
+                  <Feed.Content>
+                    <Feed.Summary>
+                      <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado {voto.puntos}
+                        puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.descripcion}<Icon name='quote right'/> 
+                        <Feed.Date>{voto.fecha}</Feed.Date>
+                    </Feed.Summary>
+                    <Feed.Meta>
+                      <Icon name='plus circle'
+                      color='teal' />
+                      {voto.puntos} puntos
+                    </Feed.Meta>
+                  </Feed.Content>
+                </Feed.Event>
+                :
+// Noticia de Premios Canjeados 
+                <Feed.Event>
                 <Feed.Label>
                   <Icon name='gift'/>
                 </Feed.Label>
                 <Feed.Content>
                   <Feed.Summary>
-                    <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado 
-                      puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.razon}<Icon name='quote right'/> 
+                    <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos}
+                      puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
                       <Feed.Date>{voto.fecha}</Feed.Date>
                   </Feed.Summary>
                   <Feed.Meta>
-                    <Icon name='certificate' />
+                    <Icon name='minus circle' />
                     {voto.puntos} puntos
                   </Feed.Meta>
                 </Feed.Content>
-              </Feed.Event>
+                </Feed.Event>    
               )}
             </Feed>
           </Segment>

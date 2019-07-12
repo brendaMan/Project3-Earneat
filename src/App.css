@@ -32,10 +32,35 @@
   display: flex;
   justify-content: space-between;
 }
+.displayAreaGrid {
+  background-color: rgb(230,230,230);
+}
+.displayArea {
+  top: 20px;
+}
+
+/* CSS ALL */
+.gridAll {
+  padding: 0px;
+}
+
+/* CSS SideBar */
+.sideBarGrid {
+  background-color: rgb(3,208,182, 0.8);
+  margin-bottom: 0px; 
+}
+
+.sideBar {
+  z-index: 10000;
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  left: 3%;
+}
 
 /* CSS Pagina Puntos */
-.ui.header:first-child {
-  margin-top: 13px;
+element.style {
+  top: 14px;
 }
 
 .adminForms {
