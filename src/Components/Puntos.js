@@ -58,7 +58,11 @@ export default class Puntos extends Component {
                     <p>{this.state.message}</p>
                     :
                     <Form fluid="fluid" widths='equal'>
-                        <Header as='h3' >Regalar Puntos</Header>
+                        <Header 
+                            as='h3' 
+                            color="teal">
+                            Regalar Puntos
+                        </Header>
                         <Divider/>
     {/* Inputs para el Form */}
                         <Form.Group inline>

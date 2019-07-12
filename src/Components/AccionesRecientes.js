@@ -8,7 +8,10 @@ export default class AccionesRecientes extends Component {
         return (
           <Segment raised>
             <Feed>
-              <Header as='h3'>Acciones Recientes</Header>
+              <Header 
+                as='h3'
+                color="teal">
+              Acciones Recientes</Header>
               <Divider/>
               {this.props.feed.map(voto => 
 // Noticias de Puntos Regalados
