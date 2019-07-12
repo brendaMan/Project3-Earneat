@@ -24,7 +24,8 @@ export default class MiTarjeta extends Component {
                 <Card.Header>Mari</Card.Header>
                 <Card.Meta>Web Developer</Card.Meta>
                 </Card.Content>
-                <Card.Content extra>Puntos Adquiridos</Card.Content>
+                <Card.Content extra>Mis Puntos <span className="saldo">{this.props.saldo}</span></Card.Content>
+                <Card.Content extra>A Regalar: {this.props.a_regalar} </Card.Content>
             </Card>    
         )
     }

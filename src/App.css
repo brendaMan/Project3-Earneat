@@ -66,6 +66,14 @@ element.style {
 .adminForms {
   padding: 10px;
 }
+
+.saldo {
+  float: right;
+  color: black;
+  font-size: 160%;
+  font-weight: bold;
+  padding: 2px 0;
+}
    /* input box in Regalar Puntos */
 .ui.input {
   width: 65px;
