@@ -26,14 +26,14 @@ export default class Dashboard extends Component {
     return ( 
     <Router>
       <TopNavBar/>
-      <Grid divided='vertically'>
+      <Grid className="gridAll" divided='vertically'>
 {/* Grid with SideBar  */}
         <Grid.Column className="sideBarGrid" width={3}>
         <Segment 
           className='sideBar'
           inverted color='teal'
           >
-          <MiTarjeta/>
+          <MiTarjeta user={user}/>
           <MenuWithRouter
             onItemClick={item => this.onItemClick(item)}
             items={items}

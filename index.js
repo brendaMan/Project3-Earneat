@@ -253,7 +253,7 @@ server.post('/api/logout', (req, res, nex) => {
 // ?------------------------------------ VOTES ----------------------------------------
 
 // TODO: passport.authenticate (solo usuarios pueden votar)
-server.post('/api/votos', oassport.authenticate('jwt', {
+server.post('/api/votos', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)

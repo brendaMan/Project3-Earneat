@@ -29,11 +29,16 @@ export default class Puntos extends Component {
     render() {
         return (
             <Container fluid={true}>  
-                <Header as='h2' id='headerContainer' block>
-                  Dashboard
+                <Header 
+                    as='h2'     
+                    id='headerContainer' 
+                    block
+                    inverted color="teal"
+                >
+                    Dashboard
                 </Header> 
 {/* Segment con el Form para regalar puntos */}
-            <Segment raised >
+            <Segment raised>
                 { (this.state.message) ? 
                     <p>{this.state.message}</p>
                     :
