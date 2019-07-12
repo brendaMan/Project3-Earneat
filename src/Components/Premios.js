@@ -54,7 +54,7 @@ export default class Premios extends Component {
                </Card.Content>
                
                <Card.Content extra>
-                  <Button color='teal' >
+                  <Button color='teal'  >
                      Me lo quedo
                   </Button>
               </Card.Content>
