@@ -87,7 +87,7 @@ server.get('/api/usuarios/yo', passport.authenticate('jwt', {
 // 2. si es admin, puede pedir cualquier usuario
 // 3. si es usuario normal solo puede pedirse a si mismo (o sale 401)
 // 4. si no es usuario -> 401
-server.get('/api/users/:id', passport.authenticate('jwt', {
+server.get('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
     if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
         connection.query('SELECT * from usuario WHERE id= ?', (err, results) => {
