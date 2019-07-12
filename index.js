@@ -272,7 +272,7 @@ server.post('/api/votos', passport.authenticate('jwt', {
 // ?------------------------------- PREMIOS ---------------------------------------------
 
 server.get('/api/premios', (req, res) => {
-    connection.query('SELECT * from premios', (err, results) => {
+    connection.query('SELECT * from premio', (err, results) => {
         if (err) {
             console.log(err)
             res.status(500).send(err.message);
