@@ -208,7 +208,7 @@ server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
 
 
 server.get('/api/newsfeed', (req, res) => {
-    connection.query('SELECT * FROM newsfeed_plus ORDER BY date DESC LIMIT 20', (err, results) => {
+    connection.query('SELECT * FROM newsfeed_plus ORDER BY fecha DESC LIMIT 20', (err, results) => {
             if (err) {
                 res.sendStatus(500);
             } else {
