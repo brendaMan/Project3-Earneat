@@ -10,7 +10,8 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const cookieParser = require('cookie-parser'); 
 const sha1 = require('sha1'); 
 const port = process.env.PORT || 8000;
-const secret = 'cUb5jR$csB=+7xtr'
+const secret = 'cUb5jR$csB=+7xtr';
+const salt = '0X(PkJ%49nm09 75NUN6I$2]]0m6h95x';
 
 server.use(passport.initialize());
 server.use(bodyParser.json());
@@ -169,16 +170,20 @@ server.get('/api/usuarios/:id/puntos_dados', passport.authenticate('jwt', {
 server.post('/api/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
     const user = req.body;
+    console.log('user=', user)
     user.hash = sha1(user.password + salt);
     delete user.password;
+    delete user.message;
     if (req.user && (req.user.admin || req.user.id)) {
-        connection.query('INSERT INTO usuario SET ?', (err, results) => {
+        connection.query('INSERT INTO usuario SET ?',user, (err, results) => {
             if (err) {
+                console.log(err)
                 res.sendStatus(500);
             } else if (results.length === 0) {
                 res.sendStatus(404);
             } else {
-            res.json(results[0]);
+                console.log("results> ", results)
+            res.json({message: "all good"});
             }
         })
     } else {
@@ -214,8 +219,9 @@ server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('DELETE FROM usuario WHERE id = ?', (err, results) => {
+            connection.query('DELETE FROM usuario WHERE id = ?', [req.params.id], (err, results) => {
                 if (err) {
+                    console.log(err)
                     res.sendStatus(500);
                 }
                 res.json(results);

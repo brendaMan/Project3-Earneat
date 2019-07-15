@@ -2,40 +2,39 @@ import React, { Component } from 'react';
 import { Form, Segment, Container} from 'semantic-ui-react';
 
 
-export default class AddUsuario extends Component {
+export default class AddUsuarioForm extends Component {
     constructor(props){
         super(props);
         this.state={
-            name: "",
+            nombre: "",
             email: "",
             password: "",
             admin: 0,
             message: ""
         }
     }
-    onCrearUsuario = () =>{
-        fetch ('/api/users', {
+    onCrearUsuario = () => {
+        fetch ('/api/usuarios', {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: {'Content-Type':'application/json'}
         })
-        .then (res => res.json())
         .then (res =>{
-                if (res.status === 200) this.onAddingUser();
+                if (res.status === 200) 
+                    this.setState({message: `Se a creado una cuenta de usuario para ${this.state.nombre}.`});
                 else this.onErrorAddingUser();
         })
-        .catch (() => this.onErrorAddingUser())
-    }
-    
-    onAddingUser = () => {
-        this.setState({
-            message: 'Usuario creado.'
+        .catch ((err) => {
+            console.log("ERROR: ", err)
+            this.onErrorAddingUser()
         })
     }
+    
+   
 
     onErrorAddingUser = () => {
         this.setState({
-            message: 'Hay un error por lo que no se ha podido crear este usuario.'
+            message: 'Hay un error por lo que no se ha podido crear este nuevo usuario.'
         })
     }
     
@@ -49,8 +48,8 @@ export default class AddUsuario extends Component {
                 <Form.Field>
                     <label>Nombre</label>
                     <Form.Input 
-                        value= {this.state.name}
-                        onChange= {e => this.setState({name:e.target.value})}
+                        value= {this.state.nombre}
+                        onChange= {e => this.setState({nombre:e.target.value})}
                         placeholder='First Name' />
                 </Form.Field>
                 <Form.Field>
@@ -74,7 +73,7 @@ export default class AddUsuario extends Component {
                 </Form.Field>
                 <Form.Checkbox toggle
                     value= {this.state.admin}
-                    onChange= {e => this.setState(this.state.admin=0?0:1)}
+                    onChange= {e => this.setState({admin: (this.state.admin === 0 ? 1 : 0)})}
                     label='¿Es administrador?'/>
                 <Container textAlign="center">
                 <Form.Button
