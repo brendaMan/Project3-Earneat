@@ -8,14 +8,10 @@ export default class Premios extends Component {
     super(props)
     this.state = {
       user: props.user,
-      nombre: '',
-      saldo: '',
       premios : [],
     }
   
-    handleClick() {
-      this.setState({done: !this.state.done})
-  }
+    
 
 
     fetch('/api/premios')
@@ -34,7 +30,7 @@ export default class Premios extends Component {
           <Container fluid>
                <Segment>
                  <Header as='h2' block>
-                 {premios.length}  PREMIOS
+                 {/*premios.length*/}  PREMIOS
                  </Header>
               </Segment>
           
