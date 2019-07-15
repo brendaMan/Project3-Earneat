@@ -10,12 +10,12 @@ export default class Premios extends Component {
       user: props.user,
       nombre: '',
       saldo: '',
-      premios : [],
+      premios : []
     }
   
     handleClick() {
       this.setState({done: !this.state.done})
-  }
+    }
 
 
     fetch('/api/premios')
