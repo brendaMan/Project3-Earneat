@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Header, Container, Button, Card, Image, Segment,} from 'semantic-ui-react';
-import  {MiTarjeta} from './MiTarjeta';
 import imagen_premio from './imagenes/imagen_premio.png';
 
 
@@ -8,11 +7,17 @@ export default class Premios extends Component {
   constructor(props){
     super(props)
     this.state = {
+      user: props.user,
       nombre: '',
       saldo: '',
       premios : [],
     }
   
+    handleClick() {
+      this.setState({done: !this.state.done})
+  }
+
+
     fetch('/api/premios')
     .then (r => r.json())
     .then ( data => this.setState({premios : data}));
@@ -21,7 +26,7 @@ export default class Premios extends Component {
 
   render() {
     const premios = this.state.premios;
-    
+    const user = this.state.user;
     
 
     return(
@@ -29,7 +34,7 @@ export default class Premios extends Component {
           <Container fluid>
                <Segment>
                  <Header as='h2' block>
-                 {premios.length}  Premios 
+                 {premios.length}  PREMIOS
                  </Header>
               </Segment>
           
@@ -37,7 +42,7 @@ export default class Premios extends Component {
           <Segment>
             <Segment>
                  <Header as='h2' block textAlign='center'>
-                   ¡ Tienes acumulados {this.props.saldo} puntos !
+                   ¡ Enhorabuena {user.nombre}, tienes acumulados {this.props.saldo} puntos !
                  </Header>
             </Segment>
           
@@ -52,14 +57,13 @@ export default class Premios extends Component {
                <Card.Content>
                  <Card.Header className='premio-header' textAlign= 'center' >{premio.nombre}</Card.Header>
                  <Card.Meta className='date' textAlign= 'center'>
-                      <span >Primer premio</span>
                       <span>{premio.puntos} Puntos </span>
                   </Card.Meta>
                 <Card.Description  className= 'descripcion'  textAlign='center'>{premio.descripcion}</Card.Description>
                </Card.Content>
                
                <Card.Content extra textAlign='center'>
-                  <Button color='teal'  >
+                  <Button color='teal' onClick={this.handleClick} >
                      Me lo quedo
                   </Button>
               </Card.Content>
