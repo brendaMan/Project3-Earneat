@@ -33,7 +33,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "react-split-pane": "^0.1.87",
-    "semantic-ui-react": "^0.87.2",
+    "semantic-ui-react": "^0.87.3",
     "sha1": "^1.1.1"
   },
   "eslintConfig": {

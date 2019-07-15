@@ -62,14 +62,14 @@ export default class Dashboard extends Component {
         className="displayAreaGrid" 
          width={13}
         >
-          <Segment
+          {/* <Segment
             className="displayArea" 
-          >
+          > */}
           { user.admin ? 
 // Navegacion para administradores
             <Switch>
-              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user}} />)} />
-              <Route path="/premios" component={Premios} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
+              <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo}} />)} />
               <Route path="/mi-area" component={MiArea} />
               <Route path="/administrar-usuarios" component={AdminUsuarios} />
               <Route path="/administrar-premios" component={AdminPremios} />
@@ -78,12 +78,12 @@ export default class Dashboard extends Component {
 // Navegacion para resto de usuarios
             <Switch>
               <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user}} />)} />
-              <Route path="/premios" component={Premios} />
+              <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo}} />)} />
               <Route path="/mi-area" component={MiArea} />
               {/* <Route component={MissingPage} /> */}
             </Switch>
                   }
-          </Segment>
+          {/* </Segment> */}
         </Grid.Column>
       </Grid>
     </Router>

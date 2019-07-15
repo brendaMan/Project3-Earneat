@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Menu, Container, Icon } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
+import { userInfo } from "os";
 
 class MenuWithRouter extends Component {
   render() {
@@ -31,7 +32,11 @@ class MenuWithRouter extends Component {
     }
 
     return (
-      <Menu fluid vertical>
+      <Menu 
+        fluid 
+        vertical
+        tabular
+      >
         <Container>{menuItems}</Container>
       </Menu>
     );

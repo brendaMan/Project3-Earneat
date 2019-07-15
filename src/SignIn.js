@@ -77,9 +77,12 @@ export default class SignIn extends Component {
                 <Container textAlign='center'>
                     <Button 
                         onClick={this.onLogin}
-                        color='teal' circular={true} type='submit'
-                    > Sign In </Button>
-                    <p style={{ color: 'red'}}>{this.state.message}</p>
+                        color='teal' 
+                        circular={true} 
+                        type='submit'
+                        > Sign In 
+                    </Button>
+                    <p style={{ color: 'red', textAlign: 'center'}}>{this.state.message}</p>
                 </Container>
             </Form>
             </Container>
