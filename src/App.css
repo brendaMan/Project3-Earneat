@@ -1,8 +1,10 @@
 .App {
   text-align: center;
+  background-color: black;
 }
 
-/* SignIn page CSS */
+/* ------------------------------------ SignIn page CSS -------------------------------------- */
+
 .signInDiv {
   background-image: linear-gradient(
     rgba(233, 240, 239, 0.7),
@@ -32,19 +34,29 @@
   display: flex;
   justify-content: space-between;
 }
+
+/* -------------------------------------- CSS Grid ALL --------------------------------------- */
+
+/* .gridAll {
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 110vh;
+} */
+
+/* ------------------------------------ CSS Display Area ------------------------------------- */
+
 .displayAreaGrid {
   background-color: rgb(230,230,230);
 }
-.displayArea {
+
+/* .displayArea {
   top: 20px;
-}
+  bottom: 20px;
+  left: 10px;
+} */
 
-/* CSS ALL */
-.gridAll {
-  padding: 0px;
-}
+/* --------------------------------------- CSS SideBar --------------------------------------- */
 
-/* CSS SideBar */
 .sideBarGrid {
   background-color: rgb(3,208,182, 0.8);
   margin-bottom: 0px; 
@@ -54,11 +66,16 @@
   z-index: 10000;
   position: fixed;
   top: 20px;
-  width: 100%;
-  left: 3%;
+  width: 90%;
+  left: 7%;
 }
 
-/* CSS Pagina Puntos */
+/* ------------------------------------ CSS Pagina Puntos ------------------------------------ */
+
+.containerPuntos{
+  padding: 22px 1% 5%;
+}
+
 element.style {
   top: 14px;
 }
@@ -70,14 +87,31 @@ element.style {
 .saldo {
   float: right;
   color: black;
-  font-size: 160%;
+  font-size: 120%;
   font-weight: bold;
   padding: 2px 0;
 }
-   /* input box in Regalar Puntos */
-.ui.input {
-  width: 65px;
+
+/* ------------------------------ input boxes in Regalar Puntos -------------------------------- */
+
+.linea1Puntos{
+  text-align: center;
 }
 
-/* Personal area*/
+.linea2Puntos{
+  text-align: center;
+  padding: 0px 20px;
+}
+
+.inputPuntos {
+  width: 80px;
+  margin: 0px 10px;
+}
+
+.selectPuntos{
+  width: 250px;
+  margin: 0px 10px;
+}
+
+/* -------------------------------------- Personal area -------------------------------------- */
 
