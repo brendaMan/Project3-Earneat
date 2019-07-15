@@ -224,6 +224,29 @@ server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
     }
 );
 
+server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            const data= {
+                a_usuario_id: req.body.a_usuario_id,
+                de_usuario_id: req.body.de_usuario_id, 
+                puntos: req.body.puntos,
+                razon: req.body.razon
+            }
+            connection.query('INSERT INTO premio_usario SET ?', data, (err, results) => {
+            if (err) {
+                console.log(err)
+                res.sendStatus(500)
+            } else {
+                res.json(results);
+            }
+        });
+    }
+});
+
+
 
 // ?----------------------------- NEWS FEED ----------------------------------------
 
@@ -299,6 +322,8 @@ server.post('/api/votos', passport.authenticate('jwt', {
 
 // ?------------------------------- PREMIOS ---------------------------------------------
 
+
+
 server.get('/api/premios', (req, res) => {
     connection.query('SELECT * from premio', (err, results) => {
         if (err) {
@@ -310,13 +335,32 @@ server.get('/api/premios', (req, res) => {
     });
 });
 
+// TODO: premios area personal
+server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
+            connection.query('SELECT * from premios_canjeados WHERE id= ?', [req.params.id], (err, results) => {
+            if (err) {
+                res.sendStatus(500);
+            } else if (results.length === 0) {
+                res.sendStatus(404);
+            } else {
+            res.json(results[0]);
+            }
+        })
+    } else {
+        res.sendStatus(401)
+    }
+})
+
+
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 server.post('/api/premios/add', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('INSERT into premios SET ?', (err, results) => {
+            connection.query('INSERT into premio SET ?', (err, results) => {
         if (err) {
             res.sendStatus(500);
         }

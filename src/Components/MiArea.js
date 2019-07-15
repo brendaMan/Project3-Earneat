@@ -5,7 +5,9 @@ export default class MiArea extends Component {
     constructor(props){
         super(props);
             this.state = {
-                done: false
+                done: false,
+                user: props.user,
+                premio_canjeado: []
             }
             this.handleClick = this.handleClick.bind(this)
     };
@@ -33,7 +35,7 @@ export default class MiArea extends Component {
                                             ui={false}
                                         />
                                         <Card.Content>
-                                            <Card.Header textAlign="center">Viaje a tenerife</Card.Header>
+                                            <Card.Header textAlign="center">{this.props.premio_canjeado.nombre_premio}</Card.Header>
                                                 <Card.Meta />
                                                     <Card.Description textAlign="center">
                                                         190000 puntos
