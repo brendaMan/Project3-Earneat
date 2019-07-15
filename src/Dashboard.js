@@ -68,7 +68,7 @@ export default class Dashboard extends Component {
           { user.admin ? 
 // Navegacion para administradores
             <Switch>
-              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
+              <Route path="/" exact render= {(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
               <Route path="/premios" component={Premios} />
               <Route path="/mi-area" component={MiArea} />
               <Route path="/administrar-usuarios" component={AdminUsuarios} />
