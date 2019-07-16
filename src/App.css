@@ -119,3 +119,12 @@ element.style {
 /* ----------------------------------- Admin Usuarios area ----------------------------------- */
 
 /* ----------------------------------- Admin Premimos area ----------------------------------- */
+
+.listadoPremio1 {
+  font-size: 115%;
+}
+
+.listadoPremio2 {
+  font-weight: normal;
+  padding-left: 10px;
+}

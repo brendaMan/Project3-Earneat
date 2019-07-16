@@ -19,8 +19,13 @@ export default class AddPremioForm extends Component {
         })
         .then (res =>{
                 if (res.status === 200) {
-                    this.setState({message: `Se a creado un nuevo premio llamado: ${this.state.nombre}.`});
-                    // this.props.onAddPremio() 
+                    this.setState({
+                        message: `Se a creado un nuevo premio llamado: ${this.state.nombre}.`,
+                        nombre: "",
+                        puntos: "",
+                        descripcion: ""
+                    });
+                    this.props.onAddPremio() 
                 }   
                 else this.onErrorAddingPremio();
         })

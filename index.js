@@ -383,11 +383,13 @@ server.post('/api/premios/add', passport.authenticate('jwt', {
 server.post('/api/premios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         const total = req.body;
-        delete user.message;
+        delete total.message;
+        console.log('estoy en api premios y el body es:', req.body)
         if (req.user || req.user.admin) {
+            console.log("admin ok")
             connection.query('INSERT into premio SET ?', total, (err, results) => {
                 if (err) {
-                    console.log(err)
+                    console.log("ERROR: ", err)
                     res.sendStatus(500);
                 } else if (results.length === 0) {
                     res.sendStatus(404);
@@ -412,6 +414,23 @@ server.patch('api/premios/:id', passport.authenticate('jwt', {
                     res.sendStatus(results);
                 }
             });
+        }
+    }
+);
+
+server.delete('/api/premios/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('DELETE FROM premio WHERE id = ?', req.params.id, (err, results) => {
+                console.log('id', req.params.id)
+                if (err) {
+                    console.log(err)
+                    res.sendStatus(500);
+                }
+                res.json(results);
+            });     
         }
     }
 );

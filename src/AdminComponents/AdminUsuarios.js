@@ -19,7 +19,7 @@ export default class AdminUsuarios extends Component {
     }
 
     onDeleteUsuario = (id) => {
-        console.log('id front', id)
+        console.log('id utilizado en el delete usuario:', id)
         fetch(`/api/usuarios/${id}`, {
             method: 'DELETE'
         })
@@ -46,16 +46,13 @@ export default class AdminUsuarios extends Component {
                         </Feed.Label>
                         <Feed.Content>
                             <Feed.Summary>
-                                {usuario.nombre} es usuario de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
-                                <Button 
-                                    floated='right'
-                                    animated
-                                    circular
+                                {usuario.nombre} {usuario.apillido} es usuario de EarnEat. El correo electrónico que utiliza en esta plataforma es {usuario.email}. 
+                                <Button floated='right' animated circular inverted color='black'
                                     onClick={()=> this.onDeleteUsuario(usuario.id)}
                                 >
                                     <Button.Content hidden>Delete</Button.Content>
                                     <Button.Content visible>
-                                        <Icon name='trash' />
+                                        <Icon name='trash' inverted color='black' />
                                     </Button.Content>
                                 </Button>
                             </Feed.Summary>

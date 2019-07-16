@@ -16,7 +16,17 @@ export default class AdminUsuarios extends Component {
         fetch('/api/premios')
         .then (res => res.json())
         .then (data => this.setState({premios:data}))
-    } 
+    }
+
+    onDeletePremio = (id) => {
+        console.log('id utilizado en el delete premio:', id)
+        fetch(`/api/premios/${id}`, {
+            method: 'DELETE'
+        })
+        .then (res => res.json()) 
+        .then (data => this.loadPremios())
+    }
+     
     render() {
         return (
             <Container fluid={true} className='containerAll'>  
@@ -36,18 +46,15 @@ export default class AdminUsuarios extends Component {
                             </Feed.Label>
                             <Feed.Content>
                                 <Feed.Summary>
-                                    {premio.nombre} cuesta {premio.puntos} puntos.
+                                    <span className='listadoPremio1'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
                                     <br/>
-                                    Los detalles del premio son: {premio.descripcion}
-                                    <Button 
-                                        floated='right'
-                                        animated
-                                        circular
-                                        // onClick={()=> this.onDeletePremio(premio.id)}
+                                    <span className='listadoPremio2'>Detalles adicionales: {premio.descripcion}</span>
+                                    <Button floated='right' animated circular inverted color='black'
+                                        onClick={()=> this.onDeletePremio(premio.id)}
                                     >
                                         <Button.Content hidden>Delete</Button.Content>
                                         <Button.Content visible>
-                                            <Icon name='trash' />
+                                            <Icon name='trash' inverted color='black'/>
                                         </Button.Content>
                                     </Button>
                                 </Feed.Summary>
@@ -56,9 +63,7 @@ export default class AdminUsuarios extends Component {
                 </Feed>
                 </Segment>
                 <Segment raised >
-                    <AddPremioForm 
-                    // onAddUsuario={this.loadUsuarios}
-                    />
+                    <AddPremioForm onAddPremio={this.loadPremios}/>
                 </Segment>
             </Container>
         )

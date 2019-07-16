@@ -22,7 +22,13 @@ export default class AddUsuarioForm extends Component {
         })
         .then (res =>{
                 if (res.status === 200) {
-                    this.setState({message: `Se a creado una cuenta de usuario para ${this.state.nombre}.`});
+                    this.setState({
+                        message: `Se a creado una cuenta de usuario para ${this.state.nombre}.`,
+                        nombre: "",
+                        apellido: "",
+                        email: "",
+                        password: ""
+                    });
                     this.props.onAddUsuario() 
                 }   
                 else this.onErrorAddingUser();
@@ -50,7 +56,7 @@ export default class AddUsuarioForm extends Component {
                     as='h3'
                     textAlign='center'
                 >
-                    Dar de Alta a Usuarios Nuevos
+                    Dar de Alta a Nuevos Usuarios
                 </Header>
                 <Divider/>
             <Form inverted>
