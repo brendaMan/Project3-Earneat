@@ -7,6 +7,7 @@ export default class AddUsuarioForm extends Component {
         super(props);
         this.state={
             nombre: "",
+            apellido: "",
             email: "",
             password: "",
             admin: 0,
@@ -31,8 +32,6 @@ export default class AddUsuarioForm extends Component {
             this.onErrorAddingUser()
         })
     }
-    
-   
 
     onErrorAddingUser = () => {
         this.setState({
@@ -51,34 +50,36 @@ export default class AddUsuarioForm extends Component {
                     as='h3'
                     textAlign='center'
                 >
-                    Formulario para Crear Usuarios
+                    Dar de Alta a Usuarios Nuevos
                 </Header>
-                {/* <Divider/> */}
+                <Divider/>
             <Form inverted>
                 <Form.Field>
                     <label>Nombre</label>
                     <Form.Input 
                         value= {this.state.nombre}
-                        onChange= {e => this.setState({nombre:e.target.value})}
+                        onChange= {e => this.setState({nombre: e.target.value})}
                         placeholder='First Name' />
                 </Form.Field>
                 <Form.Field>
                     <label>Apellido(s)</label>
                     <Form.Input 
+                        value= {this.state.apellido}
+                        onChange= {e => this.setState({apellido: e.target.value})}
                         placeholder='Last Name' />
                 </Form.Field>
                 <Form.Field>
                     <label>Correo Electrónico</label>
                     <Form.Input 
                         value= {this.state.email}
-                        onChange= {e => this.setState({email:e.target.value})}
+                        onChange= {e => this.setState({email: e.target.value})}
                         placeholder='Email' />
                 </Form.Field>
                 <Form.Field>
                     <label >Contraseña</label>
                     <Form.Input 
                         value= {this.state.password}
-                        onChange= {e => this.setState({password:e.target.value})}
+                        onChange= {e => this.setState({password: e.target.value})}
                         placeholder='Password' />
                 </Form.Field>
                 <Form.Checkbox toggle
@@ -89,11 +90,12 @@ export default class AddUsuarioForm extends Component {
                 <Form.Button
                     inverted 
                     type="submit"
-                    onClick={this.onCrearUsuario}>
+                    onClick={this.onCrearUsuario}
+                >
                     Crear usuario
                 </Form.Button>
                 {this.state.message}
-                </Container>
+                </Container> 
             </Form>
             </Segment>
         )

@@ -14,12 +14,12 @@ export default class MiArea extends Component {
     };
         handleClick() {
             this.setState({done: !this.state.done})
-            const nueva_hash= {usuario_id: this.state.user.id, hash: hash }
-            fetch('/api/usuarios', {
-                method: 'POST',
-                body: JSON.stringify(nueva_hash),
-                headers: {'Content-Type': 'application/json'}
-            })
+            // const nueva_hash= {usuario_id: this.state.user.id, hash: hash }
+            // fetch('/api/usuarios', {
+            //     method: 'POST',
+            //     body: JSON.stringify(nueva_hash),
+            //     headers: {'Content-Type': 'application/json'}
+            // })
                 
         }
 

@@ -96,11 +96,12 @@ element.style {
 
 .linea1Puntos{
   text-align: center;
+  font-size: 110%;
 }
 
 .linea2Puntos{
-  text-align: center;
-  padding: 0px 20px;
+  text-align: left;
+  font-size: 105%;
 }
 
 .inputPuntos {

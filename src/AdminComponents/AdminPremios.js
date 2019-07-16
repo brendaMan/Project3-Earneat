@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AddPremioForm from './AddPremioForm';
-import { Container, Header, Segment, Feed, Icon, Divider } from "semantic-ui-react";
+import { Container, Header, Segment, Feed, Icon, Divider, Button } from "semantic-ui-react";
 
 
 export default class AdminUsuarios extends Component {
@@ -19,43 +19,48 @@ export default class AdminUsuarios extends Component {
     } 
     render() {
         return (
-                <Container 
-                    fluid={true}
-                    className='containerAll' 
-                >  
-                <Header as='h2' id='headerContainer' block>
-                  Administrar Premios
+            <Container fluid={true} className='containerAll'>  
+                <Header inverted as='h2' block>
+                    Administrar Premios
                 </Header> 
-                <Segment raised >
+            <Segment raised >
                 <Feed>
-                    <Header as='h3'>Listado de Premios</Header>
-                    <Divider/>
+                    <Header as='h3' textAlign='center'>
+                        Listado de Premios
+                    </Header>
+                <Divider/>
                     {this.state.premios.map(premio => 
                         <Feed.Event>
                             <Feed.Label>
-                                <Icon 
-                                    color='teal'
-                                    circular
-                                    name='gift' 
-                                    size='massive' 
-                                />
+                                <Icon circular name='gift' size='massive'/>
                             </Feed.Label>
                             <Feed.Content>
-                                {premio.nombre} cuesta {premio.puntos} puntos.
-                                <br/>
-                                Los detalles del premio son: {premio.descripcion}
-                                <Feed.Meta>
-                                    <Icon name='trash' />
-                                    ¿Eliminar premio?
-                                </Feed.Meta>
+                                <Feed.Summary>
+                                    {premio.nombre} cuesta {premio.puntos} puntos.
+                                    <br/>
+                                    Los detalles del premio son: {premio.descripcion}
+                                    <Button 
+                                        floated='right'
+                                        animated
+                                        circular
+                                        // onClick={()=> this.onDeletePremio(premio.id)}
+                                    >
+                                        <Button.Content hidden>Delete</Button.Content>
+                                        <Button.Content visible>
+                                            <Icon name='trash' />
+                                        </Button.Content>
+                                    </Button>
+                                </Feed.Summary>
                             </Feed.Content>
                     </Feed.Event>)}
                 </Feed>
                 </Segment>
                 <Segment raised >
-                    <AddPremioForm/>
+                    <AddPremioForm 
+                    // onAddUsuario={this.loadUsuarios}
+                    />
                 </Segment>
-                </Container>
+            </Container>
         )
     }
 }

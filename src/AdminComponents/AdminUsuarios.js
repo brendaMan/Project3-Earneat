@@ -29,26 +29,15 @@ export default class AdminUsuarios extends Component {
 
     render() {
         return (
-                <Container 
-                    fluid={true}
-                    className='containerAll' 
-                >  
-                <Header  
-                    as='h2'     
-                    id='headerContainer' 
-                    block
-                    inverted color="teal"
-                >
+            <Container fluid={true} className='containerAll'>  
+                <Header as='h2' block inverted>
                     Administrar Usuarios
                 </Header> 
-                <Segment raised >
+            <Segment raised >
                 <Feed>
-                <Header 
-                    as='h3'
-                    color='teal'
-                >
-                    Listado de Usuarios
-                </Header>
+                    <Header textAlign='center' as='h3'>
+                        Listado de Usuarios
+                    </Header>
                 <Divider/>
                     {this.state.usuarios.map(usuario => 
                     <Feed.Event>
@@ -56,12 +45,12 @@ export default class AdminUsuarios extends Component {
                             <Icon name='user' size='massive' />
                         </Feed.Label>
                         <Feed.Content>
-                            {usuario.nombre} es usuario de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
-                            <Feed.Meta>
+                            <Feed.Summary>
+                                {usuario.nombre} es usuario de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
                                 <Button 
+                                    floated='right'
                                     animated
                                     circular
-                                    basic color='teal'
                                     onClick={()=> this.onDeleteUsuario(usuario.id)}
                                 >
                                     <Button.Content hidden>Delete</Button.Content>
@@ -69,7 +58,7 @@ export default class AdminUsuarios extends Component {
                                         <Icon name='trash' />
                                     </Button.Content>
                                 </Button>
-                            </Feed.Meta>
+                            </Feed.Summary>
                         </Feed.Content>
                     </Feed.Event>)}
                 </Feed>
@@ -77,7 +66,7 @@ export default class AdminUsuarios extends Component {
                 <Segment raised >
                     <AddUsuarioForm onAddUsuario={this.loadUsuarios}/>
                 </Segment>
-                </Container>
+            </Container>
         )
     }
 }

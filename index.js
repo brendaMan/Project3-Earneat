@@ -106,12 +106,6 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 })
 
 
-// server.get('/api/usuarios/:id/forgot_password', password.authenticate('jwt', {
-//     session: false}), (req, res) => {
-//         const email: req
-//     })
-
-
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
 console.log('get /api/dropdown/usuarios')
@@ -204,12 +198,9 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 // 4. si no es usuario -> 401
 server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        console.log("estoy dentro del patch")
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                console.log("dentro del if trambolico")
-                connection.query('UPDATE usuario SET ? WHERE id = ?', req.params.id, (err, results) => {
+                connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
                     if (err) {
-                        console.log("error en la query: ", err)
                         res.sendStatus(500);
                     } else if (results.length === 0) {
                         res.sendStatus(404);
@@ -302,7 +293,6 @@ server.post('/api/login', (req, res, next) => {
             }
         })(req, res, next);
     }
-
 );
 
 
@@ -360,7 +350,7 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
             if (err) {
                 res.sendStatus(500);
             } else if (results.length === 0) {
-                res.sendStatus(404);l
+                res.sendStatus(404);
             } else {
             res.json(results[0]);
             }
@@ -374,23 +364,15 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 server.post('/api/premios/add', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        console.log("dentro de add")
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            const canjeado = {
-                usuario_id: req.body.usuario_id,
-                premio_id: req.body.premio_id, 
-                fecha: new Date()
-            }
-            console.log("el premio en el back es: ", canjeado)
-            connection.query('INSERT into premio_usuario SET ?', canjeado,(err, results) => {
-                if (err) {
-                    console.log(err)
-                    res.sendStatus(500);
-                }
-                    res.json(results);
-            });
+            connection.query('INSERT into premio SET ?', (err, results) => {
+        if (err) {
+            res.sendStatus(500);
+        }
+            res.json(results);
+        });
     }
 });
 
@@ -424,19 +406,6 @@ server.patch('api/premios/:id', passport.authenticate('jwt', {
     }
 );
 
-server.delete('api/premios/:id', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-        if (req.user || req.user.admin) {
-            connection.query('DELETE premio SET ? WHERE id = ?', (err, results)=> {
-                if (err) {
-                    res.sendStatus(401);
-                } else {
-                    res.sendStatus(results);
-                }
-            });
-        }
-    }
-);
 
 server.on("error", (e) => console.log(e))
 
