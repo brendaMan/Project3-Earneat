@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import AddUsuario from './AddUsuario';
-import { Container, Header, Segment, Feed, Icon, Divider} from "semantic-ui-react";
+import AddUsuarioForm from './AddUsuarioForm';
+import { Container, Header, Segment, Feed, Icon, Divider, Button} from "semantic-ui-react";
 
 
 export default class AdminUsuarios extends Component {
@@ -13,13 +13,29 @@ export default class AdminUsuarios extends Component {
     }
 
     loadUsuarios = () => {
-        fetch('/api/users')
+        fetch('/api/usuarios')
         .then (res => res.json())
         .then (data => this.setState({usuarios:data}))
     }
+
+    onDeleteUsuario = (id) => {
+        fetch(`/api/usuarios/${id}`, {
+            method: 'DELETE'
+            // headers: {'Content-Type': 'application/json'},
+            // body: JSON.stringify({data})
+        })
+        .then(res => {
+            console.log('Deleted:', res.message)
+            return res
+          })
+    }
+
     render() {
         return (
-                <Container fluid={true}>  
+                <Container 
+                    fluid={true}
+                    className='containerAll' 
+                >  
                 <Header as='h2' id='headerContainer' block>
                   Administrar Usuarios
                 </Header> 
@@ -33,17 +49,26 @@ export default class AdminUsuarios extends Component {
                             <Icon name='user' size='massive' />
                         </Feed.Label>
                         <Feed.Content>
-                            {usuario.name} es usuario(a) de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
+                            {usuario.nombre} es usuario de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
                             <Feed.Meta>
-                                <Icon name='trash' />
-                                ¿Eliminar usuario?
+                                <Button 
+                                    animated
+                                    circular
+                                    basic color='teal'
+                                    onClick={this.onDeleteUsuario}
+                                >
+                                    <Button.Content hidden>Delete</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name='trash' />
+                                    </Button.Content>
+                                </Button>
                             </Feed.Meta>
                         </Feed.Content>
                     </Feed.Event>)}
                 </Feed>
                 </Segment>
                 <Segment raised >
-                    <AddUsuario onAddUsuario={this.loadUsuarios}/>
+                    <AddUsuarioForm onAddUsuario={this.loadUsuarios}/>
                 </Segment>
                 </Container>
         )

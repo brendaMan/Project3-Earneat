@@ -82,9 +82,9 @@ export default class Dashboard extends Component {
                   :
 // Navegacion para resto de usuarios
             <Switch>
-              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user}} />)} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
               <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo}} />)} />
-              <Route path="/mi-area" component={MiArea} />
+              <Route path="/mi-area" component={(p) => (<MiArea {...p} {...{ user: user, premio_canjeado : this.state.premio_canjeado}} />)} />
               {/* <Route component={MissingPage} /> */}
             </Switch>
                   }

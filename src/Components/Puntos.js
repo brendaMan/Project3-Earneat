@@ -48,7 +48,7 @@ export default class Puntos extends Component {
         return (
             <Container  
                 fluid={true}
-                className='containerPuntos' 
+                className='containerAll' 
             >
             <Header 
                 as='h2'     
@@ -86,7 +86,8 @@ export default class Puntos extends Component {
                             <Select
                                 className='selectPuntos' 
                                 options={this.state.usuarios} 
-                                onChange={(e, data) => this.setState({a_usuario_id: data.value})} />
+                                onChange={(e, data) => this.setState({a_usuario_id: data.value})}
+                            />.
                         </Form.Group>
                         <Form.Group 
                             className='linea2Puntos'
@@ -94,7 +95,10 @@ export default class Puntos extends Component {
                             value={this.state.razon} 
                             onChange={e => this.setState({razon: e.target.value})}
                         >
-                            por: <TextArea></TextArea>
+                            <p>¿Por qué? Pues te cuento que... </p>
+                            <TextArea
+                                placeholder="¿Cual es la razón por la que quieres dar puntos a tu compañer@?"
+                            />
                         </Form.Group>
 {/* Button para regalar puntos */}
                         <Container 
@@ -106,7 +110,8 @@ export default class Puntos extends Component {
                             </Button>
                         </Container>
                         <Modal
-                            size={"large"}
+                            centered={false}
+                            size='mini'
                             open={this.state.visible}
                             close={this.onClose}
                         >
