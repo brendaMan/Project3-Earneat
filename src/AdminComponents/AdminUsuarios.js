@@ -19,15 +19,12 @@ export default class AdminUsuarios extends Component {
     }
 
     onDeleteUsuario = (id) => {
+        console.log('id front', id)
         fetch(`/api/usuarios/${id}`, {
             method: 'DELETE'
-            // headers: {'Content-Type': 'application/json'},
-            // body: JSON.stringify({data})
         })
-        .then(res => {
-            console.log('Deleted:', res.message)
-            return res
-          })
+        .then (res => res.json()) 
+        .then (data => this.loadUsuarios())
     }
 
     render() {
@@ -36,13 +33,23 @@ export default class AdminUsuarios extends Component {
                     fluid={true}
                     className='containerAll' 
                 >  
-                <Header as='h2' id='headerContainer' block>
-                  Administrar Usuarios
+                <Header  
+                    as='h2'     
+                    id='headerContainer' 
+                    block
+                    inverted color="teal"
+                >
+                    Administrar Usuarios
                 </Header> 
                 <Segment raised >
                 <Feed>
-                <Header as='h3'>Listado de Usuarios</Header>
-                 <Divider/>
+                <Header 
+                    as='h3'
+                    color='teal'
+                >
+                    Listado de Usuarios
+                </Header>
+                <Divider/>
                     {this.state.usuarios.map(usuario => 
                     <Feed.Event>
                         <Feed.Label>
@@ -55,7 +62,7 @@ export default class AdminUsuarios extends Component {
                                     animated
                                     circular
                                     basic color='teal'
-                                    onClick={this.onDeleteUsuario}
+                                    onClick={()=> this.onDeleteUsuario(usuario.id)}
                                 >
                                     <Button.Content hidden>Delete</Button.Content>
                                     <Button.Content visible>

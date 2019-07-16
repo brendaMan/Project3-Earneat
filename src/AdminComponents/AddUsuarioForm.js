@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Segment, Container} from 'semantic-ui-react';
+import { Form, Segment, Container, Header, Divider} from 'semantic-ui-react';
 
 
 export default class AddUsuarioForm extends Component {
@@ -20,8 +20,10 @@ export default class AddUsuarioForm extends Component {
             headers: {'Content-Type':'application/json'}
         })
         .then (res =>{
-                if (res.status === 200) 
+                if (res.status === 200) {
                     this.setState({message: `Se a creado una cuenta de usuario para ${this.state.nombre}.`});
+                    this.props.onAddUsuario() 
+                }   
                 else this.onErrorAddingUser();
         })
         .catch ((err) => {
@@ -43,7 +45,15 @@ export default class AddUsuarioForm extends Component {
             <Segment 
                 className="adminForms"
                 inverted 
-                tertiary>
+                tertiary
+            >
+                <Header 
+                    as='h3'
+                    textAlign='center'
+                >
+                    Formulario para Crear Usuarios
+                </Header>
+                {/* <Divider/> */}
             <Form inverted>
                 <Form.Field>
                     <label>Nombre</label>

@@ -219,7 +219,8 @@ server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('DELETE FROM usuario WHERE id = ?', [req.params.id], (err, results) => {
+            connection.query('DELETE FROM usuario WHERE id = ?', req.params.id, (err, results) => {
+                console.log('id', req.params.id)
                 if (err) {
                     console.log(err)
                     res.sendStatus(500);
