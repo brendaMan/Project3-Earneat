@@ -424,6 +424,19 @@ server.patch('api/premios/:id', passport.authenticate('jwt', {
     }
 );
 
+server.delete('api/premios/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (req.user || req.user.admin) {
+            connection.query('DELETE premio SET ? WHERE id = ?', (err, results)=> {
+                if (err) {
+                    res.sendStatus(401);
+                } else {
+                    res.sendStatus(results);
+                }
+            });
+        }
+    }
+);
 
 server.on("error", (e) => console.log(e))
 
