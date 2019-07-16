@@ -357,15 +357,23 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 server.post('/api/premios/add', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        console.log("dentro de add")
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            connection.query('INSERT into premio SET ?', (err, results) => {
-        if (err) {
-            res.sendStatus(500);
-        }
-            res.json(results);
-        });
+            const canjeado = {
+                usuario_id: req.body.usuario_id,
+                premio_id: req.body.premio_id, 
+                fecha: new Date()
+            }
+            console.log("el premio en el back es: ", canjeado)
+            connection.query('INSERT into premio_usuario SET ?', canjeado,(err, results) => {
+                if (err) {
+                    console.log(err)
+                    res.sendStatus(500);
+                }
+                    res.json(results);
+            });
     }
 });
 
