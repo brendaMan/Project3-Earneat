@@ -196,10 +196,13 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 // 2. si es admin, puede cambiar cualquier usuario
 // 3. si es usuario normal solo puede cambiarse a si mismo (o sale 401)
 // 4. si no es usuario -> 401
-server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
+server.patch('/api/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
+                console.log("dentro del if trambolico")
+                console.log(req.body)
+                // if(req.password === req.hash) {}
+                connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
                     if (err) {
                         res.sendStatus(500);
                     } else if (results.length === 0) {
@@ -379,17 +382,24 @@ server.post('/api/premios/add', passport.authenticate('jwt', {
 // TODO: passport.authenticate (solo administrador puede crear premios)
 server.post('/api/premios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        const total = req.body;
+        delete user.message;
         if (req.user || req.user.admin) {
             connection.query('INSERT into premio SET ?', total, (err, results) => {
                 if (err) {
+                    console.log(err)
                     res.sendStatus(500);
+                } else if (results.length === 0) {
+                    res.sendStatus(404);
                 } else {
-                    res.sendStatus(results);
+                    console.log("results> ", results)
+                res.json({message: "all good"});
                 }
-            }); 
+            })
+        } else {
+            res.sendStatus(401)
         }
-    }
-);
+    })
 
 // TODO: revisar logica (solo administrador puede cambiar premios)
 server.patch('api/premios/:id', passport.authenticate('jwt', {
