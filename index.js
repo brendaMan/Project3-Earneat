@@ -105,6 +105,12 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 })
 
 
+// server.get('/api/usuarios/:id/forgot_password', password.authenticate('jwt', {
+//     session: false}), (req, res) => {
+//         const email: req
+//     })
+
+
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
 console.log('get /api/dropdown/usuarios')
@@ -286,6 +292,7 @@ server.post('/api/login', (req, res, next) => {
             }
         })(req, res, next);
     }
+    
 );
 
 
@@ -343,7 +350,7 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
             if (err) {
                 res.sendStatus(500);
             } else if (results.length === 0) {
-                res.sendStatus(404);
+                res.sendStatus(404);l
             } else {
             res.json(results[0]);
             }

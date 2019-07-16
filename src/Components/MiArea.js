@@ -17,7 +17,7 @@ export default class MiArea extends Component {
 
         render() {
                 return (
-                    <Container fluid>
+                    <Container fluid className ="containerAll">
                         <div>
                             <Segment>
                                     <Header as="h2" widths="equal">
@@ -59,7 +59,7 @@ export default class MiArea extends Component {
                                             <Form.Group widths={2}>
                                                 <Form.Input label='Vieja contraseña' placeholder='Old password' />
                                                 <Form.Input label='Nueva contraseña' placeholder='New password' />
-                                                <Form.Input label='Repetir contraseña' placeholder='Confirm Password' />
+                                                <Form.Input label='Repetir contraseña' placeholder='Confirm New Password' />
                                             </Form.Group>
                                             
                                                 <Grid>
