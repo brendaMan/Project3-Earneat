@@ -7,12 +7,20 @@ export default class MiArea extends Component {
             this.state = {
                 done: false,
                 user: props.user,
+                hash: '',
                 premio_canjeado: []
             }
             this.handleClick = this.handleClick.bind(this)
     };
         handleClick() {
             this.setState({done: !this.state.done})
+            const nueva_hash= {usuario_id: this.state.user.id, hash: hash }
+            fetch('/api/usuarios', {
+                method: 'POST',
+                body: JSON.stringify(nueva_hash),
+                headers: {'Content-Type': 'application/json'}
+            })
+                
         }
 
         render() {
@@ -64,8 +72,9 @@ export default class MiArea extends Component {
                                             
                                                 <Grid>
                                                     <Grid.Column textAlign="center">
-                                                        <Button onClick={this.handleClick} 
-                                                                >Aceptar</Button>
+                                                        <Button onClick={this.handleClick}>
+                                                            Aceptar
+                                                        </Button>
                                                     </Grid.Column>
                                                 </Grid>
                                         </Form>

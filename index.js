@@ -204,9 +204,12 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 // 4. si no es usuario -> 401
 server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        console.log("estoy dentro del patch")
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
+                console.log("dentro del if trambolico")
+                connection.query('UPDATE usuario SET ? WHERE id = ?', req.params.id, (err, results) => {
                     if (err) {
+                        console.log("error en la query: ", err)
                         res.sendStatus(500);
                     } else if (results.length === 0) {
                         res.sendStatus(404);
@@ -298,7 +301,7 @@ server.post('/api/login', (req, res, next) => {
             }
         })(req, res, next);
     }
-    
+
 );
 
 
