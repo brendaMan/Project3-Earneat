@@ -106,15 +106,8 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 })
 
 
-// server.get('/api/usuarios/:id/forgot_password', password.authenticate('jwt', {
-//     session: false}), (req, res) => {
-//         const email: req
-//     })
-
-
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-console.log('get /api/dropdown/usuarios')
         if (!req || !req.user) {
             res.sendStatus(401)
         }
@@ -204,11 +197,14 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 // 4. si no es usuario -> 401
 server.patch('/api/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        console.log("estoy dentro del patch")
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                console.log("dentro del if trambolico")
-                console.log(req.body)
-                // if(req.password === req.hash) {}
+                user.hash = sha1(user.old_password + salt);
+                
+
+                // calculas el hash de la old password
+                // compruebas que coincide con el hash de la base de datos
+                // Si coincide calculas el hash de la new password y lo substituyes en la base de adtos
+
                 connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
                     if (err) {
                         console.log("error en la query: ", err)

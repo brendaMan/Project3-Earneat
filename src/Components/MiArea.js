@@ -10,16 +10,30 @@ export default class MiArea extends Component {
                 user: props.user,
                 hash: " ",
                 password: "",
-                premio_canjeado: []
+                premio_canjeado: [],
+                new_password: "",
+                old_password: "",
+
             }
             this.handleClick = this.handleClick.bind(this)
     };
+        handleNewPassword = (event) => {
+            this.setState({new_password: event.target.value})
+        }
+        handleOldPassword = (event) => {
+            this.setState({old_password: event.target.value})
+        }
         handleClick = (evento) => {
             const data = new FormData(evento.target)
             console.log(data)
             this.setState({done: !this.state.done})
             console.log("user",this.state.user)
-            const nuevo_hash= {id: this.state.user.id, hash: this.state.user.hash }
+            const nuevo_hash= {
+                id: this.state.user.id, 
+                hash: this.state.user.hash,
+                new_password: this.state.new_password,
+                old_password: this.state.old_password
+            }
             console.log("nuevo_hash", nuevo_hash)
             fetch('/api/usuarios', {
                 method: 'PATCH',
@@ -37,15 +51,7 @@ export default class MiArea extends Component {
                 })
         }
 
-            // oldPassword() {
-            //     this.setState({});
-            // }
-
-            // newPassword() {
-            //     this.setState(password:this.state.newPassword);
-            // }
-
-
+    
         render() {
                 return (
                     <Container fluid className ="containerAll">
@@ -88,9 +94,10 @@ export default class MiArea extends Component {
                                         <Form unstackable onSubmit={this.handleClick}>
                                         
                                             <Form.Group widths={2}>
-                                                <Form.Input id="old_password" name='old_password' label='Vieja contraseña' placeholder='Old password' onChange={this.oldPassword}/>
-                                                <Form.Input label='Nueva contraseña' placeholder='New password' onChange={this.newPassword}/>
-                                                <Form.Input label='Repetir contraseña' placeholder='Confirm New Password' />
+
+                                                <Form.Input id="old_password" name='old_password' label='Vieja contraseña' placeholder='Old password' onChange={this.handleOldPassword}/>
+                                                <Form.Input id="new_password" name="new_password" label='Nueva contraseña' placeholder='New password' onChange={this.handleNewPassword}/>
+                        
                                             </Form.Group>
                                             
                                                 <Grid>
