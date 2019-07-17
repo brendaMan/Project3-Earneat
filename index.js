@@ -42,6 +42,11 @@ passport.use(new JwtStrategy({
 
 server.set("port", port); 
 server.use('/', express.static(path.join(__dirname, '/build')));
+server.use('/premios', express.static(path.join(__dirname, '/build')));
+server.use('/mi-area', express.static(path.join(__dirname, '/build')));
+server.use('/administrar-usuarios', express.static(path.join(__dirname, '/build')));
+server.use('/administrar-premios', express.static(path.join(__dirname, '/build')));
+
 
 // ?----------------------------- USER ----------------------------------------
 
