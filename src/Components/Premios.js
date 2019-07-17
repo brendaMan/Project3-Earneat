@@ -23,16 +23,19 @@ export default class Premios extends Component {
     console.log("El premio es: ",premio)
     const info_premio = {usuario_id: this.state.user.id, premio_id: premio.id}
     // Aqui pongo la informacion que necesita el back en el body.
-    fetch('/api/premios/add', {
+    fetch('/api/usuarios/' + this.state.user.id + '/premios', {
     method: 'POST',
     body: JSON.stringify(info_premio),
     headers: {'Content-Type': 'application/json'}
    })
       .then(res => {
          if (res.status === 200) {
-           console.log(this.state.user)
+           console.log('saldo', this.state.saldo)
+           console.log('valor del premio', premio.puntos)
            this.setState({message : `¡ Felicidades ${this.state.user.nombre} !  Puedes ver tu premio en tu área personal.`, visible: true})
+           this.props.loadSaldo();
           }
+         else if (res.status === 500) this.setState({message: 'Ha habido un problema canjeando tu premio', visible: true})
          else this.setState({message: 'Lo siento, pero tu premio no se ha canjeado. Verifica que tengas saldo suficiente en tu cuenta. Si el problema persiste, contacta a algun administrador.', visible: true})
        })
       .catch (err => {
