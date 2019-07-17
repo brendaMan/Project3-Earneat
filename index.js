@@ -242,8 +242,7 @@ server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            console.log("SELECT puntos_saldo - premio.puntos AS puntos_restantes FROM puntos_saldo JOIN premio ON premio.id = ? WHERE puntos_saldo.id = ? ", req.body);
-            connection.query(`SELECT puntos_saldo - premio.puntos AS puntos_restantes
+            connection.query(`SELECT puntos_saldo - premio.puntos AS puntos_despues_de_canjear
             FROM puntos_saldo 
             JOIN premio ON premio.id = ?
             WHERE puntos_saldo.id = ?`, [req.body.premio_id, req.body.usuario_id], (err, results) => {
@@ -251,7 +250,7 @@ server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
                     console.log(err);
                     res.sendStatus(500)
                 } 
-                else if (results && results[0] && results[0].puntos_restantes >= 0) {
+                else if (results && results[0] && results[0].puntos_despues_de_canjear >= 0) {
                     const data= {
                         usuario_id: req.body.usuario_id,
                         premio_id: req.body.premio_id
@@ -265,7 +264,7 @@ server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
                         }
                     })
                 } else {
-                    console.log(results)
+
                     res.sendStatus(409);
                 }
 
