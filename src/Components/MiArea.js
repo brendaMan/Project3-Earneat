@@ -7,15 +7,24 @@ export default class MiArea extends Component {
             this.state = {
                 done: false,
                 user: props.user,
-                premio_canjeado: []
+                premios_canjeados: []
             }
             this.handleClick = this.handleClick.bind(this)
-    };
+    
+
+    fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
+    .then(res=> res.json())
+    .then(data=> this.setState({premios_canjeados: data.premios_canjeados}))
+        }
+    
         handleClick() {
             this.setState({done: !this.state.done})
         }
 
         render() {
+            const premios_canjeados = this.state.premios_canjeados;
+
+
                 return (
                     <Container fluid>
                         <div>
@@ -28,6 +37,9 @@ export default class MiArea extends Component {
                                         Premios canjeados
                                     </Header>
                                         <Divider clearing />
+                                   
+                                        <Card.Group centered >
+                                         {premios_canjeados.map (premio_canjeado => 
                                     <Card>
                                         <Image
                                             src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
@@ -35,13 +47,15 @@ export default class MiArea extends Component {
                                             ui={false}
                                         />
                                         <Card.Content>
-                                            <Card.Header textAlign="center">{this.props.premio_canjeado.nombre_premio}</Card.Header>
+                                            <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
                                                 <Card.Meta />
                                                     <Card.Description textAlign="center">
-                                                        190000 puntos
+                                                        {premio_canjeado.descripcion}
                                                     </Card.Description>
                                         </Card.Content>
-                                    </Card>
+                                    </Card>)}
+
+                                  </Card.Group>
                                 </Segment>
 
                                 <Segment>
