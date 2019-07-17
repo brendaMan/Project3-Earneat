@@ -35,7 +35,7 @@ export default class MiArea extends Component {
                 old_password: this.state.old_password
             }
             console.log("nuevo_hash", nuevo_hash)
-            fetch('/api/usuarios', {
+            fetch('/api/usuarios/'+ this.state.user.id, {
                 method: 'PATCH',
                 body: JSON.stringify(nuevo_hash),
                 headers: {'Content-Type': 'application/json'}
@@ -119,4 +119,4 @@ export default class MiArea extends Component {
                     </Container>
                 )
             }
-        }
+}

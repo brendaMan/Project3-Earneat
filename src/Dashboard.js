@@ -29,9 +29,9 @@ export default class Dashboard extends Component {
     .then(res=> res.json())
     .then(data=> this.setState({a_regalar: data.puntos_restantes}))
     
-    fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
-    .then(res=> res.json())
-    .then(data=> this.setState({premio_canjeado: data.premios_canjeados}))
+    //fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
+    //.then(res=> res.json())
+    //.then(data=> this.setState({premio_canjeado: data.premios_canjeados}))
   }
   render() {
     const user = this.props.user;

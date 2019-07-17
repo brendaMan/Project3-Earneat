@@ -122,7 +122,6 @@ server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
         }
     })
 
-// TODO: /api/usuarios
 // 1. passport.authenticate
 // 2. si es admin, puede pedir cualquier usuario
 // 3. si es usuario normal solo puede pedirse a si mismo (o sale 401)
@@ -161,7 +160,6 @@ server.get('/api/usuarios/:id/puntos_dados', passport.authenticate('jwt', {
     }
 })
 
-// TODO: /api/usuarios
 // 1. passport.authenticate
 // 2. si es admin, puede crear usuario
 // 3. si es usuario normal -> 401
@@ -190,26 +188,27 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
     }
 })
 
-// TODO: /api/usuarios
 // 1. passport.authenticate
 // 2. si es admin, puede cambiar cualquier usuario
 // 3. si es usuario normal solo puede cambiarse a si mismo (o sale 401)
 // 4. si no es usuario -> 401
-server.patch('/api/usuarios', passport.authenticate('jwt', {
+server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        const user = {};
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                user.hash = sha1(user.old_password + salt);
-                
-                // !Hay que calcular el hash de la vieja contraseña y comprobar si coincide con el hash de la base de datos
-                // !En caso de que coincida entonces se calcula el hash de la new password y se sustituye en la base de datos
+                const oldhash = sha1(req.body.old_password + salt);
+                user.hash = sha1(req.body.new_password + salt);
 
-                connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
+                console.log('UPDATE usuario SET ? WHERE id = ? AND hash = ?', user, req.body.id, oldhash)
+
+                connection.query('UPDATE usuario SET ? WHERE id = ? AND hash = ?', [user, req.body.id, oldhash], (err, results) => {
                     if (err) {
+                        console.log(err);
                         res.sendStatus(500);
                     } else if (results.length === 0) {
                         res.sendStatus(404);
                     } else {
-                    res.json(results[0]);
+                        res.json(results[0]);
                     }
                 })
             } else {
