@@ -52,7 +52,7 @@ export default class AccionesRecientes extends Component {
                   <Feed.Summary>
                     <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos}
                       puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
-                      <Feed.Date>{moment(voto.fecha).fromNow()}</Feed.Date>
+                      <Feed.Date>{moment(voto.fecha).add(2, 'h').fromNow()}</Feed.Date>
                   </Feed.Summary>
                   <Feed.Meta>
                     <Icon 

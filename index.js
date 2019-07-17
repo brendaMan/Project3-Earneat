@@ -205,7 +205,6 @@ server.patch('/api/usuarios', passport.authenticate('jwt', {
 
                 connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
                     if (err) {
-                        console.log("error en la query: ", err)
                         res.sendStatus(500);
                     } else if (results.length === 0) {
                         res.sendStatus(404);
@@ -298,7 +297,6 @@ server.post('/api/login', (req, res, next) => {
             }
         })(req, res, next);
     }
-
 );
 
 
@@ -356,7 +354,7 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
             if (err) {
                 res.sendStatus(500);
             } else if (results.length === 0) {
-                res.sendStatus(404);l
+                res.sendStatus(404);
             } else {
             res.json(results[0]);
             }
@@ -370,23 +368,15 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 server.post('/api/premios/add', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        console.log("dentro de add")
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            const canjeado = {
-                usuario_id: req.body.usuario_id,
-                premio_id: req.body.premio_id, 
-                fecha: new Date()
-            }
-            console.log("el premio en el back es: ", canjeado)
-            connection.query('INSERT into premio_usuario SET ?', canjeado,(err, results) => {
-                if (err) {
-                    console.log(err)
-                    res.sendStatus(500);
-                }
-                    res.json(results);
-            });
+            connection.query('INSERT into premio SET ?', (err, results) => {
+        if (err) {
+            res.sendStatus(500);
+        }
+            res.json(results);
+        });
     }
 });
 
@@ -394,11 +384,13 @@ server.post('/api/premios/add', passport.authenticate('jwt', {
 server.post('/api/premios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         const total = req.body;
-        delete user.message;
+        delete total.message;
+        console.log('estoy en api premios y el body es:', req.body)
         if (req.user || req.user.admin) {
+            console.log("admin ok")
             connection.query('INSERT into premio SET ?', total, (err, results) => {
                 if (err) {
-                    console.log(err)
+                    console.log("ERROR: ", err)
                     res.sendStatus(500);
                 } else if (results.length === 0) {
                     res.sendStatus(404);
@@ -427,19 +419,23 @@ server.patch('api/premios/:id', passport.authenticate('jwt', {
     }
 );
 
-server.delete('api/premios/:id', passport.authenticate('jwt', {
+server.delete('/api/premios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        if (req.user || req.user.admin) {
-            connection.query('DELETE premio SET ? WHERE id = ?', (err, results)=> {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('DELETE FROM premio WHERE id = ?', req.params.id, (err, results) => {
+                console.log('id', req.params.id)
                 if (err) {
-                    res.sendStatus(401);
-                } else {
-                    res.sendStatus(results);
+                    console.log(err)
+                    res.sendStatus(500);
                 }
-            });
+                res.json(results);
+            });     
         }
     }
 );
+
 
 server.on("error", (e) => console.log(e))
 
