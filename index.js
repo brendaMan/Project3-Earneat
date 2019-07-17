@@ -347,16 +347,16 @@ server.get('/api/premios', (req, res) => {
 });
 
 // TODO: premios area personal
-server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
+server.get('/api/usuarios/:id/premios_canjeados',  passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-            connection.query('SELECT * from premios_canjeados WHERE id= ?', [req.params.id], (err, results) => {
+            connection.query('SELECT * from premios_canjeados WHERE usuario_id = ?', [req.params.id], (err, results) => {
             if (err) {
                 res.sendStatus(500);
             } else if (results.length === 0) {
                 res.sendStatus(404);
             } else {
-            res.json(results[0]);
+            res.json(results);
             }
         })
     } else {

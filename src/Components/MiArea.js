@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Card, Container, Divider, Form, Grid, Header, Image, Segment} from 'semantic-ui-react';
+import imagen_premio from './imagenes/imagen_premio.png';
 
 export default class MiArea extends Component {
     constructor(props){
@@ -19,7 +20,7 @@ export default class MiArea extends Component {
 
         fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
         .then(res=> res.json())
-        .then(data=> this.setState({premios_canjeados: data.premios_canjeados}))
+        .then(premios_canjeados=> this.setState({premios_canjeados: premios_canjeados}))
     }
     
     handleNewPassword = (event) => {
@@ -70,7 +71,7 @@ export default class MiArea extends Component {
                                 </Header>
                             <Segment>
                                 <Header as="h3" floated="left">
-                                    Premios canjeados
+                                     {premios_canjeados.length}  Premios canjeados
                                 </Header>
                                     <Divider clearing />
                                 
@@ -78,7 +79,7 @@ export default class MiArea extends Component {
                                         {premios_canjeados.map (premio_canjeado => 
                                 <Card>
                                     <Image
-                                        src="https://react.semantic-ui.com/images/avatar/large/matthew.png"
+                                        src= {imagen_premio}
                                         wrapped
                                         ui={false}
                                     />
