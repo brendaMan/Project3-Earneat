@@ -242,19 +242,35 @@ server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            const data= {
-                usuario_id: req.body.usuario_id,
-                premio_id: req.body.premio_id
-            }
-            connection.query('INSERT INTO premio_usuario SET ?', data, (err, results) => {
-            if (err) {
-                console.log(err)
-                res.sendStatus(500)
-            } else {
-                res.json(results);
-            }
-        });
-    }
+            console.log("SELECT puntos_saldo - premio.puntos AS puntos_restantes FROM puntos_saldo JOIN premio ON premio.id = ? WHERE puntos_saldo.id = ? ", req.body);
+            connection.query(`SELECT puntos_saldo - premio.puntos AS puntos_restantes
+            FROM puntos_saldo 
+            JOIN premio ON premio.id = ?
+            WHERE puntos_saldo.id = ?`, [req.body.premio_id, req.body.usuario_id], (err, results) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500)
+                } 
+                else if (results && results[0] && results[0].puntos_restantes >= 0) {
+                    const data= {
+                        usuario_id: req.body.usuario_id,
+                        premio_id: req.body.premio_id
+                    }
+                    connection.query('INSERT INTO premio_usuario SET ?', data, (err, results) => {
+                        if (err) {
+                            console.log(err)
+                            res.sendStatus(500)
+                        } else {
+                            res.json(results);
+                        }
+                    })
+                } else {
+                    console.log(results)
+                    res.sendStatus(409);
+                }
+
+            });
+        };
 });
 
 
