@@ -23,7 +23,6 @@ export default class AddUsuarioForm extends Component {
         .then (res =>{
                 if (res.status === 200) {
                     this.setState({
-                        message: `Se a creado una cuenta de usuario para ${this.state.nombre}.`,
                         nombre: "",
                         apellido: "",
                         email: "",
