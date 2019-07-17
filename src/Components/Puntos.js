@@ -58,7 +58,7 @@ export default class Puntos extends Component {
                     </Header>
                 <Divider/>
 {/* Inputs para el Form */}
-                        <Form.Group className='linea1Puntos' grouped> 
+                        <Form.Group className='linea1Puntos' grouped as='h3'> 
                             De  <b>{this.props.a_regalar}</b>  puntos, quiero dar 
                             <Input className='inputPuntos' icon='star' iconPosition='left'
                                 value={this.state.puntos} 
