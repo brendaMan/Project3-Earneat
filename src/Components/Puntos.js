@@ -34,8 +34,12 @@ export default class Puntos extends Component {
             headers: {'Content-Type': 'application/json'}
         })
         .then(res => {
-            if (res.status === 200) {
-                this.setState({message : `Tu regalo de ${this.state.puntos} puntos ha sido completado.`, visible: true})
+            if (res.status === 200 ) {
+                this.setState({
+                    message : `Tu regalo de ${this.state.puntos} puntos ha sido completado.`, 
+                    puntos: "", 
+                    razon: "", 
+                    visible: true})
                 this.loadFeed();
             }
             else this.setState({message: 'Lo siento, pero tu regalo no se ha completado. Verifica que hayas completado el formulario. Si el problema persiste, contacta a algun administrador.', visible: true})

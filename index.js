@@ -42,6 +42,11 @@ passport.use(new JwtStrategy({
 
 server.set("port", port); 
 server.use('/', express.static(path.join(__dirname, '/build')));
+server.use('/premios', express.static(path.join(__dirname, '/build')));
+server.use('/mi-area', express.static(path.join(__dirname, '/build')));
+server.use('/administrar-usuarios', express.static(path.join(__dirname, '/build')));
+server.use('/administrar-premios', express.static(path.join(__dirname, '/build')));
+
 
 // ?----------------------------- USER ----------------------------------------
 
@@ -241,21 +246,34 @@ server.post('/api/usuarios/:id/premios', passport.authenticate('jwt', {
         if (!req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            const data= {
-                a_usuario_id: req.body.a_usuario_id,
-                de_usuario_id: req.body.de_usuario_id, 
-                puntos: req.body.puntos,
-                razon: req.body.razon
-            }
-            connection.query('INSERT INTO premio_usario SET ?', data, (err, results) => {
-            if (err) {
-                console.log(err)
-                res.sendStatus(500)
-            } else {
-                res.json(results);
-            }
-        });
-    }
+            connection.query(`SELECT puntos_saldo - premio.puntos AS puntos_despues_de_canjear
+            FROM puntos_saldo 
+            JOIN premio ON premio.id = ?
+            WHERE puntos_saldo.id = ?`, [req.body.premio_id, req.body.usuario_id], (err, results) => {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500)
+                } 
+                else if (results && results[0] && results[0].puntos_despues_de_canjear >= 0) {
+                    const data= {
+                        usuario_id: req.body.usuario_id,
+                        premio_id: req.body.premio_id
+                    }
+                    connection.query('INSERT INTO premio_usuario SET ?', data, (err, results) => {
+                        if (err) {
+                            console.log(err)
+                            res.sendStatus(500)
+                        } else {
+                            res.json(results);
+                        }
+                    })
+                } else {
+
+                    res.sendStatus(409);
+                }
+
+            });
+        };
 });
 
 
@@ -365,19 +383,20 @@ server.get('/api/usuarios/:id/premios_canjeados',  passport.authenticate('jwt', 
 
 
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
-server.post('/api/premios/add', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-        if ( !req.user || !req.user.admin) {
-            res.sendStatus(401)
-        } else {
-            connection.query('INSERT into premio SET ?', (err, results) => {
-        if (err) {
-            res.sendStatus(500);
-        }
-            res.json(results);
-        });
-    }
-});
+// server.post('/api/premios/add', passport.authenticate('jwt', {
+//     session: false}), (req, res) => {
+//         if ( !req.user || !req.user.admin) {
+//             res.sendStatus(401)
+//         } else {
+//             connection.query('INSERT into premio SET ?',req.body, (err, results) => {
+//         if (err) {
+//             console.log(err); 
+//             res.sendStatus(500);
+//         }
+//             res.json(results);
+//         });
+//     }
+// });
 
 // TODO: passport.authenticate (solo administrador puede crear premios)
 server.post('/api/premios', passport.authenticate('jwt', {
