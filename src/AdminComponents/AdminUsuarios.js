@@ -19,7 +19,7 @@ export default class AdminUsuarios extends Component {
     }
 
     onDeleteUsuario = (id) => {
-        console.log('id front', id)
+        console.log('id utilizado en el delete usuario:', id)
         fetch(`/api/usuarios/${id}`, {
             method: 'DELETE'
         })
@@ -29,26 +29,15 @@ export default class AdminUsuarios extends Component {
 
     render() {
         return (
-                <Container 
-                    fluid={true}
-                    className='containerAll' 
-                >  
-                <Header  
-                    as='h2'     
-                    id='headerContainer' 
-                    block
-                    inverted color="teal"
-                >
+            <Container fluid={true} className='containerAll'>  
+                <Header as='h2' block inverted>
                     Administrar Usuarios
                 </Header> 
-                <Segment raised >
+            <Segment raised >
                 <Feed>
-                <Header 
-                    as='h3'
-                    color='teal'
-                >
-                    Listado de Usuarios
-                </Header>
+                    <Header textAlign='center' as='h3'>
+                        Listado de Usuarios
+                    </Header>
                 <Divider/>
                     {this.state.usuarios.map(usuario => 
                     <Feed.Event>
@@ -56,20 +45,17 @@ export default class AdminUsuarios extends Component {
                             <Icon name='user' size='massive' />
                         </Feed.Label>
                         <Feed.Content>
-                            {usuario.nombre} es usuario de EarnEat y {usuario.email} es el correo electrónico que utiliza en esta plataforma. 
-                            <Feed.Meta>
-                                <Button 
-                                    animated
-                                    circular
-                                    basic color='teal'
+                            <Feed.Summary>
+                                {usuario.nombre} {usuario.apillido} es usuario de EarnEat. El correo electrónico que utiliza en esta plataforma es {usuario.email}. 
+                                <Button floated='right' animated circular inverted color='black'
                                     onClick={()=> this.onDeleteUsuario(usuario.id)}
                                 >
                                     <Button.Content hidden>Delete</Button.Content>
                                     <Button.Content visible>
-                                        <Icon name='trash' />
+                                        <Icon name='trash' inverted color='black' />
                                     </Button.Content>
                                 </Button>
-                            </Feed.Meta>
+                            </Feed.Summary>
                         </Feed.Content>
                     </Feed.Event>)}
                 </Feed>
@@ -77,7 +63,7 @@ export default class AdminUsuarios extends Component {
                 <Segment raised >
                     <AddUsuarioForm onAddUsuario={this.loadUsuarios}/>
                 </Segment>
-                </Container>
+            </Container>
         )
     }
 }

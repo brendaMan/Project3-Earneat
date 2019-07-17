@@ -108,7 +108,6 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-console.log('get /api/dropdown/usuarios')
         if (!req || !req.user) {
             res.sendStatus(401)
         }
@@ -196,10 +195,15 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 // 2. si es admin, puede cambiar cualquier usuario
 // 3. si es usuario normal solo puede cambiarse a si mismo (o sale 401)
 // 4. si no es usuario -> 401
-server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
+server.patch('/api/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                connection.query('UPDATE usuario SET ? WHERE id = ?', (err, results) => {
+                user.hash = sha1(user.old_password + salt);
+                
+                // !Hay que calcular el hash de la vieja contraseña y comprobar si coincide con el hash de la base de datos
+                // !En caso de que coincida entonces se calcula el hash de la new password y se sustituye en la base de datos
+
+                connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
                     if (err) {
                         res.sendStatus(500);
                     } else if (results.length === 0) {
@@ -364,40 +368,41 @@ server.get('/api/premios/:id/premios_canjeados',  passport.authenticate('jwt', {
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 server.post('/api/premios/add', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        console.log("dentro de add")
         if ( !req.user || !req.user.admin) {
             res.sendStatus(401)
         } else {
-            const canjeado = {
-                usuario_id: req.body.usuario_id,
-                premio_id: req.body.premio_id, 
-                fecha: new Date()
-            }
-            console.log("el premio en el back es: ", canjeado)
-            connection.query('INSERT into premio_usuario SET ?', canjeado,(err, results) => {
-                if (err) {
-                    console.log(err)
-                    res.sendStatus(500);
-                }
-                    res.json(results);
-            });
+            connection.query('INSERT into premio SET ?', (err, results) => {
+        if (err) {
+            res.sendStatus(500);
+        }
+            res.json(results);
+        });
     }
 });
 
 // TODO: passport.authenticate (solo administrador puede crear premios)
 server.post('/api/premios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        const total = req.body;
+        delete total.message;
+        console.log('estoy en api premios y el body es:', req.body)
         if (req.user || req.user.admin) {
+            console.log("admin ok")
             connection.query('INSERT into premio SET ?', total, (err, results) => {
                 if (err) {
+                    console.log("ERROR: ", err)
                     res.sendStatus(500);
+                } else if (results.length === 0) {
+                    res.sendStatus(404);
                 } else {
-                    res.sendStatus(results);
+                    console.log("results> ", results)
+                res.json({message: "all good"});
                 }
-            }); 
+            })
+        } else {
+            res.sendStatus(401)
         }
-    }
-);
+    })
 
 // TODO: revisar logica (solo administrador puede cambiar premios)
 server.patch('api/premios/:id', passport.authenticate('jwt', {
@@ -410,6 +415,23 @@ server.patch('api/premios/:id', passport.authenticate('jwt', {
                     res.sendStatus(results);
                 }
             });
+        }
+    }
+);
+
+server.delete('/api/premios/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('DELETE FROM premio WHERE id = ?', req.params.id, (err, results) => {
+                console.log('id', req.params.id)
+                if (err) {
+                    console.log(err)
+                    res.sendStatus(500);
+                }
+                res.json(results);
+            });     
         }
     }
 );
