@@ -108,7 +108,6 @@ server.get('/api/usuarios/:id', passport.authenticate('jwt', {
 
 server.get('/api/dropdown/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-console.log('get /api/dropdown/usuarios')
         if (!req || !req.user) {
             res.sendStatus(401)
         }
@@ -199,9 +198,11 @@ server.post('/api/usuarios', passport.authenticate('jwt', {
 server.patch('/api/usuarios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
-                console.log("dentro del if trambolico")
-                console.log(req.body)
-                // if(req.password === req.hash) {}
+                user.hash = sha1(user.old_password + salt);
+                
+                // !Hay que calcular el hash de la vieja contraseña y comprobar si coincide con el hash de la base de datos
+                // !En caso de que coincida entonces se calcula el hash de la new password y se sustituye en la base de datos
+
                 connection.query('UPDATE usuario SET ? WHERE id = ?', [req.body, req.body.id], (err, results) => {
                     if (err) {
                         res.sendStatus(500);
