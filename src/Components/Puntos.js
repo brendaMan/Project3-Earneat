@@ -50,6 +50,7 @@ export default class Puntos extends Component {
         .catch (err => this.setState({message: 'Lo siento, pero tu regalo no se ha completado. Verifica que hayas completado el formulario. Si el problema persiste, contacta a algun administrador.', visible: true}))
     }  
     onClose = () => this.setState({ visible: false })
+
     
     render() {
         return (
