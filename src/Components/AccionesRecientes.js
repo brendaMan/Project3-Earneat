@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Feed, Icon, Header, Segment, Divider } from 'semantic-ui-react';
 import moment from 'moment';
 
+
 export default class AccionesRecientes extends Component {
 
     render() {
@@ -36,7 +37,7 @@ export default class AccionesRecientes extends Component {
                       <Icon 
                         name='star'
                       />
-                      {voto.puntos} puntos
+                       {voto.puntos} puntos
                     </Feed.Meta>
                   </Feed.Content>
                 </Feed.Event>

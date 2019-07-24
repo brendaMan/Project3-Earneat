@@ -19,9 +19,8 @@ export default class TopNavBar extends Component {
             >
                     <Menu.Item 
                         as='h3'
-                        header 
-                        name='EarnEat' 
-                        style={{'margin-left':'6%', 'font-weight': 'bold'}}
+                        header name='Earneat' 
+                        style={{'margin-left':'5%', 'font-weight': 'bold'}}
                     />
                     <Menu.Item position='right'> 
                         <Button

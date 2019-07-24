@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AccionesRecientes from './AccionesRecientes';
 import { Header, Container, Divider, Form, Segment, TextArea, Input, Modal, Icon, Button, Select} from 'semantic-ui-react';
 
+
 export default class Puntos extends Component {
     constructor(props){
         super(props);
@@ -80,11 +81,13 @@ export default class Puntos extends Component {
                             value={this.state.razon} 
                             onChange={e => this.setState({razon: e.target.value})}
                         >
-                            <p>La razón... </p> <TextArea/>
+                            <p className="lead emoji-picker-container">La razón... </p> 
+                            <TextArea />
                         </Form.Group>
 {/* Button para regalar puntos */}
                 <Container textAlign='right'>
                     <Button inverted color='teal' 
+                        circular={true} 
                         onClick={this.onRegalar}>
                         ¡REGALAR!
                     </Button>

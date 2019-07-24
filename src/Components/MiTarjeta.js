@@ -29,12 +29,12 @@ export default class MiTarjeta extends Component {
                     <Popup
                         trigger=
                             {<Card.Description> 
-                                Saldo de mis Puntos: 
+                                Mi saldo: 
                                 <span className="saldo">
                                 {this.props.saldo}
                                 </span>
                             </Card.Description>}
-                        content='Estos son los puntos que tienes disponible para canjear premios. Los puntos acumulados no desaparecen al final del mes, solo al canjear se te quitaran puntos de esta area.'
+                        content='Estos son los puntos que te dan tus compañeros y sirven para canjear premios.'
                         style={{borderRadius: '2em',
                             padding: '1em',
                             margin: '3em'}}
@@ -43,12 +43,12 @@ export default class MiTarjeta extends Component {
                     <Popup
                         trigger=
                             {<Card.Description> 
-                                Puntos para Regalar: 
+                                Puntos a regalar: 
                                 <span className="saldo">
                                 {this.props.a_regalar}
                                 </span>
                             </Card.Description>}
-                        content='Estos son los puntos que tienes disponible para regalar a tus compañeros. Al final del mes siempre es resetean para que puedas regalar mas puntos el mes que viene.'
+                        content='Estos son los puntos que tienes disponible para regalar a tus compañeros. Cada mes se actualizan.'
                         style={{borderRadius: '2em',
                             padding: '1em',
                             margin: '3em'}}

@@ -83,8 +83,10 @@ export default class MiArea extends Component {
                         </Form.Group>
                         <Grid>
                             <Grid.Column textAlign="center">
-                                <Button >
-                                    Aceptar
+                                <Button 
+                                inverted color='teal'
+                                circular={true} >
+                                    ACEPTAR
                                 </Button>
                             </Grid.Column>
                         </Grid>

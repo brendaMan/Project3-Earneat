@@ -78,7 +78,8 @@ export default class Premios extends Component {
                </Card.Content>
                
                <Card.Content extra textAlign='center'>
-                  <Button color='teal' onClick={() => this.onCanjear(premio)} >
+
+                  <Button inverted color='teal' circular={true} onClick={() => this.onCanjear(premio)} >
                      Me lo quedo
                   </Button>
 {/* Mensaje */}
