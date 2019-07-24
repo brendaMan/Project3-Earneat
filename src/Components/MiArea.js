@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Card, Container, Divider, Form, Grid, Header, Image, Segment} from 'semantic-ui-react';
-import imagen_premio from './imagenes/imagen_premio.png';
 
 export default class MiArea extends Component {
     constructor(props){
@@ -102,7 +101,7 @@ export default class MiArea extends Component {
                 <Card.Group centered >
                     {premios_canjeados.map (premio_canjeado => 
                     <Card>
-                        <Image src= {imagen_premio} wrapped ui={false}/>
+                        <Image src= {premio_canjeado.imagen}/>
                         <Card.Content>
                             <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
                             <Card.Meta />

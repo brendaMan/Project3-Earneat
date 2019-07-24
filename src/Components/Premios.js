@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Header, Container, Button, Card, Modal, Icon, Image, Segment, Divider} from 'semantic-ui-react';
-import imagen_premio from './imagenes/imagen_premio.png';
-
-
 
 export default class Premios extends Component {
   constructor(props){
@@ -56,7 +53,7 @@ export default class Premios extends Component {
         </Header>
 {/* Header con el saldo de puntos que tienes para comprar.  */}
         <Segment raised>
-          <Header as='h3' block textAlign='center' color='teal'>
+          <Header as='h3' textAlign='center' color='teal'>
              ¡ Enhorabuena {user.nombre}, tienes acumulados {this.props.saldo} puntos !
           </Header>
         <Divider/>
@@ -64,11 +61,7 @@ export default class Premios extends Component {
         <Card.Group centered >
          {premios.map (premio => 
           <Card>
-            <Image
-              size='tiny'
-              src = {imagen_premio}
-              wrapped ui={false} 
-            />
+            <Image src = {premio.imagen} />
             <Card.Content>
               <Card.Header className='premio-header' textAlign= 'center' >{premio.nombre}</Card.Header>
                <Card.Meta className='date' textAlign= 'center'>

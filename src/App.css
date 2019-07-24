@@ -102,11 +102,17 @@ element.style {
   margin: 0px 10px;
 }
 
+/* -------------------------------------- Premios area --------------------------------------- */
+
+.ui.image {
+  position: center center; 
+  width: 290px;
+  height: 290px;
+} 
+
 .ui.teal.inverted.button {
   color: black !important;
   position: relative;
-
-  
 }
 
 /* -------------------------------------- Personal area -------------------------------------- */

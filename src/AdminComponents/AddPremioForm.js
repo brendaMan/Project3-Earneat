@@ -70,11 +70,11 @@ export default class AddPremioForm extends Component {
                         type="number"
                         placeholder='Points' />
                 </Form.Field>
-                {/* <Form.Field>
+                <Form.Field>
                     <label>URL de la Imagen</label>
                     <Form.Input 
                         placeholder='Image URL' />
-                </Form.Field> */}
+                </Form.Field>
                 <Form.Field>
                     <label>Detalles</label>
                     <Form.TextArea
