@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      saldo:0,
+      saldo: 0,
       a_regalar: 0,
       premio_canjeado: []
     }
@@ -22,12 +22,12 @@ export default class Dashboard extends Component {
   }
   loadSaldo = () => {
     fetch(`/api/usuarios/${this.props.user.id}/puntos_saldo`)
-    .then(res=> res.json())
-    .then(data=> this.setState({saldo: data.puntos_saldo}))
+      .then(res=> res.json())
+      .then(data=> this.setState({saldo: data.puntos_saldo}))
 
     fetch(`/api/usuarios/${this.props.user.id}/puntos_dados`)
-    .then(res=> res.json())
-    .then(data=> this.setState({a_regalar: data.puntos_restantes}))
+      .then(res=> res.json())
+      .then(data=> this.setState({a_regalar: data.puntos_restantes}))
     
     //fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
     //.then(res=> res.json())
@@ -73,7 +73,7 @@ export default class Dashboard extends Component {
           { user.admin ? 
 // Navegacion para administradores
             <Switch>
-              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar, loadSaldo: this.loadSaldo}} />)} />
               <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo, loadSaldo: this.loadSaldo }} />)} />
               <Route path="/mi-area" component={(p) => (<MiArea {...p} {...{ user: user, premio_canjeado : this.state.premio_canjeado}} />)} />
               <Route path="/administrar-usuarios" component={AdminUsuarios} />
@@ -82,8 +82,8 @@ export default class Dashboard extends Component {
                   :
 // Navegacion para resto de usuarios
             <Switch>
-              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar}} />)} />
-              <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo}} />)} />
+              <Route path="/" exact render={(p) => (<Puntos {...p} {...{ user: user, a_regalar:this.state.a_regalar, loadSaldo: this.loadSaldo}} />)} />
+              <Route path="/premios" component= {(p) => (<Premios {...p} {...{ user: user, saldo : this.state.saldo, loadSaldo: this.loadSaldo}} />)} />
               <Route path="/mi-area" component={(p) => (<MiArea {...p} {...{ user: user, premio_canjeado : this.state.premio_canjeado}} />)} />
               {/* <Route component={MissingPage} /> */}
             </Switch>

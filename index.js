@@ -329,23 +329,43 @@ server.post('/api/logout', (req, res, nex) => {
 // TODO: passport.authenticate (solo usuarios pueden votar)
 server.post('/api/votos', passport.authenticate('jwt', {
     session: false}), (req, res) => {
-        if (!req.user || !req.user.admin) {
+        if (!req.user) {
             res.sendStatus(401)
-        } else {
-            const data= {
-                a_usuario_id: req.body.a_usuario_id,
-                de_usuario_id: req.body.de_usuario_id, 
-                puntos: req.body.puntos,
-                razon: req.body.razon
-            }
-            connection.query('INSERT INTO voto SET ?', data, (err, results) => {
-            if (err) {
-                console.log(err)
-                res.sendStatus(500)
-            } else {
-                res.json(results);
-            }
-        });
+        } 
+        // inspeccionar lo que nos estan mandando (req.body)
+        else if (!req.body.a_usuario_id || !req.body.de_usuario_id || !req.body.puntos || !req.body.razon || req.body.puntos < 0) {
+            res.sendStatus(400);
+        }
+        else {
+            connection.query('SELECT puntos_restantes FROM puntos_dados WHERE id=?',[req.user.id],(err,results)=>{
+                if (err) {
+                    console.log(err)
+                    return res.sendStatus(500) 
+                } 
+                const puntos_restantes = results && results[0] && results[0].puntos_restantes;
+                const noTieneLosPuntos = Number(req.body.puntos) >= puntos_restantes;
+                //console.log('SELECT puntos_restantes FROM puntos_dados WHERE id=?', { err, puntos_restantes, "Number(req.body.puntos)": Number(req.body.puntos), noTieneLosPuntos })
+                
+                if (noTieneLosPuntos){ /// tiene puntos suficientes? si no, manda 409 (o 403)
+                    console.log('Lo siento. No tienes puntos suficientes')
+                    res.sendStatus(403)
+                } else {
+                    const data= {
+                        a_usuario_id: req.body.a_usuario_id,
+                        de_usuario_id: req.body.de_usuario_id, 
+                        puntos: req.body.puntos,
+                        razon: req.body.razon
+                    }
+                    connection.query('INSERT INTO voto SET ?', data, (err, results) => {
+                        if (err) {
+                            console.log(err)
+                            res.sendStatus(500)
+                        } else {
+                            res.json(results);
+                        }
+                    });
+                }
+        })
     }
 });
 
