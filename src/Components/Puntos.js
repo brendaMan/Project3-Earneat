@@ -19,6 +19,7 @@ export default class Puntos extends Component {
         fetch('/api/dropdown/usuarios') 
         .then(res => res.json())
         .then(data => this.setState({usuarios : data.filter(u=> u.key !== props.user.id)}))
+        
         this.loadFeed()
     }
 
@@ -34,9 +35,14 @@ export default class Puntos extends Component {
             headers: {'Content-Type': 'application/json'}
         })
         .then(res => {
-            if (res.status === 200) {
-                this.setState({message : `Tu regalo de ${this.state.puntos} puntos ha sido completado.`, visible: true})
+            if (res.status === 200 ) {
+                this.setState({
+                    message : `Tu regalo de ${this.state.puntos} puntos ha sido completado.`, 
+                    puntos: "", 
+                    razon: "", 
+                    visible: true})
                 this.loadFeed();
+                this.props.loadSaldo();
             }
             else this.setState({message: 'Lo siento, pero tu regalo no se ha completado. Verifica que hayas completado el formulario. Si el problema persiste, contacta a algun administrador.', visible: true})
         })
@@ -86,7 +92,9 @@ export default class Puntos extends Component {
                 </Form>
             </Segment> 
 {/* Nueva pantalla que muestra un mensaje al regalar puntos. */}
-                    <Modal centered={false} size='mini'
+                    <Modal 
+                        className='modal'
+                        centered={false} size='mini'
                         open={this.state.visible}
                         close={this.onClose}
                     >

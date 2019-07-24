@@ -37,11 +37,9 @@
 
 /* -------------------------------------- CSS Grid ALL --------------------------------------- */
 
-/* .gridAll {
-  padding-right: 10px;
-  padding-left: 10px;
-  height: 110vh;
-} */
+.gridAll {
+  height: 100vh;
+}
 
 /* ------------------------------------ CSS Display Area ------------------------------------- */
 
@@ -52,12 +50,6 @@
 .containerAll{
   padding: 22px 1% 5%;
 }
-
-/* .displayArea {
-  top: 20px;
-  bottom: 20px;
-  left: 10px;
-} */
 
 /* --------------------------------------- CSS SideBar --------------------------------------- */
 
@@ -78,10 +70,6 @@
 
 element.style {
   top: 14px;
-}
-
-.adminForms {
-  padding: 10px;
 }
 
 .saldo {
@@ -127,4 +115,8 @@ element.style {
 .listadoPremio2 {
   font-weight: normal;
   padding-left: 10px;
+}
+
+.page.modals.dimmer {
+  z-index:999999;
 }

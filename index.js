@@ -203,7 +203,6 @@ server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
         if (req.user && (req.user.admin || req.user.id === req.params.id) ) {
                 const oldhash = sha1(req.body.old_password + salt);
                 user.hash = sha1(req.body.new_password + salt);
-
                 console.log('UPDATE usuario SET ? WHERE id = ? AND hash = ?', user, req.body.id, oldhash)
 
                 connection.query('UPDATE usuario SET ? WHERE id = ? AND hash = ?', [user, req.body.id, oldhash], (err, results) => {
@@ -235,7 +234,7 @@ server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
                 if (err) {
                     console.log(err)
                     res.sendStatus(500);
-                }
+                }   
                 res.json(results);
             });     
         }
