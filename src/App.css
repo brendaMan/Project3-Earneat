@@ -105,9 +105,14 @@ element.style {
 /* -------------------------------------- Premios area --------------------------------------- */
 
 .ui.image {
-  /* position: center center; */
+  position: center center; 
   width: 290px;
   height: 290px;
+} 
+
+.ui.teal.inverted.button {
+  color: black !important;
+  position: relative;
 }
 
 /* -------------------------------------- Personal area -------------------------------------- */
@@ -127,4 +132,10 @@ element.style {
 
 .page.modals.dimmer {
   z-index:999999;
+}
+
+/* ----------------------------------- Acciones recientes area ----------------------------------- */
+.ui-segment {
+  height: 500px;
+  overflow-y: scroll;
 }
