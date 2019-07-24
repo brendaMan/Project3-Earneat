@@ -116,3 +116,7 @@ element.style {
   font-weight: normal;
   padding-left: 10px;
 }
+
+.page.modal.dimmer {
+  z-index:999999;
+}

@@ -90,7 +90,9 @@ export default class Puntos extends Component {
                 </Form>
             </Segment> 
 {/* Nueva pantalla que muestra un mensaje al regalar puntos. */}
-                    <Modal centered={false} size='mini'
+                    <Modal 
+                        className='modal'
+                        centered={false} size='mini'
                         open={this.state.visible}
                         close={this.onClose}
                     >

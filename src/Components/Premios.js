@@ -83,6 +83,7 @@ export default class Premios extends Component {
                   </Button>
 {/* Mensaje */}
                   <Modal 
+                    className='modal'
                     centered={false} size='mini'
                     open={this.state.visible}
                     close={this.onClose}
