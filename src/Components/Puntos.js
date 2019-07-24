@@ -19,6 +19,7 @@ export default class Puntos extends Component {
         fetch('/api/dropdown/usuarios') 
         .then(res => res.json())
         .then(data => this.setState({usuarios : data.filter(u=> u.key !== props.user.id)}))
+        
         this.loadFeed()
     }
 
@@ -41,6 +42,7 @@ export default class Puntos extends Component {
                     razon: "", 
                     visible: true})
                 this.loadFeed();
+                this.props.loadSaldo();
             }
             else this.setState({message: 'Lo siento, pero tu regalo no se ha completado. Verifica que hayas completado el formulario. Si el problema persiste, contacta a algun administrador.', visible: true})
         })
