@@ -6,8 +6,8 @@ export default class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "mari@hotmail.com",
-            password: "123456",
+            email: "",
+            password: "",
             message: ""
         };
     }
