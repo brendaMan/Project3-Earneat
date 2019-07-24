@@ -100,7 +100,7 @@ export default class MiArea extends Component {
                 <Card.Group centered >
                     {premios_canjeados.map (premio_canjeado => 
                     <Card>
-                        <Image src= {imagen_premio} wrapped ui={false}/>
+                        <Image src= {imagen_premio}/>
                         <Card.Content>
                             <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
                             <Card.Meta />
