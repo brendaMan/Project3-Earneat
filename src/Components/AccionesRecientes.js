@@ -22,51 +22,34 @@ export default class AccionesRecientes extends Component {
               
                 <Feed.Event>
                   <Feed.Label>
-                    <Icon 
-                      circular
-                      name='star outline'
-                      inverted color="teal"
-                    />
+                    <Icon circular name='star outline' inverted color="teal"/>
                   </Feed.Label>
                   <Feed.Content>
                     <Feed.Summary>
-                      <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado {voto.puntos} puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.descripcion}<Icon name='quote right'/> 
-                      <Feed.Date>{moment(voto.fecha).add(2, 'h').fromNow()}</Feed.Date>
+                      <span className='nombre'>{voto.de_nombre}</span> le ha regalado {voto.puntos} puntos a <span className='nombre'>{voto.a_nombre}</span>. La razón... <Icon name='quote left'/> {voto.descripcion} <Icon name='quote right'/> 
                     </Feed.Summary>
                     <Feed.Meta>
-                      <Icon 
-                        name='star'
-                      />
-                       {voto.puntos} puntos
+                      <Icon name='clock'/>
+                      {moment(voto.fecha).add(2, 'h').fromNow()}
                     </Feed.Meta>
                   </Feed.Content>
                 </Feed.Event>
                 :
 // Noticia de Premios Canjeados 
                 <Feed.Event>
-                <Feed.Label>
-                    <Icon 
-                      name='gift'
-                      color= 'teal'
-                      circular
-                    />
-                </Feed.Label>
-                <Feed.Content>
-                  <Feed.Summary>
-                    <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos} puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
-                      <Feed.Date>{moment(voto.fecha).add(2, 'h').fromNow()}</Feed.Date>
-                  </Feed.Summary>
-                  <Feed.Meta>
-                    <Icon 
-                      name='tags' 
-                      // inverted color='red'
-                    />
-                    {voto.puntos} puntos
-                  </Feed.Meta>
-                </Feed.Content>
-                </Feed.Event>
-              )}
-              
+                  <Feed.Label>
+                      <Icon name='gift' color= 'teal' circular/>
+                  </Feed.Label>
+                  <Feed.Content>
+                    <Feed.Summary>
+                      <span className='nombre'>{voto.de_nombre}</span> ha canjeado {voto.puntos} puntos por lo que ahora tiene... <Icon name='quote left' size='small'/> {voto.descripcion} <Icon name='quote right' size='small'/>
+                    </Feed.Summary>
+                    <Feed.Meta >
+                      <Icon name='clock outline'/>
+                      {moment(voto.fecha).add(2, 'h').fromNow()}
+                    </Feed.Meta>
+                  </Feed.Content>
+                </Feed.Event>)}
             </Feed>
           </Segment>
         )

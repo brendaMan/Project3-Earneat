@@ -4,7 +4,7 @@ import { Menu, Button} from 'semantic-ui-react';
 export default class TopNavBar extends Component {
     onLogOut = () => fetch('/api/logout', {method: "POST"})
         .then(res => {
-            if (res.status === 200) window.location.reload()
+            if (res.status === 200) window.location.href = '/';
         })
     
     render() {
