@@ -7,15 +7,18 @@ export default class AccionesRecientes extends Component {
     render() {
         return (
           <Segment raised>
-            <Feed size='large'>
+            <Feed size='large' className="ui-segment">
               <Header 
                 as='h3'
                 color="teal">
               Acciones Recientes</Header>
               <Divider/>
+
+              
               {this.props.feed.map(voto => 
 // Noticias de Puntos Regalados
                 voto.a_usuario_id ? 
+              
                 <Feed.Event>
                   <Feed.Label>
                     <Icon 
@@ -26,8 +29,7 @@ export default class AccionesRecientes extends Component {
                   </Feed.Label>
                   <Feed.Content>
                     <Feed.Summary>
-                      <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado {voto.puntos}
-                        puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.descripcion}<Icon name='quote right'/> 
+                      <Feed.User>{voto.de_nombre}</Feed.User> le ha regalado {voto.puntos} puntos a <Feed.User>{voto.a_nombre}</Feed.User>... <Icon name='quote left'/>{voto.descripcion}<Icon name='quote right'/> 
                       <Feed.Date>{moment(voto.fecha).add(2, 'h').fromNow()}</Feed.Date>
                     </Feed.Summary>
                     <Feed.Meta>
@@ -50,8 +52,7 @@ export default class AccionesRecientes extends Component {
                 </Feed.Label>
                 <Feed.Content>
                   <Feed.Summary>
-                    <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos}
-                      puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
+                    <Feed.User>{voto.de_nombre}</Feed.User> ha canjeado {voto.puntos} puntos por lo que ahora tiene... <Feed.User>{voto.descripcion}</Feed.User>
                       <Feed.Date>{moment(voto.fecha).add(2, 'h').fromNow()}</Feed.Date>
                   </Feed.Summary>
                   <Feed.Meta>
@@ -62,8 +63,9 @@ export default class AccionesRecientes extends Component {
                     {voto.puntos} puntos
                   </Feed.Meta>
                 </Feed.Content>
-                </Feed.Event>    
+                </Feed.Event>
               )}
+              
             </Feed>
           </Segment>
         )

@@ -82,9 +82,9 @@ export default class Puntos extends Component {
                         </Form.Group>
 {/* Button para regalar puntos */}
                 <Container textAlign='right'>
-                    <Button 
+                    <Button inverted color='teal' 
                         onClick={this.onRegalar}>
-                        Regalar
+                        ¡REGALAR!
                     </Button>
                 </Container>
                 </Form>
