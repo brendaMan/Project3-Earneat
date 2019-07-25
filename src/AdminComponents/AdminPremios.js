@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddPremioForm from './AddPremioForm';
+import AddPremioForm from './PremioForm';
 import { Container, Header, Segment, Feed, Icon, Divider, Button, Checkbox, Popup } from "semantic-ui-react";
 
 
@@ -50,7 +50,7 @@ export default class AdminUsuarios extends Component {
             </Header> 
 {/* Formulario Premios */}
             <Segment raised >
-                <AddPremioForm premio={this.state.premioAEditar} onAddPremio={this.loadPremios}/>
+                <AddPremioForm premio={this.state.premioAEditar} onLoadPremios={this.loadPremios}/>
             </Segment>
             <Segment raised >
 {/* Listado de premios donde se pueden activar/desactivar y editar */}

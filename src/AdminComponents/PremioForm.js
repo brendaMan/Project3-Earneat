@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Segment, Container, Popup} from 'semantic-ui-react';
 
-export default class AddPremioForm extends Component {
+export default class PremioForm extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -12,7 +12,6 @@ export default class AddPremioForm extends Component {
             activo: "",
             message: ""
         };
-
     }
     onCrearPremio = () => {
         fetch ('/api/premios', {
@@ -23,15 +22,14 @@ export default class AddPremioForm extends Component {
         .then (res => {
                 if (res.status === 200) {
                     this.onClear()
-                    this.props.onAddPremio() 
+                    this.props.onLoadPremios() 
                 }   
                 else this.onError();
         })
-        .catch ((err) => {
-            console.log("ERROR: ", err)
+        .catch (() => {
             this.onError()
         })
-    }
+    };
 
     componentWillReceiveProps = (newProps) => {
         this.setState({
@@ -53,7 +51,7 @@ export default class AddPremioForm extends Component {
             .then (res => {
                 if (res.status === 200) {
                     this.onClear()
-                    this.props.onAddPremio() 
+                    this.props.onLoadPremios() 
                 }
         })
             .catch (() => {

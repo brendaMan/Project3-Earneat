@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AddUsuarioForm from './AddUsuarioForm';
+import UsuarioForm from './UsuarioForm';
 import { Container, Header, Segment, Feed, Icon, Divider, Button} from "semantic-ui-react";
 
 
@@ -32,7 +32,12 @@ export default class AdminUsuarios extends Component {
             <Container fluid={true} className='containerAll'>  
                 <Header as='h2' block inverted>
                     Administrar Usuarios
-                </Header> 
+                </Header>
+{/* Usuario Form */}
+                <Segment raised >
+                    <UsuarioForm onLoadUsuario={this.loadUsuarios}/>
+                </Segment> 
+{/* Listado Usuarios */}
             <Segment raised >
                 <Feed>
                     <Header textAlign='center' as='h3'>
@@ -59,9 +64,6 @@ export default class AdminUsuarios extends Component {
                         </Feed.Content>
                     </Feed.Event>)}
                 </Feed>
-                </Segment>
-                <Segment raised >
-                    <AddUsuarioForm onAddUsuario={this.loadUsuarios}/>
                 </Segment>
             </Container>
         )
