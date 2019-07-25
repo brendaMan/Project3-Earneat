@@ -127,16 +127,22 @@ element.style {
 /* ----------------------------------- Admin Premimos area ----------------------------------- */
 
 .listadoPremio1 {
-  font-size: 115%;
+  font-size: 120%;
+  padding-left: 30px;
 }
 
 .listadoPremio2 {
   font-weight: normal;
-  padding-left: 10px;
+  padding-left: 40px;
 }
 
 .page.modals.dimmer {
   z-index:999999;
+}
+
+.spaceBetween {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* ----------------------------------- Acciones recientes area ----------------------------------- */

@@ -423,7 +423,6 @@ server.post('/api/premios', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         const total = req.body;
         delete total.message;
-        console.log('estoy en api premios y el body es:', req.body)
         if (req.user || req.user.admin) {
             console.log("admin ok")
             connection.query('INSERT into premio SET ?', total, (err, results) => {
@@ -433,7 +432,6 @@ server.post('/api/premios', passport.authenticate('jwt', {
                 } else if (results.length === 0) {
                     res.sendStatus(404);
                 } else {
-                    console.log("results> ", results)
                 res.json({message: "all good"});
                 }
             })
@@ -443,14 +441,16 @@ server.post('/api/premios', passport.authenticate('jwt', {
     })
 
 // TODO: revisar logica (solo administrador puede cambiar premios)
-server.patch('api/premios/:id', passport.authenticate('jwt', {
+server.patch('/api/premios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
+        delete req.body.message;
         if (req.user || req.user.admin) {
-            connection.query('UPDATE premio SET ? WHERE id = ?', (err, results)=> {
+            console.log("admin ok")
+            connection.query('UPDATE `premio` SET ? WHERE id = ?', [req.body, req.params.id], (err, results)=> {
                 if (err) {
                     res.sendStatus(401);
                 } else {
-                    res.sendStatus(results);
+                    res.json(results);
                 }
             });
         }
