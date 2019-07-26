@@ -16,7 +16,8 @@ export default class AdminUsuarios extends Component {
     loadPremios = () => {
         fetch('/api/premios')
         .then (res => res.json())
-        .then (data => this.setState({premios: data}))
+        .then (data => this.setState({premios: data, premioAEditar: {}}))
+        //this.setState({  })
     }
 
     onEditar = (premio) => {

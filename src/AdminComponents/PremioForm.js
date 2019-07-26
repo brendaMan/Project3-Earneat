@@ -13,6 +13,7 @@ export default class PremioForm extends Component {
             message: ""
         };
     }
+
     onCrearPremio = () => {
         fetch ('/api/premios', {
             method: "POST",
@@ -31,6 +32,25 @@ export default class PremioForm extends Component {
         })
     };
 
+    onEditarPremio = () => {
+        fetch (`/api/premios/${this.state.id}`, {
+            method: "PATCH",
+            body: JSON.stringify(this.state),
+            headers: {'Content-Type':'application/json'} 
+        }) 
+            .then (res => {
+                if (res.status === 200) {
+                    debugger
+                    this.onClear();
+                    this.props.onLoadPremios();
+                }
+                else this.onError();
+        })
+            .catch (() => {
+                this.onError()
+            })
+    }
+
     componentWillReceiveProps = (newProps) => {
         this.setState({
             id: newProps.premio.id,
@@ -40,24 +60,6 @@ export default class PremioForm extends Component {
             descripcion: newProps.premio.descripcion,
             activo: newProps.premio.activo
         })
-    }
-    
-    onEditarPremio = () => {
-        fetch (`/api/premios/${this.state.id}`, {
-            method: "PATCH",
-            body: JSON.stringify(this.state),
-            headers: {'Content-Type':'application/json'}
-        })
-            .then (res => {
-                if (res.status === 200) {
-                    this.onClear();
-                    this.props.onLoadPremios();
-                }
-                else this.onError();
-        })
-            .catch (() => {
-                this.onError()
-            })
     }
 
     onError = () => {
