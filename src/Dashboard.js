@@ -63,13 +63,7 @@ export default class Dashboard extends Component {
         </Segment>
         </Grid.Column>
 {/* Grid with Content Area */}
-        <Grid.Column
-        className="displayAreaGrid" 
-         width={13}
-        >
-          {/* <Segment
-            className="displayArea" 
-          > */}
+        <Grid.Column className="displayAreaGrid" width={13}>
           { user.admin ? 
 // Navegacion para administradores
             <Switch>

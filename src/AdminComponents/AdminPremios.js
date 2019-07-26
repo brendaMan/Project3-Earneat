@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import AddPremioForm from './PremioForm';
 import { Container, Header, Segment, Feed, Icon, Divider, Button, Checkbox, Popup } from "semantic-ui-react";
 
-
 export default class AdminUsuarios extends Component {
     constructor (props){
         super(props);
@@ -24,14 +23,15 @@ export default class AdminUsuarios extends Component {
         this.setState({ premioAEditar: premio })
     }
 
-    // onDesactivarPremio = (id) => {
-    //     fetch(`api/premios/${id}`, {
-    //        method: 'PATCH',
-    //        body: JSON.stringify({ active: 0 })
-    //     })
-    //     .then (res => res.json())
-    //     .then (data => this.loadPremios())
-    // }
+    onDesactivarPremio = (premio) => {
+        fetch(`/api/premios/${premio.id}`, {
+           method: 'PATCH',
+           body: JSON.stringify({ activo: premio.activo ? 0 : 1 }),
+           headers: {'Content-Type':'application/json'}
+        })
+        .then (res => res.json())
+        .then (data => this.loadPremios())
+    }
 
     // onDeletePremio = (id) => {
     //     console.log('id utilizado en el delete premio:', id)
@@ -64,15 +64,12 @@ export default class AdminUsuarios extends Component {
                         <Feed.Label>
 {/* Botton editar premio */}
                             <Button animated circular inverted color='grey'
-                                onClick={ () => this.onEditar(premio) } 
-                            >
+                                onClick={ () => this.onEditar(premio) } >
                                 <Button.Content hidden>Editar</Button.Content>
-                                <Button.Content visible>
-                                    <Icon name='gift'  color='teal'/>
-                                </Button.Content>
+                                <Button.Content visible><Icon name='gift' color='teal'/></Button.Content>
                             </Button>
                         </Feed.Label>
-                        <Feed.Content className>
+                        <Feed.Content>
                             <Feed.Summary>
                                 <span className='listadoPremio1'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
                             </Feed.Summary>
@@ -81,11 +78,11 @@ export default class AdminUsuarios extends Component {
 {/* Toggle Activo/noActivo */}
                                 <Popup 
                                     trigger={<Checkbox toggle
-                                    value= {premio.activo}
-                                    defaultChecked={1}
-                                    // onClick= {() => this.onPremioActivo(premio.id)}
-                                    />}
-                                    content='Toggle a la izquierda para desactivar premio y a la derecha para activarlo nuevamente.'
+                                                value= {premio.activo}
+                                                checked={premio.activo}
+                                                onChange= {() => this.onDesactivarPremio(premio)}
+                                            />}
+                                    content='"Toggle" a la derecha para desactivar premio y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
                                     basic inverted
                                 />
 {/* Boton de DELETE */}

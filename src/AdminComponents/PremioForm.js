@@ -50,9 +50,10 @@ export default class PremioForm extends Component {
         })
             .then (res => {
                 if (res.status === 200) {
-                    this.onClear()
-                    this.props.onLoadPremios() 
+                    this.onClear();
+                    this.props.onLoadPremios();
                 }
+                else this.onError();
         })
             .catch (() => {
                 this.onError()
@@ -119,16 +120,18 @@ export default class PremioForm extends Component {
                         placeholder='Details' />
                 </Form.Field>
 {/* Buttons para crear o editar premios */}
-                <Container>
-                    <Form.Button inverted circular type="submit" floated='left'
+                <Container textAlign="center">
+                {this.state.id === 0 ? 
+                    <Form.Button inverted circular type="submit" 
                         onClick={this.onCrearPremio}
-                        > Crear Premio </Form.Button>
-                    <Form.Button inverted circular type="submit" floated='right'
+                        > Guardar </Form.Button>
+                :
+                <Form.Button inverted circular type="submit" 
                         onClick={this.onEditarPremio}
-                        > Editar Premio </Form.Button>
-                    
+                        > Guardar </Form.Button>
+                }
                 </Container>
-                {this.state.message}
+                <h4 style={{ color: 'red', textAlign: 'center'}}>{this.state.message}</h4>
             </Form>
             </Segment>
         )
