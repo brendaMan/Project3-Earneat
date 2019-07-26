@@ -401,6 +401,27 @@ server.get('/api/usuarios/:id/premios_canjeados',  passport.authenticate('jwt', 
     }
 })
 
+//TODO: premios area personal para marcarlos como utilizados.
+server.patch('/api/usuarios/:usuario_id/premios/:premio_usuario_id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        delete req.body.message;
+        console.log('req.user.id !== req.params.usuario_id', { 'req.user.id': req.user.id, 'req.params.usuario_id': req.params.usuario_id});
+        if (!req.user || req.user.id != req.params.usuario_id) {
+            res.sendStatus(403);
+        } else {
+            console.log("admin ok")
+            connection.query('UPDATE `premio_usuario` SET `utilizado`= 1 WHERE id = ? AND usuario_id = ?', [req.params.premio_usuario_id, req.params.usuario_id], (err, results)=> {
+                if (err) {
+                    console.log(err);
+                    res.sendStatus(500);
+                } else {
+                    res.json(results);
+                }
+            });
+        }
+    }
+);
+
 
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 // server.post('/api/premios/add', passport.authenticate('jwt', {

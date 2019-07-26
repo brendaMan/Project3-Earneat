@@ -103,7 +103,7 @@ export default class PremioForm extends Component {
                 <Form.Field>
                     <label>URL de la Imagen</label>
                     <Popup
-                        trigger={<Form.Input 
+                        trigger= {<Form.Input 
                             value= {this.state.imagen}
                             onChange= {e => this.setState({imagen: e.target.imagen})}
                             placeholder='Image URL' />}

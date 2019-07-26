@@ -47,10 +47,10 @@ export default class UsuarioForm extends Component {
     render() {
         return (
             <Segment className="adminForms" inverted tertiary>
-                <Header as='h3' textAlign='center'>
+                {/* <Header as='h3' textAlign='center'>
                     Dar de Alta a Nuevos Usuarios
                 </Header>
-                <Divider/>
+                <Divider/> */}
             <Form inverted>
                 <Form.Field>
 {/* Input Nombre */}
@@ -96,7 +96,7 @@ export default class UsuarioForm extends Component {
                     type="submit"
                     onClick={this.onCrearUsuario}
                 >
-                    Crear usuario
+                    Guardar
                 </Form.Button>
                 {this.state.message}
                 </Container> 

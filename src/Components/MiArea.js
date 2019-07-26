@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Card, Container, Divider, Form, Grid, Header, Image, Segment} from 'semantic-ui-react';
+import { Button, Card, Container, Divider, Form, Popup, Header, Image, Segment} from 'semantic-ui-react';
 
 export default class MiArea extends Component {
     constructor(props){
@@ -15,12 +15,15 @@ export default class MiArea extends Component {
             old_password: "",
         }
         this.handleClick = this.handleClick.bind(this)
-
-
-        fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
-        .then(res=> res.json())
-        .then(premios_canjeados=> this.setState({premios_canjeados: premios_canjeados}))
+        this.onLoadPremiosCanjeados()
     }
+
+    onLoadPremiosCanjeados = () => {
+        console.log('loadPremiosCanjeados()');
+        fetch(`/api/usuarios/${this.props.user.id}/premios_canjeados`)
+            .then(res=> res.json())
+            .then(premios_canjeados=> this.setState({premios_canjeados: premios_canjeados}))
+        }
     
     handleNewPassword = (event) => {
         this.setState({new_password: event.target.value})
@@ -30,16 +33,13 @@ export default class MiArea extends Component {
     }
     handleClick = (evento) => {
         const data = new FormData(evento.target)
-        console.log(data)
         this.setState({done: !this.state.done})
-        console.log("user",this.state.user)
         const nuevo_hash= {
             id: this.state.user.id, 
             hash: this.state.user.hash,
             new_password: this.state.new_password,
             old_password: this.state.old_password
         }
-        console.log("nuevo_hash", nuevo_hash)
         fetch('/api/usuarios/'+this.state.user.id, {
             method: 'PATCH',
             body: JSON.stringify(nuevo_hash),
@@ -56,62 +56,102 @@ export default class MiArea extends Component {
             })
     }
 
+    onDisfrutado = (premio_canjeado) => { 
+        console.log('onDisfrutado', premio_canjeado)
+        fetch(`/api/usuarios/${premio_canjeado.usuario_id}/premios/${premio_canjeado.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(premio_canjeado),
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => {
+                console.log('onDisfrutado', res);
+                if (res.status === 200) {
+                    this.setState({message: 'Tu premio sera marcado como utilizado.', visible: true});
+                    this.onLoadPremiosCanjeados();
+                }
+                else this.setState({message: 'Ha occurido un error. Vuelve a tratar más tarde o contacta a un administrador.', visible: true})
+            })
+            .catch (err => {
+                this.setState({message: 'Ha occurido un error. Vuelve a tratar más tarde o contacta a un administrador.', visible: true})
+            })
+    }
 
     render() {
-        const premios_canjeados = this.state.premios_canjeados;
+        console.log({ canjeados: this.state.premios_canjeados })
+        const premios_canjeados = this.state.premios_canjeados.filter(premio => premio.utilizado === 0)
+        const premios_canjeados_utilizados = this.state.premios_canjeados.filter(premio => premio.utilizado === 1)
     return (
         <Container className='containerAll' fluid={true} >
             <Header as='h2' id='headerContainer' block inverted color="teal">
                 Mi Área Personal
             </Header> 
 {/* Form de cambios al perfil */}
-            <Segment raised>
-                <Header as='h3' color="teal">
-                    Cambios de perfil
-                </Header>
-            <Divider/>
-                <Segment>
-                    { this.state.done 
-                    ? 
-                    <p>{this.state.message}</p>
-                    :
-                    <Form unstackable onSubmit={this.handleClick}>
-                        <Form.Group widths={2}>
-                            <Form.Input id="old_password" name='old_password' label='Vieja contraseña' placeholder='Old password' onChange={this.handleOldPassword}/>
-                            <Form.Input id="new_password" name="new_password" label='Nueva contraseña' placeholder='New password' onChange={this.handleNewPassword}/>
-                        </Form.Group>
-                        <Grid>
-                            <Grid.Column textAlign="center">
-                                <Button 
-                                inverted color='teal'
-                                circular={true} >
-                                    ACEPTAR
-                                </Button>
-                            </Grid.Column>
-                        </Grid>
-                    </Form>}
-                </Segment>
-            </Segment>
+        <Segment raised>
+            <Header as='h3' textAlign='center' color="teal">
+                Cambios de perfil
+            </Header>
+        <Divider/>
+        <Segment>
+            { this.state.done 
+            ? 
+            <p>{this.state.message}</p>
+            :
+            <Form unstackable onSubmit={this.handleClick}>
+                <Form.Group widths={2}>
+                    <Form.Input id="old_password" name='old_password' label='Vieja contraseña' placeholder='Old password' onChange={this.handleOldPassword}/>
+                    <Form.Input id="new_password" name="new_password" label='Nueva contraseña' placeholder='New password' onChange={this.handleNewPassword}/>
+                </Form.Group>
+                <Container textAlign='center'>
+                    <Button inverted color='teal' circular={true} >
+                        ACEPTAR
+                    </Button>
+                </Container>
+            </Form>}
+        </Segment>
+        </Segment>
 {/* Numero de premios canjeados */}
-            <Segment raised>
-                <Header as='h3' color="teal">
-                    Tienes {premios_canjeados.length} premios canjeados
-                </Header>
+        <Segment raised>
+            <Header as='h3' textAlign='center' color="teal">
+                Tienes {premios_canjeados.length} premios canjeados
+            </Header>
             <Divider/>
-                <Card.Group centered >
-                    {premios_canjeados.map (premio_canjeado => 
-                    <Card>
-                        <Image src= {premio_canjeado.imagen}/>
-                        <Card.Content>
-                            <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
-                            <Card.Meta />
-                            <Card.Description textAlign="center">
-                                {premio_canjeado.descripcion}
-                            </Card.Description>
-                        </Card.Content>
-                    </Card>)}
-                </Card.Group>
-            </Segment> 
+{/* Tarjetas con información de los premios canjeados sin utilizar. */}
+            <Card.Group centered >
+                {premios_canjeados.map (premio_canjeado => 
+                <Card raised>
+                    <Image src= {premio_canjeado.imagen}/>
+                    <Card.Content>
+                        <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
+                    <Card.Meta/>
+                        <Card.Description textAlign="center">
+                            {premio_canjeado.descripcion}
+                        </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra textAlign='center'>
+                        <Popup
+                            trigger={
+                                <Button inverted color='teal' circular={true} onClick={() => this.onDisfrutado(premio_canjeado)} >
+                                    ¿Disfrutado?
+                                </Button>}
+                            content='Si ya has disfrutado de este premio, has click aquí para distinguirlo de los que aún no has utilizado y/o recibido.'
+                            position='top center'
+                        />
+                    </Card.Content>
+                </Card> )}
+{/* Tarjetas con los premios utilizados. */}
+                {premios_canjeados_utilizados.map (premio_canjeado => 
+                <Card className='inactivo'>
+                    <Image src= {premio_canjeado.imagen}/>
+                    <Card.Content>
+                        <Card.Header textAlign="center">{premio_canjeado.nombre_premio}</Card.Header>
+                    <Card.Meta />
+                        <Card.Description textAlign="center">
+                            {premio_canjeado.descripcion}
+                        </Card.Description>
+                    </Card.Content>
+                </Card>)}
+            </Card.Group>
+        </Segment> 
         </Container>
             )
         }
