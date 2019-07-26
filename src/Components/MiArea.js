@@ -149,6 +149,9 @@ export default class MiArea extends Component {
                             {premio_canjeado.descripcion}
                         </Card.Description>
                     </Card.Content>
+                    <Card.Content extra textAlign='center'>
+                        <h4>Disfrutado</h4>
+                    </Card.Content>
                 </Card>)}
             </Card.Group>
         </Segment> 
