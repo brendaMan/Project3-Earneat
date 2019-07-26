@@ -52,13 +52,14 @@ server.use('/administrar-premios', express.static(path.join(__dirname, '/build')
 
 // TODO: Documentar mas
 server.get('/api', (req, res) => {
-    res.write('GET    /api/users                        List of users\n');
-    res.write('GET    /api/users/me                     Administrator\n');
-    res.write('GET    /api/users/:id                    User details.\n');
+    res.write('GET    /api/usuario                        List of users\n');
+    res.write('GET    /api/usuario/me                     Administrator\n');
+    res.write('GET    /api/usuario/:id                    User details.\n');
     res.write('GET    /api/newsfeed                     NF on profile\n');
     res.write(                                                      '\n');
-    res.write('POST   /api/logout                    Log out profile \n');
     res.write('POST   /api/login                      Log in profile.\n');
+    res.write('POST   /api/logout                    Log out profile \n');
+    
     res.end();
 })
 
