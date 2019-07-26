@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Segment, Container, Popup} from 'semantic-ui-react';
 
-export default class AddPremioForm extends Component {
+export default class PremioForm extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -12,7 +12,6 @@ export default class AddPremioForm extends Component {
             activo: "",
             message: ""
         };
-
     }
     onCrearPremio = () => {
         fetch ('/api/premios', {
@@ -23,15 +22,14 @@ export default class AddPremioForm extends Component {
         .then (res => {
                 if (res.status === 200) {
                     this.onClear()
-                    this.props.onAddPremio() 
+                    this.props.onLoadPremios() 
                 }   
                 else this.onError();
         })
-        .catch ((err) => {
-            console.log("ERROR: ", err)
+        .catch (() => {
             this.onError()
         })
-    }
+    };
 
     componentWillReceiveProps = (newProps) => {
         this.setState({
@@ -52,9 +50,10 @@ export default class AddPremioForm extends Component {
         })
             .then (res => {
                 if (res.status === 200) {
-                    this.onClear()
-                    this.props.onAddPremio() 
+                    this.onClear();
+                    this.props.onLoadPremios();
                 }
+                else this.onError();
         })
             .catch (() => {
                 this.onError()
@@ -121,16 +120,18 @@ export default class AddPremioForm extends Component {
                         placeholder='Details' />
                 </Form.Field>
 {/* Buttons para crear o editar premios */}
-                <Container>
-                    <Form.Button inverted circular type="submit" floated='left'
+                <Container textAlign="center">
+                {this.state.id === 0 ? 
+                    <Form.Button inverted circular type="submit" 
                         onClick={this.onCrearPremio}
-                        > Crear Premio </Form.Button>
-                    <Form.Button inverted circular type="submit" floated='right'
+                        > Guardar </Form.Button>
+                :
+                <Form.Button inverted circular type="submit" 
                         onClick={this.onEditarPremio}
-                        > Editar Premio </Form.Button>
-                    
+                        > Guardar </Form.Button>
+                }
                 </Container>
-                {this.state.message}
+                <h4 style={{ color: 'red', textAlign: 'center'}}>{this.state.message}</h4>
             </Form>
             </Segment>
         )

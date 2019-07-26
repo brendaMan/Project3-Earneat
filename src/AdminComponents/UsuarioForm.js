@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form, Segment, Container, Header, Divider} from 'semantic-ui-react';
 
 
-export default class AddUsuarioForm extends Component {
+export default class UsuarioForm extends Component {
     constructor(props){
         super(props);
         this.state={
@@ -28,17 +28,17 @@ export default class AddUsuarioForm extends Component {
                         email: "",
                         password: ""
                     });
-                    this.props.onAddUsuario() 
+                    this.props.onLoadUsuarios() 
                 }   
-                else this.onErrorAddingUser();
+                else this.onError();
         })
         .catch ((err) => {
             console.log("ERROR: ", err)
-            this.onErrorAddingUser()
+            this.onError()
         })
     }
 
-    onErrorAddingUser = () => {
+    onError = () => {
         this.setState({
             message: 'Hay un error por lo que no se ha podido crear este nuevo usuario.'
         })
@@ -46,26 +46,21 @@ export default class AddUsuarioForm extends Component {
     
     render() {
         return (
-            <Segment 
-                className="adminForms"
-                inverted 
-                tertiary
-            >
-                <Header 
-                    as='h3'
-                    textAlign='center'
-                >
+            <Segment className="adminForms" inverted tertiary>
+                <Header as='h3' textAlign='center'>
                     Dar de Alta a Nuevos Usuarios
                 </Header>
                 <Divider/>
             <Form inverted>
                 <Form.Field>
+{/* Input Nombre */}
                     <label>Nombre</label>
                     <Form.Input 
                         value= {this.state.nombre}
                         onChange= {e => this.setState({nombre: e.target.value})}
                         placeholder='First Name' />
                 </Form.Field>
+{/* Input Apellido */}
                 <Form.Field>
                     <label>Apellido(s)</label>
                     <Form.Input 
@@ -73,6 +68,7 @@ export default class AddUsuarioForm extends Component {
                         onChange= {e => this.setState({apellido: e.target.value})}
                         placeholder='Last Name' />
                 </Form.Field>
+{/* Input Email */}
                 <Form.Field>
                     <label>Correo Electrónico</label>
                     <Form.Input 
@@ -80,6 +76,7 @@ export default class AddUsuarioForm extends Component {
                         onChange= {e => this.setState({email: e.target.value})}
                         placeholder='Email' />
                 </Form.Field>
+{/* Input Contraseña */}
                 <Form.Field>
                     <label >Contraseña</label>
                     <Form.Input 
@@ -87,11 +84,13 @@ export default class AddUsuarioForm extends Component {
                         onChange= {e => this.setState({password: e.target.value})}
                         placeholder='Password' />
                 </Form.Field>
+{/* Admin? */}
                 <Form.Checkbox toggle
                     value= {this.state.admin}
                     onChange= {e => this.setState({admin: (this.state.admin === 0 ? 1 : 0)})}
                     label='¿Es administrador?'/>
                 <Container textAlign="center">
+{/* Button */}
                 <Form.Button
                     inverted 
                     type="submit"
