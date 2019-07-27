@@ -478,7 +478,7 @@ server.post('/api/premios', passport.authenticate('jwt', {
         }
     })
 
-// TODO: Solo administrador puede cambiar premios)
+// TODO: Solo administrador puede cambiar premios
 server.patch('/api/premios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         delete req.body.message;

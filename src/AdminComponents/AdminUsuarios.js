@@ -7,21 +7,15 @@ export default class AdminUsuarios extends Component {
     constructor (props){
         super(props);
         this.state={
-            usuarios: [],
-            usuarioAEditar: {},
+            usuarios: []
         }
         this.loadUsuarios()
-        this.onEditar()
     }
 
     loadUsuarios = () => {
         fetch('/api/usuarios')
         .then (res => res.json())
-        .then (data => this.setState({ usuarios:data, usuarioAEditar: {} }) )
-    }
-
-    onEditar = (usuario) => {
-        this.setState({ usuarioAEditar: usuario })
+        .then (data => this.setState({ usuarios:data }) )
     }
 
     onDesactivarUsuario = (usuario) => {
@@ -52,7 +46,7 @@ export default class AdminUsuarios extends Component {
                 </Header>
 {/* --------------------------------- Formulario Usuarios -------------------------------------- */}
                 <Segment raised >
-                    <UsuarioForm onLoadUsuario={this.loadUsuarios}/>
+                    <UsuarioForm onLoadUsuarios={this.loadUsuarios}/>
                 </Segment> 
 {/* --------------- Listado de usuarios donde se pueden activar/desactivar y editar ------------- */}
             <Segment raised >
@@ -64,27 +58,24 @@ export default class AdminUsuarios extends Component {
 {/* ------------------------------------- Usuarios Activos ------------------------------------- */}
                     {usuarios.map(usuario => 
                     <Feed.Event>
-                        <Feed.Label>
-{/* Botton editar usuario */}
-                            <Button animated circular inverted color='blue'
-                                onClick={ () => this.onEditar(usuario) } >
-                                <Button.Content hidden>Editar</Button.Content>
-                                <Button.Content visible><Icon name='user' color='black'/></Button.Content>
-                            </Button>
-                        </Feed.Label>
 {/* Info usuario */}
+                        <Feed.Label>
+                            <Icon name='user' circular color='blue'/>
+                        </Feed.Label>
                         <Feed.Content>
-                            <Feed.Summary className='spaceBetween'>
-                            <span className='listadoPremio1'>{usuario.nombre} {usuario.apellido} es usuario de EarnEat. El correo electrónico que utiliza en esta plataforma es: {usuario.email}.</span> 
+                            <Feed.Summary>
+                                <span className='listadoUsuario'>{usuario.nombre} {usuario.apellido}</span>
+                            </Feed.Summary>
+                            <Feed.Extra  className='spaceBetween'>
+                                <span className='listadoUsuarioExtra'> Correo electrónico: {usuario.email}.</span> 
 {/* Toggle Activo/noActivo */}
                                 <Popup 
                                     trigger={<Checkbox toggle
-                                                color='grey'
                                                 value= {usuario.activo}
                                                 checked={usuario.activo}
                                                 onChange= {() => this.onDesactivarUsuario(usuario)}
                                             />}
-                                    content='"Toggle" a la derecha para desactivar usuario y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
+                                    content='"Toggle" a la izquierda para desactivar usuario.'
                                     basic inverted
                                 />
 {/* Button para borrar usuarios */}
@@ -96,36 +87,33 @@ export default class AdminUsuarios extends Component {
                                         <Icon name='trash' inverted color='black' />
                                     </Button.Content>
                                 </Button> */}
-                            </Feed.Summary>
+                            </Feed.Extra>
                         </Feed.Content>
                     </Feed.Event>)}
 {/* ------------------------------------ Usuarios Inactivos ------------------------------------ */}
                     {usuarios_inactivos.map(usuario => 
                     <Feed.Event>
-                        <Feed.Label>
-{/* Botton editar usuario */}
-                            <Button animated circular inverted color='grey'
-                                onClick={ () => this.onEditar(usuario) } >
-                                <Button.Content hidden>Editar</Button.Content>
-                                <Button.Content visible><Icon name='user' color='black'/></Button.Content>
-                            </Button>
-                        </Feed.Label>
 {/* Info usuario */}
+                        <Feed.Label>
+                            <Icon name='user' circular color='grey'/>
+                        </Feed.Label>
                         <Feed.Content>
-                            <Feed.Summary className='spaceBetween'>
-                            <span className='listadoPremio1Inactivo'>{usuario.nombre} {usuario.apellido} es usuario de EarnEat. El correo electrónico que utiliza en esta plataforma es: {usuario.email}.</span> 
+                            <Feed.Summary>
+                                <span className='listadoUsuario Inactivo'>{usuario.nombre} {usuario.apellido}</span>
+                            </Feed.Summary>
+                            <Feed.Extra  className='spaceBetween'>
+                                <span className='listadoUsuarioExtra Inactivo'> Correo electrónico: {usuario.email}.</span> 
 {/* Toggle Activo/noActivo */}
                                 <Popup 
                                     trigger={<Checkbox toggle
-                                                color='grey'
                                                 value= {usuario.activo}
                                                 checked={usuario.activo}
                                                 onChange= {() => this.onDesactivarUsuario(usuario)}
                                             />}
-                                    content='"Toggle" a la derecha para desactivar usuario y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
+                                    content='"Toggle" a la derecha para activar usuario nuevamente.'
                                     basic inverted
                                 />
-                            </Feed.Summary>
+                            </Feed.Extra>
                         </Feed.Content>
                     </Feed.Event>)}
                 </Feed>

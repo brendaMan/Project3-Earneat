@@ -6,7 +6,6 @@ export default class UsuarioForm extends Component {
     constructor(props){
         super(props);
         this.state={
-            id: 0, 
             nombre: "",
             apellido: "",
             email: "",
@@ -35,36 +34,6 @@ export default class UsuarioForm extends Component {
         })
     }
 
-    onEditarUsuario = () => {
-        fetch (`/api/usuarios/${this.state.id}`, {
-            method: "PATCH",
-            body: JSON.stringify(this.state),
-            headers: {'Content-Type':'application/json'} 
-        }) 
-            .then (res => {
-                if (res.status === 200) {
-                    debugger
-                    this.onClear();
-                    this.props.onLoadUsuarios();
-                }
-                else this.onError();
-        })
-            .catch (() => {
-                this.onError()
-            })
-    }
-
-    // componentWillReceiveProps = (newProps) => {
-    //     this.setState({
-    //         id: newProps.usuario.id,
-    //         nombre: newProps.usuario.nombre,
-    //         apellido: newProps.usuario.apellido, 
-    //         imagen: newProps.usuario.imagen,
-    //         descripcion: newProps.usuario.descripcion,
-    //         activo: newProps.usuasrio.activo
-    //     })
-    // }
-
     onError = () => {
         this.setState({
             message: 'Hay un error por lo que no se ha podido crear este nuevo usuario.'
@@ -73,7 +42,6 @@ export default class UsuarioForm extends Component {
 
     onClear = () => {
         this.setState({
-            id: 0,
             nombre: "",
             apellido: "",
             email: "",
@@ -85,10 +53,6 @@ export default class UsuarioForm extends Component {
     render() {
         return (
             <Segment className="adminForms" inverted tertiary>
-                {/* <Header as='h3' textAlign='center'>
-                    Dar de Alta a Nuevos Usuarios
-                </Header>
-                <Divider/> */}
             <Form inverted>
                 <Form.Field>
 {/* Input Nombre */}
@@ -129,15 +93,9 @@ export default class UsuarioForm extends Component {
                     label='¿Es administrador?'/>
 {/* Buttons para crear o editar premios */}
                 <Container textAlign="center">
-                {this.state.id === 0 ? 
                     <Form.Button inverted circular type="submit" 
                         onClick={this.onCrearUsuario}
                         > Guardar </Form.Button>
-                :
-                <Form.Button inverted circular type="submit" 
-                        onClick={this.onEditarUsuario}
-                        > Guardar </Form.Button>
-                }
                 </Container>
                 <h4 style={{ color: 'red', textAlign: 'center'}}>{this.state.message}</h4>
             </Form>

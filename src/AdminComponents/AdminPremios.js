@@ -77,17 +77,16 @@ export default class AdminUsuarios extends Component {
                             <Feed.Summary>
                                 <span className='listadoPremio1'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
                             </Feed.Summary>
-                            <Feed.Summary className='spaceBetween'>
+                            <Feed.Extra className='spaceBetween'>
                                 <span className='listadoPremio2'>Detalles adicionales: {premio.descripcion}</span>
 {/* Toggle Activo/noActivo */}
                                 <Popup 
                                     trigger={<Checkbox toggle
-                                                color='grey'
                                                 value= {premio.activo}
                                                 checked={premio.activo}
                                                 onChange= {() => this.onDesactivarPremio(premio)}
                                             />}
-                                    content='"Toggle" a la derecha para desactivar premio y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
+                                    content='"Toggle" a la izquierda para desactivar el premio.'
                                     basic inverted
                                 />
 {/* Boton de DELETE */}
@@ -99,7 +98,7 @@ export default class AdminUsuarios extends Component {
                                         <Icon name='trash' inverted color='black'/>
                                     </Button.Content>
                                 </Button>  */}
-                            </Feed.Summary>
+                            </Feed.Extra>
                         </Feed.Content>
                     </Feed.Event>)}
 {/* ------------------------------------ Premios Inactivos ------------------------------------ */}
@@ -115,19 +114,18 @@ export default class AdminUsuarios extends Component {
                         </Feed.Label>
                         <Feed.Content>
                             <Feed.Summary>
-                                <span className='listadoPremio1Inactivo'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
+                                <span className='listadoPremio1 Inactivo'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
                             </Feed.Summary>
                             <Feed.Summary className='spaceBetween'>
-                                <span className='listadoPremio2'>Detalles adicionales: {premio.descripcion}</span>
+                                <span className='listadoPremio2 Inactivo'>Detalles adicionales: {premio.descripcion}</span>
 {/* Toggle Activo/noActivo */}
                                 <Popup 
                                     trigger={<Checkbox toggle
-                                                color='grey'
                                                 value= {premio.activo}
                                                 checked={premio.activo}
                                                 onChange= {() => this.onDesactivarPremio(premio)}
                                             />}
-                                    content='"Toggle" a la derecha para desactivar premio y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
+                                    content='"Toggle" a la derecha para activar el premio nuevamente.'
                                     basic inverted
                                 />
                             </Feed.Summary>

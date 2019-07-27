@@ -129,6 +129,14 @@ element.style {
 
 /* ----------------------------------- Admin Usuarios area ----------------------------------- */
 
+.listadoUsuario {
+  font-size: 120%;
+}
+
+.listadoUsuarioExtra {
+  padding-left: 15px;
+}
+
 /* ----------------------------------- Admin Premios area ------------------------------------ */
 
 .listadoPremio1 {
@@ -136,15 +144,13 @@ element.style {
   padding-left: 35px;
 }
 
-.listadoPremio1Inactivo {
-  font-size: 110%;
-  color: grey;
-  padding-left: 35px;
-}
-
 .listadoPremio2 {
   font-weight: normal;
   padding-left: 50px;
+}
+
+.Inactivo {
+  color: grey;
 }
 
 .page.modals.dimmer {
