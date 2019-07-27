@@ -40,7 +40,6 @@ export default class PremioForm extends Component {
         }) 
             .then (res => {
                 if (res.status === 200) {
-                    debugger
                     this.onClear();
                     this.props.onLoadPremios();
                 }

@@ -133,12 +133,18 @@ element.style {
 
 .listadoPremio1 {
   font-size: 120%;
-  padding-left: 30px;
+  padding-left: 35px;
+}
+
+.listadoPremio1Inactivo {
+  font-size: 110%;
+  color: grey;
+  padding-left: 35px;
 }
 
 .listadoPremio2 {
   font-weight: normal;
-  padding-left: 40px;
+  padding-left: 50px;
 }
 
 .page.modals.dimmer {
