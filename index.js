@@ -52,9 +52,9 @@ server.use('/administrar-premios', express.static(path.join(__dirname, '/build')
 
 // TODO: Documentar mas
 server.get('/api', (req, res) => {
-    res.write('GET    /api/usuarios                        List of users\n');
-    res.write('GET    /api/usuarios/me                     Administrator\n');
-    res.write('GET    /api/usuarios/:id                    User details.\n');
+    res.write('GET    /api/usuarios                       List of users\n');
+    res.write('GET    /api/usuarios/me                    Administrator\n');
+    res.write('GET    /api/usuarios/:id                   User details.\n');
     res.write('GET    /api/newsfeed                       NF on profile\n');
     res.write(                                                        '\n');
     res.write('POST   /api/premios                        Premios. \n');
