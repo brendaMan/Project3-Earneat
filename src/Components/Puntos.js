@@ -66,17 +66,16 @@ export default class Puntos extends Component {
                     </Header>
                 <Divider/>
 {/* Inputs para el Form */}
-                    <Form.Group className='linea1Puntos' grouped as='h3'> 
+                    <Form.Group className='linea1Puntos' grouped > 
                         De  <b>{this.props.a_regalar}</b>  puntos, quiero dar 
-                        <Input className='inputPuntos' icon='star' iconPosition='left'
+                        <Input  className='inputPuntos' icon='star' iconPosition='left'
                                 value={this.state.puntos} 
                                 onChange={e => this.setState({puntos: e.target.value})}
                         /> 
-                        puntos a  
-                        <Select className='selectPuntos' 
+                        puntos a <Select className='selectPuntos'
                                 options={this.state.usuarios} 
                                 onChange={(e, data) => this.setState({a_usuario_id: data.value})}
-                        />.
+                        />
                     </Form.Group>
                     <Form.Group className='linea2Puntos' grouped inline
                                 value={this.state.razon} 

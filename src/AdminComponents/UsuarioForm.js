@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Segment, Container, Header, Divider} from 'semantic-ui-react';
-
+import { Form, Segment, Container } from 'semantic-ui-react';
 
 export default class UsuarioForm extends Component {
     constructor(props){
@@ -15,6 +14,7 @@ export default class UsuarioForm extends Component {
             message: ""
         }
     }
+    
     onCrearUsuario = () => {
         fetch ('/api/usuarios', {
             method: "POST",

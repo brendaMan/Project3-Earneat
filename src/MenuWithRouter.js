@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Menu, Container, Icon } from "semantic-ui-react";
+import { Menu, Icon, Responsive, Segment, Button, Dropdown } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
-import { userInfo } from "os";
 
 class MenuWithRouter extends Component {
+
+  onLogOut = () => fetch('/api/logout', {method: "POST"})
+  .then(res => {
+      if (res.status === 200) window.location.href = '/';
+  })
+
   render() {
     const headerIcon = <Icon name={this.props.headerIcon} size="large" />;
 
@@ -32,13 +37,29 @@ class MenuWithRouter extends Component {
     }
 
     return (
-      <Menu 
-        fluid 
-        vertical
-        tabular
-      >
-        <Container>{menuItems}</Container>
-      </Menu>
+      <div>
+{/* Tablet and Computer */}
+        <Responsive minWidth={768}>
+          <Menu fluid vertical pointing>
+            <Segment>{menuItems}</Segment>
+          </Menu>
+        </Responsive>
+{/* Mobile */}
+        <Responsive maxWidth={767}>
+        <Menu inverted color= 'teal' horizontal="true" borderless={true}>
+          <Menu.Item>
+            <Dropdown as='h3' floating={true} 
+              text='EarnEat' options={menuItems} />
+          </Menu.Item>
+          <Menu.Item position='right'> 
+            <Button circular={true} type='submit' inverted
+              onClick={this.onLogOut}> 
+              Log Out
+            </Button>
+          </Menu.Item> 
+        </Menu>
+        </Responsive>
+      </div> 
     );
   }
 }

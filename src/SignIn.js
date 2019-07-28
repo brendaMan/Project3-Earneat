@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Checkbox, Form, Input, Container, Header, Icon, Image } from 'semantic-ui-react';
+import { Button, Form, Input, Container, Header, Icon, Image } from 'semantic-ui-react';
 import Logo from './ApeteatLogo.svg'
 
 export default class SignIn extends Component {
@@ -69,10 +69,10 @@ export default class SignIn extends Component {
                     />
                 </Form.Field>
 {/* CHECKBOX y RECUERDAME */}
-                <Form.Field className='checkbox'>
+                {/* <Form.Field className='checkbox'>
                     <Checkbox label='Recuérdame'/> 
                     <a href='#'>¿Olvidaste tu contraseña?</a>
-                </Form.Field>
+                </Form.Field> */}
 {/* BOTON de Sign In */}
                 <Container textAlign='center'>
                     <Button 

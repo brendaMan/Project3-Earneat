@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Image, Popup } from 'semantic-ui-react';
-
+import { Card, Image, Popup, Responsive, Segment } from 'semantic-ui-react';
 
 export default class MiTarjeta extends Component {
     constructor(props) {
@@ -15,6 +14,7 @@ export default class MiTarjeta extends Component {
     render() {
         const user= this.state.user
         return ( 
+            <Responsive as={Segment} minWidth={768}>
             <Card raised fluid>
                 {user.admin ? 
                 <Image src='https://i.postimg.cc/gjxthq3T/key-1013662-960-720.jpg' wrapped ui={false} />
@@ -22,8 +22,7 @@ export default class MiTarjeta extends Component {
                 <Image src='https://i.postimg.cc/N00HzMM6/networks-3017395-1280.jpg' wrapped ui={false} />
                 }
                 <Card.Content>
-                    <Card.Header
-                        textAlign='center'>
+                    <Card.Header textAlign='center'>
                         {user.nombre}
                     </Card.Header>
                     <Popup
@@ -56,6 +55,7 @@ export default class MiTarjeta extends Component {
                     />
                 </Card.Content>
             </Card>    
+            </Responsive>
         )
     }
 }

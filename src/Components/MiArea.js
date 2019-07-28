@@ -32,7 +32,7 @@ export default class MiArea extends Component {
         this.setState({old_password: event.target.value})
     }
     handleClick = (evento) => {
-        const data = new FormData(evento.target)
+        // const data = new FormData(evento.target)
         this.setState({done: !this.state.done})
         const nuevo_hash= {
             id: this.state.user.id, 

@@ -47,15 +47,19 @@
   background-color: rgb(230,230,230);
 }
 
+#root {
+  background-color: rgb(230,230,230);
+}
+
 .containerAll{
   padding: 22px 1% 5%;
 }
 
-/* --------------------------------------- CSS SideBar --------------------------------------- */
+/* --------------------------------------- CSS SideBar Area ---------------------------------- */
 
 .sideBarGrid {
   background-color: rgb(3,208,182, 0.8);
-  margin-bottom: 0px; 
+  margin-bottom: 0px
 }
 
 .sideBar {
@@ -102,9 +106,26 @@ element.style {
   margin: 0px 10px;
 }
 
+@media screen and (max-width: 767px){
+  .inputPuntos {
+    width: 80px;
+    margin: 5px 10px;
+  }
+  .selectPuntos{
+    width: 150px;
+    margin: 5px 1px;
+  }
+}
+
  /* texto en Acciones Recientes */
 .nombre {
   color: rgb(3,208,182, 0.8);
+}
+
+/* Acciones recientes area... Scroll */
+.ui-segment {
+  height: 500px;
+  overflow-y: scroll;
 }
 
 /* -------------------------------------- Premios area --------------------------------------- */
@@ -162,8 +183,4 @@ element.style {
   justify-content: space-between;
 }
 
-/* ----------------------------------- Acciones recientes area ----------------------------------- */
-.ui-segment {
-  height: 500px;
-  overflow-y: scroll;
-}
+

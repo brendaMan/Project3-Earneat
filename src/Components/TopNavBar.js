@@ -9,26 +9,15 @@ export default class TopNavBar extends Component {
     
     render() {
         return (
-            <Menu 
-                inverted color="teal"
-                fluid 
-                horizontal="true" 
-                attached="top" 
-                borderless={true}
+            <Menu inverted color="teal" fluid horizontal="true" attached="top" borderless={true}
                 className="topNavBar"
             >
-                    <Menu.Item 
-                        as='h3'
-                        header name='Earneat' 
+                    <Menu.Item as='h3' header name='EarnEat' 
                         style={{'margin-left':'5%', 'font-weight': 'bold'}}
                     />
                     <Menu.Item position='right'> 
-                        <Button
-                            onClick={this.onLogOut}
-                            circular={true} 
-                            type='submit'
-                            inverted
-                        >
+                        <Button circular={true} type='submit' inverted
+                            onClick={this.onLogOut}> 
                             Log Out
                         </Button>
                     </Menu.Item>             

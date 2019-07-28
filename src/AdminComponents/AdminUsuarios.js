@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UsuarioForm from './UsuarioForm';
-import { Container, Header, Segment, Feed, Icon, Divider, Button, Checkbox, Popup} from "semantic-ui-react";
+import { Container, Header, Segment, Feed, Icon, Divider, Checkbox, Popup} from "semantic-ui-react";
 
 
 export default class AdminUsuarios extends Component {
