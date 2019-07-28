@@ -11,6 +11,7 @@ export default class UsuarioForm extends Component {
             email: "",
             password: "",
             admin: 0,
+            activo: "",
             message: ""
         }
     }
@@ -22,12 +23,7 @@ export default class UsuarioForm extends Component {
         })
         .then (res =>{
                 if (res.status === 200) {
-                    this.setState({
-                        nombre: "",
-                        apellido: "",
-                        email: "",
-                        password: ""
-                    });
+                    this.onClear()
                     this.props.onLoadUsuarios() 
                 }   
                 else this.onError();
@@ -43,14 +39,20 @@ export default class UsuarioForm extends Component {
             message: 'Hay un error por lo que no se ha podido crear este nuevo usuario.'
         })
     }
+
+    onClear = () => {
+        this.setState({
+            nombre: "",
+            apellido: "",
+            email: "",
+            password: "",
+            activo: ""
+        });
+    }
     
     render() {
         return (
             <Segment className="adminForms" inverted tertiary>
-                <Header as='h3' textAlign='center'>
-                    Dar de Alta a Nuevos Usuarios
-                </Header>
-                <Divider/>
             <Form inverted>
                 <Form.Field>
 {/* Input Nombre */}
@@ -84,22 +86,18 @@ export default class UsuarioForm extends Component {
                         onChange= {e => this.setState({password: e.target.value})}
                         placeholder='Password' />
                 </Form.Field>
-{/* Admin? */}
+{/* ¿Admin? */}
                 <Form.Checkbox toggle
                     value= {this.state.admin}
                     onChange= {e => this.setState({admin: (this.state.admin === 0 ? 1 : 0)})}
                     label='¿Es administrador?'/>
+{/* Buttons para crear o editar premios */}
                 <Container textAlign="center">
-{/* Button */}
-                <Form.Button
-                    inverted 
-                    type="submit"
-                    onClick={this.onCrearUsuario}
-                >
-                    Crear usuario
-                </Form.Button>
-                {this.state.message}
-                </Container> 
+                    <Form.Button inverted circular type="submit" 
+                        onClick={this.onCrearUsuario}
+                        > Guardar </Form.Button>
+                </Container>
+                <h4 style={{ color: 'red', textAlign: 'center'}}>{this.state.message}</h4>
             </Form>
             </Segment>
         )

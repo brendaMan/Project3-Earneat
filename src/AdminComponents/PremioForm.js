@@ -13,6 +13,7 @@ export default class PremioForm extends Component {
             message: ""
         };
     }
+
     onCrearPremio = () => {
         fetch ('/api/premios', {
             method: "POST",
@@ -31,23 +32,12 @@ export default class PremioForm extends Component {
         })
     };
 
-    componentWillReceiveProps = (newProps) => {
-        this.setState({
-            id: newProps.premio.id,
-            nombre: newProps.premio.nombre,
-            puntos: newProps.premio.puntos, 
-            imagen: newProps.premio.imagen,
-            descripcion: newProps.premio.descripcion,
-            activo: newProps.premio.activo
-        })
-    }
-    
     onEditarPremio = () => {
         fetch (`/api/premios/${this.state.id}`, {
             method: "PATCH",
             body: JSON.stringify(this.state),
-            headers: {'Content-Type':'application/json'}
-        })
+            headers: {'Content-Type':'application/json'} 
+        }) 
             .then (res => {
                 if (res.status === 200) {
                     this.onClear();
@@ -59,6 +49,17 @@ export default class PremioForm extends Component {
                 this.onError()
             })
     }
+
+    // componentWillReceiveProps = (newProps) => {
+    //     this.setState({
+    //         id: newProps.premio.id,
+    //         nombre: newProps.premio.nombre,
+    //         puntos: newProps.premio.puntos, 
+    //         imagen: newProps.premio.imagen,
+    //         descripcion: newProps.premio.descripcion,
+    //         activo: newProps.premio.activo
+    //     })
+    // }
 
     onError = () => {
         this.setState({
@@ -103,7 +104,7 @@ export default class PremioForm extends Component {
                 <Form.Field>
                     <label>URL de la Imagen</label>
                     <Popup
-                        trigger={<Form.Input 
+                        trigger= {<Form.Input 
                             value= {this.state.imagen}
                             onChange= {e => this.setState({imagen: e.target.imagen})}
                             placeholder='Image URL' />}

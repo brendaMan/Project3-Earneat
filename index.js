@@ -225,6 +225,25 @@ server.patch('/api/usuarios/:id', passport.authenticate('jwt', {
             }
         })
 
+// Editar la información del usuario como administrador ?????????????????????????????
+server.patch('/api/usuario/:id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        delete req.body.message;
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
+            connection.query('UPDATE `usuario` SET ? WHERE id = ?', [req.body, req.params.id], (err, results)=> {
+                if (err) {
+                    console.log('err', err)
+                    res.sendStatus(500);
+                } else {
+                    res.json(results);
+                }
+            });
+        }
+    }
+);
+
 
 server.delete('/api/usuarios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
@@ -403,6 +422,24 @@ server.get('/api/usuarios/:id/premios_canjeados',  passport.authenticate('jwt', 
     }
 })
 
+//TODO: Premios en mi area personal. Este API permite marcarlos como utilizados.
+server.patch('/api/usuarios/:usuario_id/premios/:premio_usuario_id', passport.authenticate('jwt', {
+    session: false}), (req, res) => {
+        delete req.body.message;
+        if (!req.user || req.user.id != req.params.usuario_id) {
+            res.sendStatus(403);
+        } else {
+            connection.query('UPDATE `premio_usuario` SET `utilizado`= 1 WHERE id = ? AND usuario_id = ?', [req.params.premio_usuario_id, req.params.usuario_id], (err, results)=> {
+                if (err) {
+                    res.sendStatus(500);
+                } else {
+                    res.json(results);
+                }
+            });
+        }
+    }
+);
+
 
 // TODO: passport.authenticate (solo usuarios pueden escoger premios)
 // server.post('/api/premios/add', passport.authenticate('jwt', {
@@ -442,15 +479,16 @@ server.post('/api/premios', passport.authenticate('jwt', {
         }
     })
 
-// TODO: revisar logica (solo administrador puede cambiar premios)
+// TODO: Solo administrador puede cambiar premios
 server.patch('/api/premios/:id', passport.authenticate('jwt', {
     session: false}), (req, res) => {
         delete req.body.message;
-        if (req.user || req.user.admin) {
-            console.log("admin ok")
+        if (!req.user || !req.user.admin) {
+            res.sendStatus(401)
+        } else {
             connection.query('UPDATE `premio` SET ? WHERE id = ?', [req.body, req.params.id], (err, results)=> {
                 if (err) {
-                    res.sendStatus(401);
+                    res.sendStatus(500);
                 } else {
                     res.json(results);
                 }
@@ -465,9 +503,7 @@ server.delete('/api/premios/:id', passport.authenticate('jwt', {
             res.sendStatus(401)
         } else {
             connection.query('DELETE FROM premio WHERE id = ?', req.params.id, (err, results) => {
-                console.log('id', req.params.id)
                 if (err) {
-                    console.log(err)
                     res.sendStatus(500);
                 }
                 res.json(results);

@@ -7,7 +7,7 @@ export default class AdminUsuarios extends Component {
         super(props);
         this.state={
             premios: [],
-            premioAEditar: {}
+            premioAEditar: {},
         }
         this.loadPremios()
         this.onEditar()
@@ -16,7 +16,7 @@ export default class AdminUsuarios extends Component {
     loadPremios = () => {
         fetch('/api/premios')
         .then (res => res.json())
-        .then (data => this.setState({premios: data}))
+        .then (data => this.setState({ premios: data, premioAEditar: {} }) )
     }
 
     onEditar = (premio) => {
@@ -43,37 +43,41 @@ export default class AdminUsuarios extends Component {
     // }
      
     render() {
+        const premios= this.state.premios.filter(p => p.activo === 1)
+        const premios_inactivos= this.state.premios.filter(p => p.activo === 0)
         return (
         <Container fluid={true} className='containerAll'>  
             <Header inverted as='h2' block>
-                Administrar Premios
+                Administrar Premios 
             </Header> 
-{/* Formulario Premios */}
+{/* --------------------------------- Formulario Premios -------------------------------------- */}
             <Segment raised >
                 <AddPremioForm premio={this.state.premioAEditar} onLoadPremios={this.loadPremios}/>
             </Segment>
             <Segment raised >
-{/* Listado de premios donde se pueden activar/desactivar y editar */}
+{/* --------------- Listado de premios donde se pueden activar/desactivar y editar ------------- */}
                 <Feed>
                     <Header as='h3' textAlign='center'>
                         Listado de Premios
                     </Header>
                 <Divider/>
-                    {this.state.premios.map(premio => 
+{/* ------------------------------------- Premios Activos ------------------------------------- */}
+                    {premios.map(premio => 
                     <Feed.Event>
                         <Feed.Label>
 {/* Botton editar premio */}
-                            <Button animated circular inverted color='grey'
+                            <Button animated circular inverted color='blue'
                                 onClick={ () => this.onEditar(premio) } >
                                 <Button.Content hidden>Editar</Button.Content>
-                                <Button.Content visible><Icon name='gift' color='teal'/></Button.Content>
+                                <Button.Content visible><Icon name='gift' color='black'/></Button.Content>
                             </Button>
                         </Feed.Label>
+{/* Info premio */}
                         <Feed.Content>
                             <Feed.Summary>
                                 <span className='listadoPremio1'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
                             </Feed.Summary>
-                            <Feed.Summary className='spaceBetween'>
+                            <Feed.Extra className='spaceBetween'>
                                 <span className='listadoPremio2'>Detalles adicionales: {premio.descripcion}</span>
 {/* Toggle Activo/noActivo */}
                                 <Popup 
@@ -82,7 +86,7 @@ export default class AdminUsuarios extends Component {
                                                 checked={premio.activo}
                                                 onChange= {() => this.onDesactivarPremio(premio)}
                                             />}
-                                    content='"Toggle" a la derecha para desactivar premio y a la izquierda para activarlo nuevamente. Toma unos 3 segundos en ejecutarse la acción.'
+                                    content='"Toggle" a la izquierda para desactivar el premio.'
                                     basic inverted
                                 />
 {/* Boton de DELETE */}
@@ -94,6 +98,36 @@ export default class AdminUsuarios extends Component {
                                         <Icon name='trash' inverted color='black'/>
                                     </Button.Content>
                                 </Button>  */}
+                            </Feed.Extra>
+                        </Feed.Content>
+                    </Feed.Event>)}
+{/* ------------------------------------ Premios Inactivos ------------------------------------ */}
+                    {premios_inactivos.map(premio => 
+                    <Feed.Event>
+                        <Feed.Label>
+{/* Botton editar premio */}
+                            <Button animated circular inverted color='grey'
+                                onClick={ () => this.onEditar(premio) } >
+                                <Button.Content hidden>Editar</Button.Content>
+                                <Button.Content visible><Icon name='gift' color='black'/></Button.Content>
+                            </Button>
+                        </Feed.Label>
+                        <Feed.Content>
+                            <Feed.Summary>
+                                <span className='listadoPremio1 Inactivo'>{premio.nombre} tiene un coste de {premio.puntos} puntos. </span>
+                            </Feed.Summary>
+                            <Feed.Summary className='spaceBetween'>
+                                <span className='listadoPremio2 Inactivo'>Detalles adicionales: {premio.descripcion}</span>
+{/* Toggle Activo/noActivo */}
+                                <Popup 
+                                    trigger={<Checkbox toggle
+                                                value= {premio.activo}
+                                                checked={premio.activo}
+                                                onChange= {() => this.onDesactivarPremio(premio)}
+                                            />}
+                                    content='"Toggle" a la derecha para activar el premio nuevamente.'
+                                    basic inverted
+                                />
                             </Feed.Summary>
                         </Feed.Content>
                     </Feed.Event>)}
