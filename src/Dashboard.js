@@ -55,6 +55,8 @@ export default class Dashboard extends Component {
           <Grid.Column className="sideBarGrid" 
             tablet={5} 
             computer={3}
+            // largeScreen
+            // widescreen
           >
           <Segment className='sideBar' inverted color='teal'>
             <MiTarjeta user={user} saldo={this.state.saldo} a_regalar={this.state.a_regalar}/>

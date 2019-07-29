@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: black;
 }
 
 /* ------------------------------------ SignIn page CSS -------------------------------------- */
@@ -24,10 +23,19 @@
   -moz-box-shadow: 0 10px 6px -6px #03d0b6;
   box-shadow: 0 10px 6px -6px #03d0b6;
   padding: 2%;
-  margin-top: 5%;
+  margin-top: 7%;
   background-color: #ffffff;
   opacity: 0.7;
   width: 50% !important;
+}
+
+@media screen and (max-width: 767px){
+  .signInDiv {
+    padding-top: 10%;
+  }
+  .signInContainer { 
+    margin-top: 15%;
+  }
 }
 
 .checkbox {
@@ -41,25 +49,31 @@
   height: 100vh;
 }
 
+.topNavBar {
+  padding-right: 1%;
+} 
+
 /* ------------------------------------ CSS Display Area ------------------------------------- */
 
 .displayAreaGrid {
   background-color: rgb(230,230,230);
+  margin-bottom: 0px !important;
 }
 
 #root {
   background-color: rgb(230,230,230);
 }
 
+
 .containerAll{
-  padding: 22px 1% 5%;
+  padding: 22px 2% 2%;
 }
 
 /* --------------------------------------- CSS SideBar Area ---------------------------------- */
 
 .sideBarGrid {
   background-color: rgb(3,208,182, 0.8);
-  margin-bottom: 0px
+  margin-bottom: 0px !important;
 }
 
 .sideBar {
@@ -135,6 +149,14 @@ element.style {
   width: 290px;
   height: 290px;
 } 
+
+@media screen and (max-width: 767px){
+  .ui.image {
+    position: center center; 
+    width: auto;
+    height: 200px;
+  } 
+}
 
 .ui.teal.inverted.button {
   color: black !important;
