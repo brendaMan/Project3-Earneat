@@ -50,16 +50,16 @@ export default class PremioForm extends Component {
             })
     }
 
-    // componentWillReceiveProps = (newProps) => {
-    //     this.setState({
-    //         id: newProps.premio.id,
-    //         nombre: newProps.premio.nombre,
-    //         puntos: newProps.premio.puntos, 
-    //         imagen: newProps.premio.imagen,
-    //         descripcion: newProps.premio.descripcion,
-    //         activo: newProps.premio.activo
-    //     })
-    // }
+    componentWillReceiveProps = (newProps) => {
+        this.setState({
+            id: newProps.premio.id,
+            nombre: newProps.premio.nombre,
+            puntos: newProps.premio.puntos, 
+            imagen: newProps.premio.imagen,
+            descripcion: newProps.premio.descripcion,
+            activo: newProps.premio.activo
+        })
+    }
 
     onError = () => {
         this.setState({

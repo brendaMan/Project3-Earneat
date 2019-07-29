@@ -30,7 +30,7 @@ export default class AccionesRecientes extends Component {
                     </Feed.Summary>
                     <Feed.Meta>
                       <Icon name='clock'/>
-                      {moment(voto.fecha).add(2, 'h').fromNow()}
+                      {moment(voto.fecha).fromNow()}
                     </Feed.Meta>
                   </Feed.Content>
                 </Feed.Event>
@@ -46,7 +46,7 @@ export default class AccionesRecientes extends Component {
                     </Feed.Summary>
                     <Feed.Meta >
                       <Icon name='clock outline'/>
-                      {moment(voto.fecha).add(2, 'h').fromNow()}
+                      {moment(voto.fecha).fromNow()}
                     </Feed.Meta>
                   </Feed.Content>
                 </Feed.Event>)}

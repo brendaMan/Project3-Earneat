@@ -7,7 +7,7 @@ export default class AdminUsuarios extends Component {
         super(props);
         this.state={
             premios: [],
-            premioAEditar: {},
+            premioAEditar: {}
         }
         this.loadPremios()
         this.onEditar()
