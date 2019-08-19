@@ -3,6 +3,6 @@ Last WCS project. Our 'client' for this project was ApetEat.
 
 ## Final Product
 
-![EarnEat](https://gph.is/g/4LN58pQ)
+![EarnEat](https://media.giphy.com/media/kF048y8VjCrVifB4Jg/giphy.gif)
 
 
